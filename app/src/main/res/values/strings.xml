@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Diabezone</string>
+    <string name="welcome">Welcome</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="mobile_number_desc">Please enter your phone number. We will send you 4-digit code to verify your account.</string>
+    <string name="send_code">Send Code</string>
+    <string name="phone_placeholder">+91 000 000 0000</string>
+    <string name="enter_phone_number">Enter your phone number</string>
+    <string name="valid_phone">Enter a valid phone number</string>
+
+</resources>

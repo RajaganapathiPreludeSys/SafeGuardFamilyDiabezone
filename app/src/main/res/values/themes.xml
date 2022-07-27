@@ -1,0 +1,378 @@
+<resources>
+    <style name="Theme.Diabezone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/royalBlue</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/bgBlue</item>
+        <item name="android:statusBarColor" >?attr/colorPrimary</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/bgGrey</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Diabezone</item>
+    </style>
+
+    <!--  Font  -->
+    <style name="Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+    </style>
+
+    <style name="Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="HindBold">
+        <item name="font">@font/hind_bold</item>
+    </style>
+    <!--  End of Font -->
+
+    <!--  Font Size  -->
+    <style name="Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Medium">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Large">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="xLarge">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="xxLarge">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <!--  End of Font Size  -->
+
+    <!--  Font Color  -->
+    <!--  Font Size :: Font Color  -->
+    <style name="Small.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Medium.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Large.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="xLarge.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="xxLarge.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Small.Blue">
+        <item name="android:textColor">@color/royalBlue</item>
+    </style>
+
+    <style name="Medium.Blue">
+        <item name="android:textColor">@color/royalBlue</item>
+    </style>
+
+    <style name="Large.Blue">
+        <item name="android:textColor">@color/royalBlue</item>
+    </style>
+
+    <style name="xLarge.Blue">
+        <item name="android:textColor">@color/royalBlue</item>
+    </style>
+
+    <style name="xxLarge.Blue">
+        <item name="android:textColor">@color/royalBlue</item>
+    </style>
+    <!--  End of Font Color  -->
+
+    <!--  Font  -->
+    <!--  Font Size :: Font Color :: Font(Montserrat) -->
+    <style name="Small.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Medium.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Large.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xLarge.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xxLarge.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Small.White.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Medium.White.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Large.White.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xLarge.White.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xxLarge.White.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Small.Blue.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Medium.Blue.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Large.Blue.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xLarge.Blue.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+
+    <style name="xxLarge.Blue.Montserrat">
+        <item name="font">@font/montserrat_regular</item>
+    </style>
+    <!--  End of Font(Montserrat)  -->
+
+    <!--  Font Size :: Font Color :: Font(MontserratBold) -->
+    <style name="Small.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Small.White.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.White.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.White.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.White.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.White.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Small.Blue.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.Blue.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.Blue.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.Blue.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.Blue.MontserratBold">
+        <item name="font">@font/montserrat_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--  End of Font(MontserratBold)  -->
+
+    <!--  Font Size :: Font Color :: Font(Hind) -->
+    <style name="Small.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Medium.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Large.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xLarge.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xxLarge.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Small.White.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Medium.White.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Large.White.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xLarge.White.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xxLarge.White.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Small.Blue.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Medium.Blue.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="Large.Blue.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xLarge.Blue.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+
+    <style name="xxLarge.Blue.Hind">
+        <item name="font">@font/hind_regular</item>
+    </style>
+    <!--  End of Font(Hind)  -->
+
+    <!--  Font Size :: Font Color :: Font(HindBold) -->
+    <style name="Small.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Small.White.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.White.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.White.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.White.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.White.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Small.Blue.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Medium.Blue.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Large.Blue.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xLarge.Blue.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="xxLarge.Blue.HindBold">
+        <item name="font">@font/hind_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--  End of Font(HindBold)  -->
+
+</resources>

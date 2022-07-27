@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="royalBlue">#1648CE</color>
+    <color name="black">#091F44</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="bgGrey">#E5E8F4</color> //  For edittext
+
+    <color name="bgBlue">#E9F5FE</color>
+    <color name="bgRed">#FAE9E9</color>
+    <color name="bgGreen">#E4F8EB</color>
+    <color name="bgOrange">#FEF3E7</color>
+
+    <color name="red">#D20D00</color>
+    <color name="green">#55A06F</color>
+    <color name="orange">#EF802F</color>
+</resources>
