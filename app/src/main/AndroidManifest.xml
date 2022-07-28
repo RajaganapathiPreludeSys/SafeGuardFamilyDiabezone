@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Diabezone"
         tools:targetApi="31">
         <activity
-            android:name="com.safeguardFamily.diabezone.ui.activity.MainActivity"
+            android:name="com.safeguardFamily.diabezone.ui.activity.OnBoardingActivity"
             android:exported="true"
             android:theme="@style/Theme.MySplash">
             <intent-filter>
@@ -25,6 +25,8 @@
         <activity android:name=".ui.activity.MobileActivity" />
         <activity android:name=".ui.activity.OtpActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
+        <activity android:name=".ui.activity.WebViewActivity" />
+        <activity android:name=".ui.activity.DashboardActivity" />
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"
@@ -45,6 +47,16 @@
                     android:scheme="io.rzp" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

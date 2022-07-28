@@ -6,6 +6,26 @@
     <string name="send_code">Send Code</string>
     <string name="phone_placeholder">+91 000 000 0000</string>
     <string name="enter_phone_number">Enter your phone number</string>
-    <string name="valid_phone">Enter a valid phone number</string>
+    <string name="valid_phone">Enter a valid phone number</string>`
+    <string name="verify_account">Verify Account!</string>
+    <string name="otp_code_desc">Enter 4-digit code we have sent to\nat <u><b>+91 %1$s</b></u></string>
+    <string name="didnt_received_the_code">Didn\'t n received the code?</string>
+    <string name="resend_code"><u>Resend Code</u></string>
+    <string name="proceed">Proceed</string>
+    <string name="skip">Skip</string>
+    <string name="accept_terms_and_privacy">By clicking proceed, you agree to our Privacy Policy our Teams and Conditions</string>
+    <string name="lets_setup_your_account_in_30_seconds">Lets setup your account in 30 Seconds</string>
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="terms_and_conditions">By creating your account you agree with to\nour <u>Terms and Conditions</u>.</string>
+    <string name="upload_profile_picture">Upload Profile Picture</string>
+    <string name="sign_up">Sign up</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="valid_name">Enter a valid name</string>
+    <string name="accept_terms">Accept the Terms and Conditions</string>
+    <string name="valid_email">Enter valid email</string>
+    <string name="home">Home</string>
+    <string name="health_vault">Health Vault</string>
+    <string name="appointment">Appointment</string>
+    <string name="profile">Profile</string>
 
 </resources>
