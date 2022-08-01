@@ -9,29 +9,256 @@
             type="com.safeguardFamily.diabezone.viewModel.HomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:background="@color/bgBackground">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBack"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWelcome"
-            style="@style/xxLarge.MontserratBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vpNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/llNotificationIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="25dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Large.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/daily_diabetes_log" />
+
+                    <ImageView
+                        android:id="@+id/ivOpenLogs"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:padding="7dp"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_menu" />
+
+                </RelativeLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rlDiabetes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Large.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/time" />
+
+                            <RelativeLayout
+                                android:id="@+id/tlTimeContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_blue">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvTimeValue"
+                                    style="@style/Large"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@+id/ivPickTime"
+                                    android:gravity="center"
+                                    android:paddingTop="7dp"
+                                    android:paddingBottom="7dp"
+                                    android:text="@string/select_time" />
+
+                                <ImageView
+                                    android:id="@+id/ivPickTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:contentDescription="@string/app_name"
+                                    android:padding="9dp"
+                                    android:src="@drawable/ic_down_arrow_blue" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Large.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/blood_sugar" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_blue"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/etBloodSugar"
+                                    style="@style/Large"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/tvLabel"
+                                    android:background="@null"
+                                    android:gravity="center"
+                                    android:hint="@string/blood_sugar_value"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="3"
+                                    android:paddingTop="7dp"
+                                    android:paddingBottom="7dp" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvLabel"
+                                    style="@style/Large"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:gravity="center"
+                                    android:paddingStart="10dp"
+                                    android:paddingTop="7dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingBottom="7dp"
+                                    android:text="mg/dL" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Large.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/type" />
+
+                            <RelativeLayout
+                                android:id="@+id/rlTypeContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_blue">
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/spType"
+                                    style="@style/Large"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:gravity="center"
+                                    android:paddingTop="7dp"
+                                    android:paddingBottom="7dp"
+                                    android:text="@string/type" />
+
+                                <ImageView
+                                    android:id="@+id/ivTypePicker"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:contentDescription="@string/app_name"
+                                    android:padding="9dp"
+                                    android:src="@drawable/ic_down_arrow_blue" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btAddToLog"
+                                style="@style/Large.White"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_royal_blue_round"
+                                android:gravity="center"
+                                android:text="@string/add_to_logs"
+                                android:textAllCaps="false" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </layout>

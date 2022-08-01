@@ -10,6 +10,7 @@
     <color name="bgRed">#FAE9E9</color>
     <color name="bgGreen">#E4F8EB</color>
     <color name="bgOrange">#FEF3E7</color>
+    <color name="bgBackground">#F2F4F7</color>
 
     <color name="red">#D20D00</color>
     <color name="green">#55A06F</color>

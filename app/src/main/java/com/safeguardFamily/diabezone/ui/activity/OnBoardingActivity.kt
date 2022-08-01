@@ -23,7 +23,7 @@ class OnBoardingActivity : AppCompatActivity() {
         mBinding.lifecycleOwner = this
 
         mBinding.btSkip.setOnClickListener {
-            startActivity(Intent(applicationContext, MobileActivity::class.java))
+            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }
         loadVideoView()

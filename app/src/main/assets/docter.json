@@ -1,0 +1,82 @@
+[
+  {
+    "image": "https://safeguardfamily.com/images/pr/dr-jayaprakash-small.jpg",
+    "name": "Dr.R.Jayaprakash",
+    "title": "Cardio-Diabetologist & Medical Director, Author of CSA Preventive Cardiology",
+    "desc": "Dr.R.Jayaprakash is a leading cardio diabetologist practicing at the multi-speciality Aditya Hospitals, Chennai. He is also the Doctor on Panel for the Directorate General of Shipping, Government of India and the American Consulate in Chennai. An alumni of JIPMER, Dr.Jayaprakash completed his MD in Medicine at the renowned Manipal University. Along his exciting medical journey in prestigious medical institutions, Dr. Jayaprakash discovered his passion in the exciting field of Cardio-Diabetes. Dr.Jayaprakash further went on to complete ACCD in Diabetes and ACLS from the American Heart Association.\n\nWith his expertise in diabetes and cardio-vascular diseases, as also providing remote and preventive medical care, Dr.Jayaprakash founded Diab-e-zone which helps patients using digital technology. Dr.Jayaprakash has also authored a book titled Cardiac Treadmill Testing and also scripted a widely acclaimed scientific paper in Cardiology published in the Indian Cardio Thoracic Journal.",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/dr-mira.jpg",
+    "name": "Dr.Mira Govindarajan",
+    "title": "Cardio-Diabetologist & Consultant Internal Medicine Specialist",
+    "desc": "Dr. Mira Govindarajan, an alumnus of JIPMER, has over 2 decades of diverse experience in Non-invasive Cardiology and Diabetes management. An assessor for the National Accreditation Board for Hospitals & Healthcare Providers (NABH), she has also handled ISO and JCI assessments. She is an esteemed member of the Quality Council of India (QCI) where her key focus areas are Medical audit, Quality control, Services marketing and Finance",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/dr-srividhya.jpg",
+    "name": "Prof. (Dr.) S.Srividhya",
+    "title": "Clinical Psychologist, Wellbeing expert & the soul saviour specialist",
+    "desc": "Dr. Srividhya is an eminent psychologist with a PhD in Psychology. She has multitudes of expertise in handling Learning Disabilities, Memory Development and Psycho Neurobics, Mindfulness, CBT and Counselling. She has decades of experience as a Psychotherapist and Performance Coach. She has pioneered in facilitating emotional well-being, understanding and relieving sleep disturbances and relationship counselling. A psychologist with a demonstrated history of working in emotional health care for more than a decade, she is skilled in working with children,adolescents and adults. She is also an authority in parenting management for special children.\n\nTrained in cognitive therapies, psychotherapy,mindfulness based therapies & solution focused approaches, she is also adept in handling psychological illnesses & lifestyle disorders. She has a strong foothold in string research with experience of test administration & interpretation.",
+    "specialist": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/dr-kavitha.jpg",
+    "name": "Dr.M.Kavitha",
+    "title": "Diabetologist & Senior Family Physician",
+    "desc": "Dr.Kavitha is the Senior Family physician and consultant diabetologist. She has vast experience in managing overall health programs in premier hospitals in Chennai. She specialises in chronic disease management such as diabetes, hypertension and cardiovascular diseases",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/mariya.jpg",
+    "name": "Ms. D. Mariya Jeya Rini",
+    "title": "Diabetes Educator & Health Manager",
+    "desc": "Mariya, a Senior Health Coach and Nutritionist, has expertise in diabetes management, weight management, hypertension, cholesterol management and detecting clinical abnormalities. She is also competent in child nutrition and maternal health.",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/monika.jpg",
+    "name": "Ms. Monika Thiyagarajan",
+    "title": "Clinical Nutritionist & Health Coach",
+    "desc": "Monika, a Nutritional Health Coach, specialises in creating personalized wellness improvement plans for clients. She is an expert in child nutrition, providing nutritional consultation, conducting vitals and detecting setbacks or concerns.",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/keerthana.jpg",
+    "name": "Ms. Keerthana Boopathi",
+    "title": "Clinical Nutritionist & Health Coach",
+    "desc": "Keerthana, a Nutritional Health Coach, specialises in detecting clinical abnormalities and providing therapeutic and nutritional counselling. She has completed her Masters in Food Science Nutrition & Dietetics and is certified in Body Composition Analysis in Medical science and Clinical nutrition.",
+    "specialist": [
+      1,
+      2
+    ]
+  },
+  {
+    "image": "https://safeguardfamily.com/images/pr/nowfal-mohammed.jpg",
+    "name": "Mr.Nowfal Mohammed",
+    "title": "Senior Physiotherapist",
+    "desc": "Nowfal, a senior physiotherapist, specialising in elder and community based physio care. He has OPD and IPD experience in handling Sports injuries, Orthopaedics and Traumatology, Paediatrics and General medicine, Cardiorespiratory and General surgery, Neurology, Neurosurgery and Community Based Physiotherapy.",
+    "specialist": [
+      2
+    ]
+  }
+]
