@@ -15,7 +15,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        mBinding.icToolbar.ivBack.setonclickListener{ finish()}
+        mBinding.icToolbar.ivBack.setOnClickListener{ finish()}
         mBinding.icToolbar.tvTitle.text = "Daily Diabetes Logbook"
         loadData()
     }

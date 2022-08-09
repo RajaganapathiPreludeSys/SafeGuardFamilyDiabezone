@@ -9,14 +9,14 @@
             type="com.safeguardFamily.diabezone.viewModel.HomeViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -257,8 +257,14 @@
 
             </LinearLayout>
 
+            <com.safeguardFamily.diabezone.ui.graph.ChartView
+                android:id="@+id/charView"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_margin="8dp" />
+
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </layout>

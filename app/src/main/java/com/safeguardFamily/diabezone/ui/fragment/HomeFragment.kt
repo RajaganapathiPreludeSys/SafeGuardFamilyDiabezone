@@ -1,9 +1,7 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -18,9 +16,11 @@ import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
 import com.safeguardFamily.diabezone.model.ProfessorModel
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
+import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class HomeFragment :
     BaseFragment<com.safeguardFamily.diabezone.databinding.FragmentHomeBinding, HomeViewModel>(
@@ -31,6 +31,7 @@ class HomeFragment :
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
+        mBinding.charView.setData(createChartData())
         loadNotification()
 
         val items = arrayOf(" Select meal type", "Before Meal", "After Meal", "Random")
@@ -53,9 +54,11 @@ class HomeFragment :
             }
         }
 
-        mBinding.tlTimeContainer.setOnClickListener { showCustomDialog() }
+        mBinding.tlTimeContainer.setOnClickListener { showDateTimeDialog() }
 
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
+
+        mViewModel.getServicesApiCall()
     }
 
     private fun loadNotification() {
@@ -125,7 +128,7 @@ class HomeFragment :
         }
     }
 
-    private fun showCustomDialog() {
+    private fun showDateTimeDialog() {
         var dateString = ""
         var timeString = ""
         val timeValidator = Calendar.getInstance()
@@ -199,5 +202,26 @@ class HomeFragment :
                 mDialog.dismiss()
             }
         }
+    }
+
+    private fun createChartData(): List<InputData> {
+        val dataList = ArrayList<InputData>()
+        dataList.add(InputData(110))
+        dataList.add(InputData(25))
+        dataList.add(InputData(0))
+        dataList.add(InputData(200))
+        dataList.add(InputData(20))
+        dataList.add(InputData(80))
+        dataList.add(InputData(40))
+
+        var currMillis = System.currentTimeMillis()
+        currMillis -= currMillis % TimeUnit.DAYS.toMillis(1)
+        for (i in dataList.indices) {
+            val position = (dataList.size - 1 - i).toLong()
+            val offsetMillis = TimeUnit.DAYS.toMillis(position)
+            val millis = currMillis - offsetMillis
+            dataList[i].millis = millis
+        }
+        return dataList
     }
 }
