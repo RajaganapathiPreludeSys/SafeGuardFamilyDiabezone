@@ -28,6 +28,8 @@
         <activity android:name=".ui.activity.WebViewActivity" />
         <activity android:name=".ui.activity.DashboardActivity" />
         <activity android:name=".ui.activity.LogBookActivity" />
+        <activity android:name=".ui.activity.AppointmentDoctorActivity" />
+        <activity android:name=".ui.activity.ScheduleAppointmentActivity" />
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"

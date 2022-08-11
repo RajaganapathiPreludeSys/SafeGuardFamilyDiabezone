@@ -1,6 +1,6 @@
 package com.safeguardFamily.diabezone.model
 
-class ProfessorModel {
+class DoctorModel {
     var name: String = ""
     var desc: String = ""
     var title: String = ""

@@ -13,6 +13,10 @@
         <item name="postSplashScreenTheme">@style/Theme.Diabezone</item>
     </style>
 
+    <style name="BottomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!--  Font  -->
     <style name="Montserrat">
         <item name="font">@font/montserrat_regular</item>

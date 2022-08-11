@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rlDiabetes"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp"
-    app:cardUseCompatPadding="true">
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.safeguardFamily.diabezone.model.DoctorModel" />
+    </data>
 
     <RelativeLayout
+        android:id="@+id/rlDiabetes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:padding="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvProfileImages"
@@ -30,6 +33,7 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
+            android:id="@+id/llContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/cvProfileImages"
@@ -40,7 +44,7 @@
                 style="@style/Large.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Diabetes" />
+                android:text="@{item.name}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDesc"
@@ -49,11 +53,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
-                android:maxLines="4"
-                android:text="@string/mobile_number_desc" />
+                android:maxLines="2"
+                android:text="@{item.desc}" />
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llContainer"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/cvProfileImages"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="4.5 (17 reviews)" />
+
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</layout>

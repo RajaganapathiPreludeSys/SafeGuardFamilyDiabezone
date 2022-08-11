@@ -14,7 +14,7 @@ import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
-import com.safeguardFamily.diabezone.model.ProfessorModel
+import com.safeguardFamily.diabezone.model.DoctorModel
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
@@ -75,8 +75,8 @@ class HomeFragment :
             json = ""
         }
 
-        val list: List<ProfessorModel> = Gson()
-            .fromJson(json, Array<ProfessorModel>::class.java).toList()
+        val list: List<DoctorModel> = Gson()
+            .fromJson(json, Array<DoctorModel>::class.java).toList()
 
         val mAdapter = NotificationAdapter(list)
         mBinding.vpNotification.adapter = mAdapter

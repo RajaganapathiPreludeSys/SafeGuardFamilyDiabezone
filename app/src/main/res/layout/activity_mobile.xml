@@ -18,10 +18,10 @@
             android:id="@+id/llWelcomeContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="40dp"
-            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -39,9 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:lineSpacingExtra="5dp"
-                android:layout_marginBottom="20dp"
                 android:text="@string/mobile_number_desc" />
 
         </LinearLayout>
@@ -51,10 +51,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:hint="@string/enter_phone_number"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:errorEnabled="true"
-            android:hint="@string/enter_phone_number"
             app:layout_constraintBottom_toTopOf="@id/btSendCode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,10 +64,10 @@
                 android:id="@+id/tiePhone"
                 style="@style/Medium"
                 android:layout_width="match_parent"
-                android:maxLength="10"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_grey_round"
-                android:inputType="phone"/>
+                android:inputType="phone"
+                android:maxLength="10" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,8 +76,8 @@
             style="@style/Large.White.HindBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="75dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/bg_royal_blue_round"
             android:gravity="center"

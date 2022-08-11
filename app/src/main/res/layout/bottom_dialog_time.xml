@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlTimeDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_royal_blue_top_round"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="1dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSelectedDate"
+            style="@style/xLarge.White.MontserratBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mar 19, 2022" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            style="@style/xLarge.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSelectedDate"
+            android:layout_marginTop="5dp"
+            android:text="Time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTimes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTime"
+            android:layout_marginTop="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btMakeAppointment"
+            style="@style/Large.Blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rvTimes"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_round"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/make_an_appointment"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+
+</layout>

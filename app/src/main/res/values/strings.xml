@@ -54,5 +54,9 @@
     <string name="february">February</string>
     <string name="april">April</string>
     <string name="june">June</string>
+    <string name="make_an_appointment">Make an appointment</string>
+    <string name="confirm">Confirm</string>
+    <string name="join_online">Join Online</string>
+    <string name="reschedule">Reschedule</string>
 
 </resources>
