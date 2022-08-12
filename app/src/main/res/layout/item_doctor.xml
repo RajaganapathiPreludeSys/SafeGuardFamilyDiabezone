@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -7,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.safeguardFamily.diabezone.model.DoctorModel" />
+            type="com.safeguardFamily.diabezone.model.response.Provider" />
     </data>
 
     <RelativeLayout
@@ -54,7 +53,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{item.desc}" />
+                android:text="@{item.speciality}" />
 
         </LinearLayout>
 
@@ -69,7 +68,7 @@
             android:drawablePadding="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="4.5 (17 reviews)" />
+            android:text="@{item.rating}" />
 
     </RelativeLayout>
 

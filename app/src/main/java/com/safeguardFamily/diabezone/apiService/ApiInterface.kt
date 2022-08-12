@@ -1,12 +1,15 @@
 package com.safeguardFamily.diabezone.apiService
 
-import com.safeguardFamily.diabezone.model.request.UserResponse
+import com.safeguardFamily.diabezone.model.request.IdRequest
+import com.safeguardFamily.diabezone.model.response.AppointmentResponse
+import com.safeguardFamily.diabezone.model.response.BaseResponse
 import retrofit2.Call
-import retrofit2.http.GET
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface ApiInterface {
 
-    @GET("posts")
-    fun getUsers() : Call<UserResponse>
+    @POST("providers")
+    fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<AppointmentResponse>>
 
 }

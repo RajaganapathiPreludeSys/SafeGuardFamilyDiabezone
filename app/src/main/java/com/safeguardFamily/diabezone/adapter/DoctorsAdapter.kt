@@ -9,15 +9,15 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.common.Bundle.KEY_PROFESSOR
 import com.safeguardFamily.diabezone.databinding.ItemDoctorBinding
-import com.safeguardFamily.diabezone.model.DoctorModel
+import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.ui.activity.AppointmentDoctorActivity
 
 class DoctorsAdapter(
-    private val largeNewsList: List<DoctorModel>
-) : RecyclerView.Adapter<DoctorsAdapter.ProfessorsViewHolder>() {
+    private val mList: List<Provider>
+) : RecyclerView.Adapter<DoctorsAdapter.DoctorViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfessorsViewHolder {
-        return ProfessorsViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
+        return DoctorViewHolder(
             ItemDoctorBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -26,18 +26,18 @@ class DoctorsAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ProfessorsViewHolder, position: Int) {
-        holder.bind(largeNewsList[position])
+    override fun onBindViewHolder(holder: DoctorViewHolder, position: Int) {
+        holder.bind(mList[position])
     }
 
-    override fun getItemCount(): Int = largeNewsList.size
+    override fun getItemCount(): Int = mList.size
 
-    inner class ProfessorsViewHolder(
+    inner class DoctorViewHolder(
         private val binding: ItemDoctorBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: DoctorModel) {
+        fun bind(model: Provider) {
             binding.item = model
-            Glide.with(itemView.context).load(model.image).into(binding.ivProfileImages)
+            Glide.with(itemView.context).load(model.pic).into(binding.ivProfileImages)
             binding.rlDiabetes.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString(KEY_PROFESSOR, Gson().toJson(model))

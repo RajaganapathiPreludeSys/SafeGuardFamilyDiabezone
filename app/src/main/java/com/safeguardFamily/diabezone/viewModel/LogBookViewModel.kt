@@ -2,5 +2,5 @@ package com.safeguardFamily.diabezone.viewModel
 
 import androidx.lifecycle.ViewModel
 
-class LogBookViewModel: ViewModel() {
+class LogBookViewModel:  BaseViewModel() {
 }

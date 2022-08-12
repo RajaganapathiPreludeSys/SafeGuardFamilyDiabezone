@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BaseUrl = "https://jsonplaceholder.typicode.com/"
+    private const val BaseUrl = "https://safeguardfamily.com/apis/"
 
     private val retrofitClient: Retrofit.Builder by lazy {
 

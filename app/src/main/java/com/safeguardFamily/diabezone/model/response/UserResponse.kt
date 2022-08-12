@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.model.request
+package com.safeguardFamily.diabezone.model.response
 
 data class UserResponse(
     val id: String,

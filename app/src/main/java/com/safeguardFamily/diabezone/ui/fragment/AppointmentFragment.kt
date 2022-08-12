@@ -24,32 +24,19 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
         mBinding.icHeader.tvTitle.text = getString(R.string.appointment)
+        mViewModel.apiError.observe(this) { showToast(it) }
         loadDoctor()
         loadAppointment()
     }
 
     private fun loadDoctor() {
-
-        val json = try {
-            val inputStream = requireContext().assets.open("docter.json")
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.use { it.read(buffer) }
-            String(buffer)
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            ""
+        mViewModel.getAppointmentData()
+        mViewModel.providers.observe(this) {
+            mBinding.rvDoctors.adapter = DoctorsAdapter(it)
+            mBinding.rvDoctors.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            mBinding.rvDoctors.setHasFixedSize(true)
         }
-
-        val list: List<DoctorModel> = Gson()
-            .fromJson(json, Array<DoctorModel>::class.java).toList()
-
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-        mBinding.rvDoctors.adapter = DoctorsAdapter(list)
-        mBinding.rvDoctors.layoutManager = layoutManager
-        mBinding.rvDoctors.setHasFixedSize(true)
     }
 
     private fun loadAppointment() {
