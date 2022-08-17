@@ -1,8 +1,12 @@
 package com.safeguardFamily.diabezone.base
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
@@ -12,10 +16,11 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.viewModel.BaseViewModel
 
-abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(
+abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layout: Int,
     private val viewModelClass: Class<VM>?
 ) : AppCompatActivity() {
@@ -26,12 +31,18 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(
 
     protected abstract fun onceCreated()
 
+    var dialog: Dialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, layout)
         if (viewModelClass != null) mViewModel = ViewModelProvider(this)[viewModelClass]
         mBinding.lifecycleOwner = this
         onceCreated()
+        mViewModel.apiError.observe(this) { showToast(it) }
+        mViewModel.apiLoader.observe(this) {
+            if (it) showLoading() else hideLoading()
+        }
     }
 
     fun expand(v: View) {
@@ -91,7 +102,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(
         this, getString(resId), if (isShort) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
     ).show()
 
-     open fun sendMessage(message: String) {
+    open fun sendMessage(message: String) {
 
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
@@ -103,6 +114,30 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(
             showToast("Please install whatsapp first.")
             return
         }
-         startActivity(intent)
+        startActivity(intent)
+    }
+
+
+    open fun showLoading() {
+        dialog = Dialog(applicationContext!!)
+        dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog!!.setContentView(R.layout.dialog_loading)
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog!!.setCancelable(false)
+        try {
+            dialog!!.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    open fun hideLoading() {
+        try {
+            if (dialog != null) {
+                dialog!!.dismiss()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -3,10 +3,12 @@ package com.safeguardFamily.diabezone.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
 import com.safeguardFamily.diabezone.databinding.ItemTimeBinding
 
 class TimeAdapter(
-    private val times: List<String>
+    private val times: List<String>,
+    private var onItemClicked: ((time: String) -> Unit)
 ) : RecyclerView.Adapter<TimeAdapter.TimeViewHolder>() {
 
     var selectedPos = -1
@@ -31,12 +33,13 @@ class TimeAdapter(
         private val binding: ItemTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(times: String) {
-            binding.item = times
+            binding.item = formatTo12Hrs(times)!!.uppercase()
             binding.selected = selectedPos == adapterPosition
             binding.llTimeContainer.setOnClickListener {
                 notifyItemChanged(selectedPos)
                 selectedPos = adapterPosition
                 notifyItemChanged(selectedPos)
+                onItemClicked(times)
             }
         }
     }

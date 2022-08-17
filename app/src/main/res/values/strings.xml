@@ -58,5 +58,6 @@
     <string name="confirm">Confirm</string>
     <string name="join_online">Join Online</string>
     <string name="reschedule">Reschedule</string>
+    <string name="no_slots_available_in_this_date">No slots available in this date</string>
 
 </resources>

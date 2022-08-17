@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.safeguardFamily.diabezone.common.Bundle.KEY_PROFESSOR
+import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
 import com.safeguardFamily.diabezone.databinding.ItemDoctorBinding
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.ui.activity.AppointmentDoctorActivity
@@ -40,14 +40,13 @@ class DoctorsAdapter(
             Glide.with(itemView.context).load(model.pic).into(binding.ivProfileImages)
             binding.rlDiabetes.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString(KEY_PROFESSOR, Gson().toJson(model))
+                bundle.putString(KEY_DOCTOR, Gson().toJson(model))
                 itemView.context.startActivity(
                     Intent(
                         itemView.context,
                         AppointmentDoctorActivity::class.java
                     ).putExtras(bundle)
                 )
-
             }
         }
     }

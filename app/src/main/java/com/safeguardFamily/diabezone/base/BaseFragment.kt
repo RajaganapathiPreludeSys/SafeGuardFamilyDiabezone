@@ -11,10 +11,10 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.safeguardFamily.diabezone.viewModel.BaseViewModel
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layout: Int,
     private val viewModelClass: Class<VM>?
 ) : Fragment() {
@@ -40,6 +40,10 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onceCreated()
+        mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it) }
+        mViewModel.apiLoader.observe(viewLifecycleOwner) {
+            if (it) showLoading() else hideLoading()
+        }
     }
 
     open fun showToast(message: String, isShort: Boolean = true) = Toast.makeText(
@@ -81,5 +85,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : ViewModel>(
         }
         startActivity(intent)
     }
+
+    open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
+    open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
 
 }

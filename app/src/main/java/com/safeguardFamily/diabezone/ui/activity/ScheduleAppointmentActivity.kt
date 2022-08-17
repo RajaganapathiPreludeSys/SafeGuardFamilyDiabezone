@@ -1,13 +1,24 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.TimeAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
+import com.safeguardFamily.diabezone.common.Bundle
+import com.safeguardFamily.diabezone.common.Bundle.TAG
+import com.safeguardFamily.diabezone.common.DateUtils
+import com.safeguardFamily.diabezone.common.DateUtils.apiDateFormat
+import com.safeguardFamily.diabezone.common.DateUtils.formatDate
+import com.safeguardFamily.diabezone.common.SharedPref
+import com.safeguardFamily.diabezone.common.SharedPref.Pref.prefIsMember
 import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBinding
+import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
+import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.ScheduleAppointmentViewModel
 import java.util.*
 
@@ -21,35 +32,53 @@ class ScheduleAppointmentActivity :
     private lateinit var bsbConfirmDialog: BottomSheetBehavior<View>
     private var isTimeSelected = false
     private var isConfirmed = false
+    private var apiDate = ""
+    private var apiTime = ""
+    private lateinit var provider: Provider
+    private var monthName = arrayOf(
+        "jan", "feb", "mar", "apr", "may", "jun", "jul",
+        "aug", "sep", "oct", "nov", "dec"
+    )
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        val calendar = Calendar.getInstance()
+        mBinding.icHeader.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.tvTitle.text = getString(R.string.appointment)
 
-        mBinding.calendar.minDate = calendar.timeInMillis
-        val day = calendar[Calendar.DAY_OF_MONTH] + 30
-        calendar.set(calendar[Calendar.YEAR], calendar[Calendar.MONTH], day)
-        mBinding.calendar.maxDate = calendar.timeInMillis
+        if (intent.extras?.containsKey(Bundle.KEY_DOCTOR) == true) {
+            provider = Gson()
+                .fromJson(intent.extras?.getString(Bundle.KEY_DOCTOR), Provider::class.java)
+            mBinding.icBottomSheetConfirm.provider = provider
+        }
 
-        mBinding.tvWelcome.text = calendar[Calendar.DAY_OF_MONTH].toString() + "-" +
-                (calendar[Calendar.MONTH] + 1) + "-" + calendar[Calendar.YEAR]
+        val cal = Calendar.getInstance()
+
+        mBinding.calendar.minDate = cal.timeInMillis
+        getAvailableSlots(cal)
+        var daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1, cal[Calendar.DAY_OF_MONTH])
+        daysInMonth += cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] - 1, daysInMonth)
+        mBinding.calendar.maxDate = cal.timeInMillis
 
         bsbTimeDialog = BottomSheetBehavior.from(mBinding.icBottomSheetTime.rlTimeDialog)
         bsbConfirmDialog = BottomSheetBehavior.from(mBinding.icBottomSheetConfirm.rlConfirmDialog)
 
         mBinding.calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            mBinding.tvWelcome.text = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
-            openTimeSelectorDialog(mBinding.tvWelcome.text as String)
+
+            cal.set(year, month, dayOfMonth)
+            getAvailableSlots(cal)
+
             isTimeSelected = false
 
             bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
             bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
+
         }
+
         bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
         bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
-
-        openTimeSelectorDialog(mBinding.tvWelcome.text as String)
 
         bsbTimeDialog.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {}
@@ -68,41 +97,69 @@ class ScheduleAppointmentActivity :
             }
         })
 
-        mBinding.btReschedule.setOnClickListener {  }
+        mBinding.btReschedule.setOnClickListener {
+            isTimeSelected = false
+
+            bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
+            bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
+        }
 
     }
 
-    private fun openTimeSelectorDialog(text: String) {
+    private fun getAvailableSlots(calendar: Calendar) {
+        apiDate = apiDateFormat(calendar.timeInMillis)
+        mBinding.icBottomSheetConfirm.date = formatDate(calendar.timeInMillis)
+        mBinding.icBottomSheetTime.tvSelectedDate.text = formatDate(calendar.timeInMillis)
+        provider.available_slots.forEach { it ->
+            if (it.month.startsWith(monthName[calendar[Calendar.MONTH]], true)) {
+                it.days.forEach {
+                    if (it.date == calendar[Calendar.DAY_OF_MONTH]) {
+                        openTimeSelectorDialog(it.slots)
+                    }
+                }
+            }
+        }
+    }
 
-        mBinding.icBottomSheetTime.tvSelectedDate.text = text
-        val dataList = ArrayList<String>()
-        dataList.add("8:00")
-        dataList.add("8:30")
-        dataList.add("9:00")
-        dataList.add("2:00")
-        dataList.add("2:30")
-        dataList.add("18:00")
-        dataList.add("18:30")
-        dataList.add("19:00")
-        dataList.add("20:00")
-        dataList.add("20:30")
-        mBinding.icBottomSheetTime.rvTimes.adapter = TimeAdapter(dataList)
+    private fun openTimeSelectorDialog(slots: List<String>) {
+        apiTime = ""
+        if (slots.isNotEmpty()) {
+            mBinding.icBottomSheetTime.rvTimes.visibility = View.VISIBLE
+            mBinding.icBottomSheetTime.tvTimes.visibility = View.GONE
+        } else {
+            mBinding.icBottomSheetTime.rvTimes.visibility = View.GONE
+            mBinding.icBottomSheetTime.tvTimes.visibility = View.VISIBLE
+        }
+        mBinding.icBottomSheetTime.rvTimes.adapter = TimeAdapter(slots) {
+            apiTime = it
+            mBinding.icBottomSheetConfirm.time = DateUtils.formatTo12Hrs(it)!!.uppercase()
+        }
         mBinding.icBottomSheetTime.rvTimes.layoutManager = GridLayoutManager(this, 3)
         mBinding.icBottomSheetTime.rvTimes.setHasFixedSize(true)
         mBinding.icBottomSheetTime.btMakeAppointment.setOnClickListener {
-            bsbTimeDialog.state = BottomSheetBehavior.STATE_HIDDEN
-            bsbConfirmDialog.state = BottomSheetBehavior.STATE_EXPANDED
-            openConfirmDialog()
-            isTimeSelected = true
+            if (apiTime.length > 1) {
+                bsbTimeDialog.state = BottomSheetBehavior.STATE_HIDDEN
+                bsbConfirmDialog.state = BottomSheetBehavior.STATE_EXPANDED
+                openConfirmDialog()
+                isTimeSelected = true
+                Log.d(TAG, " calendar = $apiDate + $apiTime")
+            } else showToast("Time slot not selected/available")
         }
     }
 
     private fun openConfirmDialog() {
 
+        mBinding.icBottomSheetConfirm.isMember = SharedPref.read(prefIsMember, false)
         mBinding.icBottomSheetConfirm.btConfirm.setOnClickListener {
             isConfirmed = true
-            bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
-            mBinding.cvContainer.visibility = View.VISIBLE
+//            bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
+//            mBinding.cvContainer.visibility = View.VISIBLE
+            val request = CreateAppointmentRequest(
+                puid = provider.puid.toString(),
+                sel_date = apiDate,
+                slot = apiTime
+            )
+            mViewModel.createAppointment(request)
         }
     }
 

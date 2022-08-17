@@ -24,7 +24,6 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
         mBinding.icHeader.tvTitle.text = getString(R.string.appointment)
-        mViewModel.apiError.observe(this) { showToast(it) }
         loadDoctor()
         loadAppointment()
     }

@@ -48,7 +48,8 @@ class OnBoardingActivity : AppCompatActivity() {
         mBinding.vvVideoPlayer.setOnCompletionListener {
             Log.d("RRR -- ", "restarted: ")
 //            mBinding.vvVideoPlayer.start()
-            startActivity(Intent(applicationContext, MobileActivity::class.java))
+//            startActivity(Intent(applicationContext, MobileActivity::class.java))
+            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }
     }

@@ -26,22 +26,38 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvSelectedDate"
             android:layout_marginTop="5dp"
-            android:text="Time" />
+            android:text="Select a time slot" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTimes"
+        <RelativeLayout
+            android:id="@+id/rlContainer"
+            android:layout_below="@+id/tvTime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTime"
-            android:layout_marginTop="10dp" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTimes"
+                style="@style/xxLarge.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:gravity="center"
+                android:text="@string/no_slots_available_in_this_date" />
+
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btMakeAppointment"
             style="@style/Large.Blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rvTimes"
-            android:layout_marginTop="15dp"
+            android:layout_below="@id/rlContainer"
+            android:layout_marginTop="25dp"
             android:background="@drawable/bg_white_round"
             android:gravity="center"
             android:padding="15dp"

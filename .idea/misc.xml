@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/layout/bottom_dialog_time.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/dialog_date_time.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/dialog_diabetes.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/fragment_appointment.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/fragment_appointment_doctor.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.34010416666666665" />

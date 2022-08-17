@@ -1,43 +1,15 @@
 package com.safeguardFamily.diabezone.model.response
 
-//data class AppointmentResponse(
-//    val `data`: Data,
-//    val error: String,
-//    val success: Boolean
-//)
-
 data class AppointmentResponse(
-    val is_member: Int,
-    val providers: List<Provider>
+    val appointment: Appointment
 )
 
-data class Provider(
-    val about: String,
-    val available_slots: List<AvailableSlot>,
-    val experience: String,
-    val name: String,
-    val num_patient: String,
-    val pic: String,
-    val puid: Int,
-    val rating: String,
-    val speciality: String,
-    val timings: Timings,
-    val type: String,
-    val vchat_url: String
-)
-
-data class AvailableSlot(
-    val days: List<Day>,
-    val month: String
-)
-
-data class Timings(
-    val days: String,
-    val time: String
-)
-
-data class Day(
-    val date: Int,
-    val day: String,
-    val slots: List<String>
+data class Appointment(
+    val aid: Int,
+    val booking_status: Int,
+    val date: String,
+    val provider: Provider,
+    val puid: String,
+    val slot: String,
+    val uid: String
 )

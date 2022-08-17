@@ -1,14 +1,32 @@
 package com.safeguardFamily.diabezone.common
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.*
+
 class Constants {
+    companion object {
+        @JvmStatic
+        @BindingAdapter("loadImage")
+        fun loadImage(view: ImageView, image: String) {
+            Glide.with(view.context)
+                .load(image)
+                .into(view)
+        }
+    }
 }
 
 object Bundle {
+    const val TAG = "RRR :: "
     const val KEY_WEB_KEY = "KEY_WEB_KEY"
     const val KEY_REGISTER_NAME = "KEY_REGISTER_NAME"
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
-    const val KEY_PROFESSOR = "KEY_PROFESSOR"
-    const val KEY_BOOKING_DIABETES = "KEY_BOOKING_DIABETES"
-    const val KEY_BOOKING_GOOD_HEALTH = "KEY_BOOKING_GOOD_HEALTH"
-    const val KEY_BOOKING_PSYCHOLOGICAL = "KEY_BOOKING_PSYCHOLOGICAL"
+    const val KEY_DOCTOR = "KEY_DOCTOR"
+
+    const val DATE_FORMAT = "LLL dd, yyyy"
+    const val API_DATE_FORMAT = "yyyy-MM-dd"
+    const val date12Format = "hh:mm a"
+    const val date24Format = "HH:mm"
 }
