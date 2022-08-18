@@ -28,7 +28,7 @@ class AppointmentViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
                             providers.postValue(response.body()!!.data!!.providers)
-                            SharedPref.write(prefIsMember, response.body()!!.data!!.is_member == 1)
+                            SharedPref.write(prefIsMember, response.body()!!.data!!.is_member)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
@@ -41,7 +41,6 @@ class AppointmentViewModel : BaseViewModel() {
                     apiError.postValue(t.message)
                     apiLoader.postValue(false)
                 }
-
             })
     }
 }

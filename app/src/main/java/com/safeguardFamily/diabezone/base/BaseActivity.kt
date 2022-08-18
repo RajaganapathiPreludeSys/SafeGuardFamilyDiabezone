@@ -40,9 +40,8 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         mBinding.lifecycleOwner = this
         onceCreated()
         mViewModel.apiError.observe(this) { showToast(it) }
-        mViewModel.apiLoader.observe(this) {
-            if (it) showLoading() else hideLoading()
-        }
+        mViewModel.apiLoader.observe(this) { if (it) showLoading() else hideLoading() }
+
     }
 
     fun expand(v: View) {
@@ -119,7 +118,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
 
 
     open fun showLoading() {
-        dialog = Dialog(applicationContext!!)
+        dialog = Dialog(this)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog!!.setContentView(R.layout.dialog_loading)
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

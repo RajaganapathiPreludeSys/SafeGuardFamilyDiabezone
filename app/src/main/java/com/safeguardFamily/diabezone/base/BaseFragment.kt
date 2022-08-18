@@ -41,9 +41,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         super.onViewCreated(view, savedInstanceState)
         onceCreated()
         mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it) }
-        mViewModel.apiLoader.observe(viewLifecycleOwner) {
-            if (it) showLoading() else hideLoading()
-        }
+        mViewModel.apiLoader.observe(viewLifecycleOwner) { if (it) showLoading() else hideLoading() }
     }
 
     open fun showToast(message: String, isShort: Boolean = true) = Toast.makeText(

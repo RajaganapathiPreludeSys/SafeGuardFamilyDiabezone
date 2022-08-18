@@ -1,7 +1,7 @@
 package com.safeguardFamily.diabezone.model.response
 
 data class ProvidersResponse(
-    val is_member: Int,
+    val is_member: Boolean,
     val providers: List<Provider>
 )
 

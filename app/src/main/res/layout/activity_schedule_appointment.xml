@@ -8,6 +8,18 @@
         <variable
             name="mViewModel"
             type="com.safeguardFamily.diabezone.viewModel.ScheduleAppointmentViewModel" />
+
+        <variable
+            name="provider"
+            type="com.safeguardFamily.diabezone.model.response.Provider" />
+
+        <variable
+            name="date"
+            type="String" />
+
+        <variable
+            name="time"
+            type="String" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -56,7 +68,7 @@
                         style="@style/Large.MontserratBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dr. Salma Akhter" />
+                        android:text="@{provider.name}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvProfession"
@@ -64,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvName"
-                        android:text="Cardiologist" />
+                        android:text="@{provider.speciality}" />
 
                     <RelativeLayout
                         android:id="@+id/tvFee"
@@ -94,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tvRating"
                             android:layout_toEndOf="@id/ivRating"
-                            android:text="4.78 out of 5" />
+                            android:text="@{provider.rating + ` out of 5`}" />
 
                     </RelativeLayout>
 
@@ -110,7 +122,8 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:background="@color/bgGrey"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            app:loadImage="@{provider.pic}" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -131,7 +144,7 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_calendar"
                             android:drawablePadding="5dp"
-                            android:text="Monday, Mar 19" />
+                            android:text="@{date}" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTime"
@@ -141,7 +154,7 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_clock"
                             android:drawablePadding="5dp"
-                            android:text="10:30-11:00 AM" />
+                            android:text="@{time}" />
                     </LinearLayout>
 
                     <LinearLayout

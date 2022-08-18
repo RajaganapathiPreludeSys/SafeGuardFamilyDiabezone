@@ -59,18 +59,20 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProfession"
                 style="@style/Medium"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvName"
+                android:layout_toStartOf="@id/cvProfileImages"
                 android:text="@{provider.speciality}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFee"
                 style="@style/Large.MontserratBold"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvProfession"
                 android:layout_marginTop="20dp"
+                android:layout_toStartOf="@id/cvProfileImages"
                 android:text="@{isMember ? `Free for members`:`₹800 Fee`}" />
 
             <androidx.cardview.widget.CardView

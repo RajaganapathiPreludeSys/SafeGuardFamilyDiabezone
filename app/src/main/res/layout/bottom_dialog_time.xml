@@ -16,8 +16,7 @@
             android:id="@+id/tvSelectedDate"
             style="@style/xLarge.White.MontserratBold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mar 19, 2022" />
+            android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTime"
@@ -30,9 +29,9 @@
 
         <RelativeLayout
             android:id="@+id/rlContainer"
-            android:layout_below="@+id/tvTime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTime">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTimes"

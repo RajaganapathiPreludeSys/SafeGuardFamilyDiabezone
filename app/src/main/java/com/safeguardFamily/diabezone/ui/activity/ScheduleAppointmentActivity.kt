@@ -1,11 +1,15 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.gson.Gson
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.TimeAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
@@ -20,13 +24,16 @@ import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBind
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.ScheduleAppointmentViewModel
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
+
 
 class ScheduleAppointmentActivity :
     BaseActivity<ActivityScheduleAppointmentBinding, ScheduleAppointmentViewModel>(
         R.layout.activity_schedule_appointment,
         ScheduleAppointmentViewModel::class.java
-    ) {
+    ), PaymentResultListener {
 
     private lateinit var bsbTimeDialog: BottomSheetBehavior<View>
     private lateinit var bsbConfirmDialog: BottomSheetBehavior<View>
@@ -50,32 +57,39 @@ class ScheduleAppointmentActivity :
             provider = Gson()
                 .fromJson(intent.extras?.getString(Bundle.KEY_DOCTOR), Provider::class.java)
             mBinding.icBottomSheetConfirm.provider = provider
+            mBinding.provider = provider
         }
 
-        val cal = Calendar.getInstance()
-
-        mBinding.calendar.minDate = cal.timeInMillis
-        getAvailableSlots(cal)
-        var daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1, cal[Calendar.DAY_OF_MONTH])
-        daysInMonth += cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] - 1, daysInMonth)
-        mBinding.calendar.maxDate = cal.timeInMillis
-
-        bsbTimeDialog = BottomSheetBehavior.from(mBinding.icBottomSheetTime.rlTimeDialog)
-        bsbConfirmDialog = BottomSheetBehavior.from(mBinding.icBottomSheetConfirm.rlConfirmDialog)
-
-        mBinding.calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
-
-            cal.set(year, month, dayOfMonth)
-            getAvailableSlots(cal)
-
+        mBinding.btReschedule.setOnClickListener {
             isTimeSelected = false
+            isConfirmed = false
 
             bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
             bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
-
         }
+
+        mBinding.btJoinOnline.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(provider.vchat_url)
+                )
+            )
+        }
+
+        mViewModel.isBookingCompleted.observe(this) {
+            if (it) {
+                bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
+                mBinding.cvContainer.visibility = View.VISIBLE
+            }
+        }
+        loadCalendar()
+        loadBottomDialogs()
+    }
+
+    private fun loadBottomDialogs() {
+        bsbTimeDialog = BottomSheetBehavior.from(mBinding.icBottomSheetTime.rlTimeDialog)
+        bsbConfirmDialog = BottomSheetBehavior.from(mBinding.icBottomSheetConfirm.rlConfirmDialog)
 
         bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
         bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
@@ -96,14 +110,28 @@ class ScheduleAppointmentActivity :
                     bsbConfirmDialog.state = BottomSheetBehavior.STATE_EXPANDED
             }
         })
+    }
 
-        mBinding.btReschedule.setOnClickListener {
+    private fun loadCalendar() {
+        val cal = Calendar.getInstance()
+
+        mBinding.calendar.minDate = cal.timeInMillis
+        getAvailableSlots(cal)
+        var daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1, cal[Calendar.DAY_OF_MONTH])
+        daysInMonth += cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        cal.set(cal[Calendar.YEAR], cal[Calendar.MONTH] - 1, daysInMonth)
+        mBinding.calendar.maxDate = cal.timeInMillis
+
+        mBinding.calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            cal.set(year, month, dayOfMonth)
+            getAvailableSlots(cal)
+
             isTimeSelected = false
 
             bsbTimeDialog.state = BottomSheetBehavior.STATE_EXPANDED
             bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
         }
-
     }
 
     private fun getAvailableSlots(calendar: Calendar) {
@@ -148,19 +176,57 @@ class ScheduleAppointmentActivity :
     }
 
     private fun openConfirmDialog() {
-
+        mBinding.date = apiDate
+        mBinding.time = DateUtils.formatTo12Hrs(apiTime)!!.uppercase()
         mBinding.icBottomSheetConfirm.isMember = SharedPref.read(prefIsMember, false)
         mBinding.icBottomSheetConfirm.btConfirm.setOnClickListener {
-            isConfirmed = true
-//            bsbConfirmDialog.state = BottomSheetBehavior.STATE_HIDDEN
-//            mBinding.cvContainer.visibility = View.VISIBLE
-            val request = CreateAppointmentRequest(
+            if (SharedPref.read(prefIsMember, false)) {
+                isConfirmed = true
+                mViewModel.createAppointment(
+                    CreateAppointmentRequest(
+                        puid = provider.puid.toString(),
+                        sel_date = apiDate,
+                        slot = apiTime
+                    )
+                )
+            } else {
+                val amount = 800 * 100
+                val checkout = Checkout()
+                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setImage(R.drawable.ic_app_logo)
+                val obj = JSONObject()
+                try {
+                    obj.put("name", "SafeGuardFamily")
+                    obj.put("description", "Payment for appointment")
+                    obj.put("theme.color", "")
+                    obj.put("currency", "INR")
+                    obj.put("amount", amount)
+                    obj.put("prefill.contact", "9003440134")
+                    obj.put("prefill.email", "test@mail.com")
+                    checkout.open(this, obj)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        showToast("Payment succeeded")
+        Log.d(TAG, "onPayment Success() called with: p0 = $p0")
+        isConfirmed = true
+        mViewModel.createAppointment(
+            CreateAppointmentRequest(
                 puid = provider.puid.toString(),
                 sel_date = apiDate,
                 slot = apiTime
             )
-            mViewModel.createAppointment(request)
-        }
+        )
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        showToast("Payment failed")
+        Log.d(TAG, "onPayment Error() called with: p0 = $p0, p1 = $p1")
     }
 
 }
