@@ -1,18 +1,30 @@
 package com.safeguardFamily.diabezone.model.response
 
 data class ProvidersResponse(
+    val appointments: List<Appointment>,
     val is_member: Boolean,
     val providers: List<Provider>
 )
 
+data class Appointment(
+    val aid: String,
+    val booking_date: String,
+    val booking_status: String,
+    val provider: Provider,
+    val puid: String,
+    val slot: String,
+    val uid: String
+)
+
 data class Provider(
     val about: String,
-    val available_slots: List<AvailableSlot>,
+    var available_slots: List<AvailableSlot>?,
     val experience: String,
+    val fees: String,
     val name: String,
     val num_patient: String,
     val pic: String,
-    val puid: Int,
+    val puid: String,
     val rating: String,
     val speciality: String,
     val timings: Timings,
@@ -20,14 +32,14 @@ data class Provider(
     val vchat_url: String
 )
 
-data class AvailableSlot(
-    val days: List<Day>,
-    val month: String
-)
-
 data class Timings(
     val days: String,
     val time: String
+)
+
+data class AvailableSlot(
+    val days: List<Day>,
+    val month: String
 )
 
 data class Day(

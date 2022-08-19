@@ -12,24 +12,26 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvName"
         style="@style/Large.MontserratBold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dr. Salma Akhter" />
+        android:layout_toStartOf="@id/cvProfileImages" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvProfession"
         style="@style/Medium"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvName"
-        android:text="Cardiologist" />
+        android:layout_toStartOf="@id/cvProfileImages"
+        android:minLines="2" />
 
     <RelativeLayout
         android:id="@+id/tvFee"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProfession"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_toStartOf="@id/cvProfileImages">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivRating"
@@ -58,13 +60,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvProfileImages"
-        app:cardCornerRadius="15dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        app:cardCornerRadius="15dp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivProfileImages"
+            android:id="@+id/ivProfileImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@color/bgGrey"
@@ -88,8 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="5dp"
-            android:text="Monday, Mar 19" />
+            android:drawablePadding="5dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTime"
@@ -98,8 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_clock"
-            android:drawablePadding="5dp"
-            android:text="10:30-11:00 AM" />
+            android:drawablePadding="5dp" />
     </LinearLayout>
 
     <LinearLayout

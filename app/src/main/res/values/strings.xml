@@ -40,10 +40,6 @@
     <string name="contact_diabezone_health_coach"><u>Contact</u> Diabezone Health Coach</string>
     <string name="submit">Submit</string>
 
-
-
-
-
     <string name="statistics">Statistics</string>
     <string name="day">Day</string>
     <string name="month">Month</string>
@@ -55,6 +51,7 @@
     <string name="april">April</string>
     <string name="june">June</string>
     <string name="make_an_appointment">Make an appointment</string>
+    <string name="reschedule_an_appointment">Reschedule your appointment</string>
     <string name="confirm">Confirm</string>
     <string name="join_online">Join Online</string>
     <string name="reschedule">Reschedule</string>

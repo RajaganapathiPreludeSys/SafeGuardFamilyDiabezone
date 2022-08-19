@@ -8,7 +8,7 @@ import com.safeguardFamily.diabezone.databinding.ActivityAppointmentDoctorBindin
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.AppointmentDoctorViewModel
 
-class AppointmentDoctorActivity :
+class DoctorDetailsActivity :
     BaseActivity<ActivityAppointmentDoctorBinding, AppointmentDoctorViewModel>(
         R.layout.activity_appointment_doctor,
         AppointmentDoctorViewModel::class.java

@@ -23,9 +23,11 @@ object Bundle {
     const val KEY_REGISTER_NAME = "KEY_REGISTER_NAME"
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
     const val KEY_DOCTOR = "KEY_DOCTOR"
+    const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
 
     const val DATE_FORMAT = "LLL dd, yyyy"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
+    const val FROM_API_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"
     const val date24Format = "HH:mm"
 }

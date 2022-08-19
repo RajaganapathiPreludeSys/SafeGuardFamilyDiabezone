@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
 import com.safeguardFamily.diabezone.databinding.ItemDoctorBinding
 import com.safeguardFamily.diabezone.model.response.Provider
-import com.safeguardFamily.diabezone.ui.activity.AppointmentDoctorActivity
+import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 
 class DoctorsAdapter(
     private val mList: List<Provider>
@@ -44,7 +44,7 @@ class DoctorsAdapter(
                 itemView.context.startActivity(
                     Intent(
                         itemView.context,
-                        AppointmentDoctorActivity::class.java
+                        DoctorDetailsActivity::class.java
                     ).putExtras(bundle)
                 )
             }

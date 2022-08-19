@@ -1,6 +1,7 @@
 package com.safeguardFamily.diabezone.apiService
 
 import com.safeguardFamily.diabezone.BuildConfig
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -21,6 +22,13 @@ object RetrofitClient {
 
         val okhttpClient = OkHttpClient.Builder()
         okhttpClient.addInterceptor(logging)
+        okhttpClient.addInterceptor(
+            Interceptor { chain ->
+                val builder = chain.request().newBuilder()
+                builder.header("X-Auth-Token", "sgsrager32524542afg3423")
+                return@Interceptor chain.proceed(builder.build())
+            }
+        )
 
         Retrofit.Builder()
             .baseUrl(BaseUrl)
