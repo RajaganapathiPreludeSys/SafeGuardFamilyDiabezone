@@ -37,6 +37,7 @@
         <activity android:name=".ui.activity.LogBookActivity" />
         <activity android:name=".ui.activity.DoctorDetailsActivity" />
         <activity android:name=".ui.activity.ScheduleAppointmentActivity" />
+        <activity android:name=".ui.activity.BookingDetailsActivity" />
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"

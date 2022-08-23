@@ -24,10 +24,16 @@ object Bundle {
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
     const val KEY_DOCTOR = "KEY_DOCTOR"
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
+    const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
 
     const val DATE_FORMAT = "LLL dd, yyyy"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
     const val FROM_API_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"
     const val date24Format = "HH:mm"
+
+    const val URL_TERMS = "https://diabezone.com/terms-conditions"
+    const val URL_ABOUT = "https://diabezone.com/about-us"
+    const val URL_PRIVACY = "https://diabezone.com/privacy-policy"
+
 }

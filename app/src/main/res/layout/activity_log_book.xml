@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/icToolbar"
-            layout="@layout/include_header"/>
+            layout="@layout/include_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDiabetes"

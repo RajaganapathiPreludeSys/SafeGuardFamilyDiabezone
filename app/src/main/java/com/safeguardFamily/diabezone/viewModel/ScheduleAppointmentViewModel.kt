@@ -58,6 +58,7 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
                             isBookingCompleted.postValue(true)
+                            successToast.postValue("Appointment Created Successfully")
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
@@ -90,6 +91,7 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
                             isBookingCompleted.postValue(true)
+                            successToast.postValue("Appointment Rescheduled Successfully")
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

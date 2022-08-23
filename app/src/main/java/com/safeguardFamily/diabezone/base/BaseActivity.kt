@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.animation.Animation
@@ -18,6 +19,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.Bundle.TAG
+import com.safeguardFamily.diabezone.common.SharedPref
+import com.safeguardFamily.diabezone.ui.activity.MobileActivity
 import com.safeguardFamily.diabezone.viewModel.BaseViewModel
 
 abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
@@ -40,6 +44,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         mBinding.lifecycleOwner = this
         onceCreated()
         mViewModel.apiError.observe(this) { showToast(it) }
+        mViewModel.successToast.observe(this) { showToast(it) }
         mViewModel.apiLoader.observe(this) { if (it) showLoading() else hideLoading() }
 
     }
@@ -137,6 +142,30 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    open fun logout() {
+        navigateTo(MobileActivity::class.java)
+        finishAffinity()
+        SharedPref.clearAll()
+    }
+
+    open fun longLog(sb: String) {
+        if (sb.length > 4000) {
+            Log.v(TAG, "sb.length = " + sb.length)
+            val chunkCount: Int = sb.length / 4000 // integer division
+            for (i in 0..chunkCount) {
+                val max = 4000 * (i + 1)
+                if (max >= sb.length) {
+                    Log.v(TAG, "chunk " + i + " of " + chunkCount + ": " + sb.substring(4000 * i))
+                } else {
+                    Log.v(
+                        TAG,
+                        "chunk " + i + " of " + chunkCount + ": " + sb.substring(4000 * i, max)
+                    )
+                }
+            }
         }
     }
 }

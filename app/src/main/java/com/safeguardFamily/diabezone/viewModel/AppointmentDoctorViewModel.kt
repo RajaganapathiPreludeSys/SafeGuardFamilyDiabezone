@@ -1,5 +1,3 @@
 package com.safeguardFamily.diabezone.viewModel
 
-class AppointmentDoctorViewModel : BaseViewModel() {
-
-}
+class AppointmentDoctorViewModel : BaseViewModel()

@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:ellipsize="end"
-                        android:maxLines="1"
+                        android:minLines="2"
                         android:text="@{provider.speciality}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/cvProfileImages"

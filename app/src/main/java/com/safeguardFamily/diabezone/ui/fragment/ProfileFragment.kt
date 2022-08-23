@@ -1,11 +1,17 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
+import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
+import com.safeguardFamily.diabezone.common.Bundle
+import com.safeguardFamily.diabezone.common.Bundle.URL_ABOUT
+import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
 import com.safeguardFamily.diabezone.databinding.FragmentProfileBinding
-import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
+import com.safeguardFamily.diabezone.ui.activity.BookingDetailsActivity
+import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.viewModel.ProfileViewModel
-import java.util.concurrent.TimeUnit
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     R.layout.fragment_profile,
@@ -14,28 +20,39 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
-        mBinding.charView.setData(createChartData())
-    }
+        mViewModel.getProfile()
 
-    private fun createChartData(): List<InputData> {
-        val dataList = ArrayList<InputData>()
-        dataList.add(InputData(110))
-        dataList.add(InputData(25))
-        dataList.add(InputData(20))
-        dataList.add(InputData(0))
-        dataList.add(InputData(20))
-        dataList.add(InputData(50))
-        dataList.add(InputData(40))
-
-        var currMillis = System.currentTimeMillis()
-        currMillis -= currMillis % TimeUnit.DAYS.toMillis(1)
-        for (i in dataList.indices) {
-            val position = (dataList.size - 1 - i).toLong()
-            val offsetMillis = TimeUnit.DAYS.toMillis(position)
-            val millis = currMillis - offsetMillis
-            dataList[i].millis = millis
+        mBinding.rlBookingContainer.setOnClickListener {
+            val bundle = android.os.Bundle()
+            bundle.putString(
+                Bundle.KEY_BOOKING_DETAILS,
+                Gson().toJson(mViewModel.userResponse.value)
+            )
+            navigateTo(BookingDetailsActivity::class.java, bundle)
         }
-        return dataList
+
+        mBinding.clTermsService.setOnClickListener {
+            val mBundle = android.os.Bundle()
+            mBundle.putString(Bundle.KEY_WEB_KEY, "Teams and Service")
+            mBundle.putString(Bundle.KEY_WEB_URL, URL_TERMS)
+            navigateTo(WebViewActivity::class.java, mBundle)
+        }
+
+        mBinding.clAbout.setOnClickListener {
+            val mBundle = android.os.Bundle()
+            mBundle.putString(Bundle.KEY_WEB_KEY, "About Diabezone")
+            mBundle.putString(Bundle.KEY_WEB_URL, URL_ABOUT)
+            navigateTo(WebViewActivity::class.java, mBundle)
+        }
+
+        mBinding.clContact.setOnClickListener {
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data =
+                Uri.parse("tel:" + mViewModel.userResponse.value!!.health_coach.mobile)
+            startActivity(dialIntent)
+        }
+
+        mBinding.clLogout.setOnClickListener { logout() }
     }
 
 }

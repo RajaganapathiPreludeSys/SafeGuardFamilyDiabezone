@@ -41,6 +41,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         super.onViewCreated(view, savedInstanceState)
         onceCreated()
         mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it) }
+        mViewModel.successToast.observe(viewLifecycleOwner) { showToast(it) }
         mViewModel.apiLoader.observe(viewLifecycleOwner) { if (it) showLoading() else hideLoading() }
     }
 
@@ -86,5 +87,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
 
     open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
     open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
+    open fun longLog(sb: String) = (activity as BaseActivity<*, *>).longLog(sb)
+    open fun logout() = (activity as BaseActivity<*, *>).logout()
 
 }

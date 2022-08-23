@@ -3,9 +3,12 @@ package com.safeguardFamily.diabezone.viewModel
 import androidx.lifecycle.MutableLiveData
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.common.SharedPref.Pref.prefIsMember
+import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefIsMember
 import com.safeguardFamily.diabezone.model.request.IdRequest
-import com.safeguardFamily.diabezone.model.response.*
+import com.safeguardFamily.diabezone.model.response.Appointment
+import com.safeguardFamily.diabezone.model.response.BaseResponse
+import com.safeguardFamily.diabezone.model.response.Provider
+import com.safeguardFamily.diabezone.model.response.ProvidersResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +31,7 @@ class AppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             providers.postValue(response.body()!!.data!!.providers)
                             upcomingAppointment.postValue(response.body()!!.data!!.appointments)
-                            SharedPref.write(prefIsMember, response.body()!!.data!!.is_member)
+                            SharedPref.write(PrefIsMember, response.body()!!.data!!.is_member)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

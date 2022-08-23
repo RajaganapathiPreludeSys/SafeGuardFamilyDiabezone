@@ -18,20 +18,29 @@
         <entry key="app/src/main/res/drawable/bg_white_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/blue_gradient.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bottom_navigation_background.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_about.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_alert.xml" value="0.3355" />
         <entry key="app/src/main/res/drawable/ic_appointment.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_booking_details.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_call_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_edit_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_gear.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_health_vault.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_healthcare_call.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_layer.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.3345" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_star_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_statistics.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_terms_service.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_upload_picture.xml" value="0.3355" />
         <entry key="app/src/main/res/drawable/onboarding_indicator_active.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/onboarding_indicator_inactive.xml" value="0.2365" />
         <entry key="app/src/main/res/layout/activity_appointment_doctor.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_booking_details.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_log_book.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.34010416666666665" />

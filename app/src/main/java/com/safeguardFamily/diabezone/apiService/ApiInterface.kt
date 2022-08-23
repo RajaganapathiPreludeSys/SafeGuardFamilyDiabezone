@@ -22,4 +22,7 @@ interface ApiInterface {
     @POST("provider-slots")
     fun getSlots(@Body body: GetSlotsRequest): Call<BaseResponse<SlotsResponse>>
 
+    @POST("profile")
+    fun getProfile(@Body body: IdRequest): Call<BaseResponse<ProfileResponse>>
+
 }

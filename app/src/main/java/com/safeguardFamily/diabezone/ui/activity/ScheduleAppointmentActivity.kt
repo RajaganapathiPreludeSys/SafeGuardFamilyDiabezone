@@ -20,7 +20,7 @@ import com.safeguardFamily.diabezone.common.DateUtils.apiDateFormat
 import com.safeguardFamily.diabezone.common.DateUtils.formatDate
 import com.safeguardFamily.diabezone.common.DateUtils.getTimeStampFromSting
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.common.SharedPref.Pref.prefIsMember
+import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefIsMember
 import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBinding
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
 import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
@@ -230,10 +230,10 @@ class ScheduleAppointmentActivity :
     private fun openConfirmDialog() {
         mBinding.date = DateUtils.displayingDateFormat(apiDate)
         mBinding.time = DateUtils.formatTo12Hrs(apiTime)!!.uppercase()
-        mBinding.icBottomSheetConfirm.isMember = SharedPref.read(prefIsMember, false)
+        mBinding.icBottomSheetConfirm.isMember = SharedPref.read(PrefIsMember, false)
         mBinding.icBottomSheetConfirm.btConfirm.setOnClickListener {
             isConfirmed = true
-            if (SharedPref.read(prefIsMember, false)) {
+            if (SharedPref.read(PrefIsMember, false)) {
                 if (isReschedule) mViewModel.reScheduleAppointment(
                     CreateAppointmentRequest(
                         puid = mProvider.puid,

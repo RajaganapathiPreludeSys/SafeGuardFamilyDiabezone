@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.ui.activity
 import android.webkit.WebViewClient
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
+import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityWebViewBinding
 import com.safeguardFamily.diabezone.viewModel.WebViewViewModel
 
@@ -13,10 +14,16 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, WebViewViewModel>(
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        mBinding.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener { finish() }
+
+        if (intent.extras?.containsKey(Bundle.KEY_WEB_KEY) == true
+            && intent.extras?.containsKey(Bundle.KEY_WEB_URL) == true
+        ) {
+            mBinding.icHeader.tvTitle.text = intent.extras?.getString(Bundle.KEY_WEB_KEY)
+        }
 
         mBinding.webView.webViewClient = WebViewClient()
-        mBinding.webView.loadUrl("https://meet.google.com/zii-vyzx-zbo")
+        mBinding.webView.loadUrl(intent.extras?.getString(Bundle.KEY_WEB_URL).toString())
         mBinding.webView.settings.javaScriptEnabled = true
         mBinding.webView.settings.setSupportZoom(true)
     }

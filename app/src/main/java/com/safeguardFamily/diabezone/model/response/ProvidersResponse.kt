@@ -29,7 +29,9 @@ data class Provider(
     val speciality: String,
     val timings: Timings,
     val type: String,
-    val vchat_url: String
+    val vchat_url: String,
+    val mobile: String,
+    val cc: String
 )
 
 data class Timings(

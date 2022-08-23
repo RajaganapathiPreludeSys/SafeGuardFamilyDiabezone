@@ -1,3 +1,5 @@
 <paths>
-    <files-path name="image.jpg" path="."/>
+    <files-path
+        name="image.jpg"
+        path="." />
 </paths>
