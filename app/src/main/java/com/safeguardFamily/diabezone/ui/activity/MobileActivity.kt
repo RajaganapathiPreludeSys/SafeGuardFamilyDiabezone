@@ -2,12 +2,13 @@ package com.safeguardFamily.diabezone.ui.activity
 
 import android.text.Editable
 import android.text.TextWatcher
-import com.safeguardFamily.diabezone.base.BaseActivity
-import com.safeguardFamily.diabezone.viewModel.MobileViewModel
+import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.common.Bundle.KEY_REGISTER_NAME
+import com.safeguardFamily.diabezone.base.BaseActivity
+import com.safeguardFamily.diabezone.common.Bundle.KEY_OTPs
 import com.safeguardFamily.diabezone.common.Bundle.KEY_REGISTER_PHONE
 import com.safeguardFamily.diabezone.databinding.ActivityMobileBinding
+import com.safeguardFamily.diabezone.viewModel.MobileViewModel
 
 class MobileActivity : BaseActivity<ActivityMobileBinding, MobileViewModel>(
     R.layout.activity_mobile,
@@ -15,16 +16,17 @@ class MobileActivity : BaseActivity<ActivityMobileBinding, MobileViewModel>(
 ) {
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
+
         mBinding.btSendCode.setOnClickListener {
             if (mBinding.tiePhone.text.toString().matches(Regex("[0-9]{10}"))) {
-                val mBundle = android.os.Bundle()
-                mBundle.putString(KEY_REGISTER_PHONE, mBinding.tiePhone.text!!.toString())
-                if (intent.extras?.containsKey(KEY_REGISTER_NAME) == true)
-                    mBundle.putString(
-                        KEY_REGISTER_NAME,
-                        intent.extras?.getString(KEY_REGISTER_NAME)
-                    )
-                navigateTo(OtpActivity::class.java, mBundle)
+                mViewModel.getOtp(mBinding.tiePhone.text.toString()) {
+                    val mBundle = android.os.Bundle()
+                    mBundle.putString(KEY_REGISTER_PHONE, mBinding.tiePhone.text!!.toString())
+                    mBundle.putString(KEY_OTPs, Gson().toJson(it))
+
+                    navigateTo(OtpActivity::class.java, mBundle)
+                }
+
             } else mBinding.textInputLayout.error = getString(R.string.valid_phone)
         }
 

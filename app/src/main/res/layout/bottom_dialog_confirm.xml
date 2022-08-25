@@ -12,10 +12,6 @@
             type="String" />
 
         <variable
-            name="isMember"
-            type="Boolean" />
-
-        <variable
             name="time"
             type="String" />
 
@@ -36,8 +32,7 @@
             android:id="@+id/tvSelectedDate"
             style="@style/xLarge.White.MontserratBold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{isMember ? `Please confirm`:`Please pay online`}" />
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:id="@+id/rlContainer"
@@ -72,8 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvProfession"
                 android:layout_marginTop="20dp"
-                android:layout_toStartOf="@id/cvProfileImages"
-                android:text="@{isMember ? `Free for members`:`₹800 Fee`}" />
+                android:layout_toStartOf="@id/cvProfileImages" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvProfileImages"

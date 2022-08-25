@@ -18,15 +18,18 @@ class Constants {
 
 object Bundle {
     const val TAG = "RRR :: "
+    const val KEY_EDIT_PROFILE = "KEY_EDIT_PROFILE"
     const val KEY_WEB_KEY = "KEY_WEB_KEY"
     const val KEY_WEB_URL = "KEY_WEB_URL"
-    const val KEY_REGISTER_NAME = "KEY_REGISTER_NAME"
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
+    const val KEY_OTPs = "KEY_OTPs"
     const val KEY_DOCTOR = "KEY_DOCTOR"
+    const val KEY_TITLE = "KEY_TITLE"
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
     const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
 
     const val DATE_FORMAT = "LLL dd, yyyy"
+    const val DATE_TIME_FORMAT = "LLL dd, yyyy hh:mm a"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
     const val FROM_API_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"

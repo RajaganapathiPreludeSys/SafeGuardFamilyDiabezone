@@ -3,7 +3,6 @@ package com.safeguardFamily.diabezone.viewModel
 import androidx.lifecycle.MutableLiveData
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefIsMember
 import com.safeguardFamily.diabezone.model.request.IdRequest
 import com.safeguardFamily.diabezone.model.response.Appointment
 import com.safeguardFamily.diabezone.model.response.BaseResponse
@@ -20,7 +19,7 @@ class AppointmentViewModel : BaseViewModel() {
 
     fun getAppointmentData() {
         apiLoader.postValue(true)
-        val request = IdRequest()
+        val request = IdRequest(uid = SharedPref.getUserId()!!)
         RetrofitClient.apiInterface.getAppointmentDate(request)
             .enqueue(object : Callback<BaseResponse<ProvidersResponse>> {
                 override fun onResponse(
@@ -31,7 +30,6 @@ class AppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             providers.postValue(response.body()!!.data!!.providers)
                             upcomingAppointment.postValue(response.body()!!.data!!.appointments)
-                            SharedPref.write(PrefIsMember, response.body()!!.data!!.is_member)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

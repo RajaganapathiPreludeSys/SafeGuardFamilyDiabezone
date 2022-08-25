@@ -1,10 +1,8 @@
 package com.safeguardFamily.diabezone.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
 import com.safeguardFamily.diabezone.databinding.ItemTimeBinding
 

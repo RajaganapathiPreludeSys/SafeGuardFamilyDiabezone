@@ -15,6 +15,13 @@
         android:orientation="vertical"
         android:padding="25dp">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_back" />
+
         <LinearLayout
             android:id="@+id/llWelcomeContainer"
             android:layout_width="match_parent"

@@ -1,11 +1,11 @@
 package com.safeguardFamily.diabezone.model.response
 
 data class ProfileResponse(
-    val health_coach: Provider,
-    val is_member: Boolean,
-    val membership: List<Membership>,
-    val past_appointments: List<PastAppointment>,
-    val user: User
+    var health_coach: Provider?,
+    var is_member: Boolean?,
+    var membership: List<Membership>?,
+    var past_appointments: List<PastAppointment>?,
+    var user: User?
 )
 
 data class Membership(
@@ -17,15 +17,11 @@ data class Membership(
 )
 
 data class PastAppointment(
-    val appointments: List<String>,
-    val title: String
-)
-
-data class User(
-    val cc: String,
-    val email: String,
-    val mobile: String,
-    val name: String,
-    val pic: String,
-    val uid: String
+    var aid: Int?,
+    var booking_date: String?,
+    var booking_status: Int?,
+    var provider: Provider?,
+    var puid: String?,
+    var slot: String?,
+    var uid: String?
 )

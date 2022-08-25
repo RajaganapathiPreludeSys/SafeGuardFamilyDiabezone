@@ -23,7 +23,7 @@ class OnBoardingActivity : AppCompatActivity() {
         mBinding.lifecycleOwner = this
 
         mBinding.btSkip.setOnClickListener {
-            startActivity(Intent(applicationContext, DashboardActivity::class.java))
+            startActivity(Intent(applicationContext, MobileActivity::class.java))
             finish()
         }
         loadVideoView()
@@ -40,7 +40,7 @@ class OnBoardingActivity : AppCompatActivity() {
 
         mBinding.ivThumbnail.visibility = View.VISIBLE
         mBinding.vvVideoPlayer.setOnPreparedListener {
-            Log.d("RRR -- ", "onceCreated: ")
+            Log.d("RRR -- ", "setOnPreparedListener: ")
             mBinding.vvVideoPlayer.visibility = View.VISIBLE
             mBinding.ivThumbnail.visibility = View.GONE
         }
@@ -48,8 +48,8 @@ class OnBoardingActivity : AppCompatActivity() {
         mBinding.vvVideoPlayer.setOnCompletionListener {
             Log.d("RRR -- ", "restarted: ")
 //            mBinding.vvVideoPlayer.start()
-//            startActivity(Intent(applicationContext, MobileActivity::class.java))
-            startActivity(Intent(applicationContext, DashboardActivity::class.java))
+            startActivity(Intent(applicationContext, MobileActivity::class.java))
+//            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }
     }

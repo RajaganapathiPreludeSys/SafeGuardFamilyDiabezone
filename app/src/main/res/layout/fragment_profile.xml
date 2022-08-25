@@ -7,6 +7,10 @@
         <variable
             name="mViewModel"
             type="com.safeguardFamily.diabezone.viewModel.ProfileViewModel" />
+
+        <variable
+            name="profile"
+            type="com.safeguardFamily.diabezone.model.response.ProfileResponse" />
     </data>
 
     <LinearLayout
@@ -44,7 +48,7 @@
                         android:id="@+id/ivProfileImages"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:loadImage="@{mViewModel.userResponse.user.pic}"
+                        app:loadImage="@{profile.user.pic}"
                         android:background="@color/bgGrey"
                         android:scaleType="centerCrop" />
 
@@ -62,7 +66,7 @@
                         style="@style/Large.MontserratBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{mViewModel.userResponse.user.name}" />
+                        android:text="@{profile.user.name}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDesc"
@@ -72,7 +76,7 @@
                         android:layout_marginTop="6dp"
                         android:drawableStart="@drawable/ic_call_filled"
                         android:drawablePadding="5dp"
-                        android:text="@{mViewModel.userResponse.user.mobile}" />
+                        android:text="@{profile.user.mobile}" />
 
                 </LinearLayout>
 

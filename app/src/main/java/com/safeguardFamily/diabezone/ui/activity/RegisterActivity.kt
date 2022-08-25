@@ -21,7 +21,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
+import com.safeguardFamily.diabezone.common.Bundle.KEY_EDIT_PROFILE
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY
+import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
+import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityRegisterBinding
 import com.safeguardFamily.diabezone.viewModel.RegisterViewModel
 import java.io.File
@@ -30,27 +34,48 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     R.layout.activity_register,
     RegisterViewModel::class.java
 ) {
+
+    val user = SharedPref.getUser()
+
+    var isEditProfile = false
+
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        val spanString = SpannableString(getString(R.string.terms_and_conditions))
+        mBinding.ivBack.setOnClickListener { finish() }
 
-        val termsAndCondition: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(p0: View) {
-                val mBundle = Bundle()
-                mBundle.putString(KEY_WEB_KEY, "Teams and Conditions")
-                navigateTo(WebViewActivity::class.java, mBundle)
+        if (intent.extras?.containsKey(KEY_EDIT_PROFILE) == true)
+            isEditProfile = intent.extras?.getBoolean(KEY_EDIT_PROFILE)!!
+
+        if (!isEditProfile) {
+            val spanString = SpannableString(getString(R.string.terms_and_conditions))
+
+            val termsAndCondition: ClickableSpan = object : ClickableSpan() {
+                override fun onClick(p0: View) {
+                    val mBundle = Bundle()
+                    mBundle.putString(KEY_WEB_KEY, "Teams and Service")
+                    mBundle.putString(KEY_WEB_URL, URL_TERMS)
+                    navigateTo(WebViewActivity::class.java, mBundle)
+                }
             }
+
+            spanString.setSpan(termsAndCondition, 47, 67, 0)
+            spanString.setSpan(ForegroundColorSpan(Color.BLACK), 47, 67, 0)
+            spanString.setSpan(UnderlineSpan(), 47, 67, 0)
+            spanString.setSpan(StyleSpan(Typeface.BOLD), 47, 67, 0)
+
+            mBinding.cbTermsAndCondition.movementMethod = LinkMovementMethod.getInstance()
+            mBinding.cbTermsAndCondition.setText(spanString, TextView.BufferType.SPANNABLE)
+            mBinding.cbTermsAndCondition.isSelected = true
+        } else {
+            mBinding.tvWelcomeDesc.visibility = View.GONE
+            mBinding.cbTermsAndCondition.visibility = View.GONE
+            mBinding.ivBack.visibility = View.VISIBLE
+            mBinding.btRegister.text = "Update User"
+            mBinding.tvWelcome.text = "Update User Profile"
+            mBinding.tieName.text = Editable.Factory.getInstance().newEditable(user.name)
+            mBinding.tieEmail.text = Editable.Factory.getInstance().newEditable(user.email)
         }
-
-        spanString.setSpan(termsAndCondition, 47, 67, 0)
-        spanString.setSpan(ForegroundColorSpan(Color.BLACK), 47, 67, 0)
-        spanString.setSpan(UnderlineSpan(), 47, 67, 0)
-        spanString.setSpan(StyleSpan(Typeface.BOLD), 47, 67, 0)
-
-        mBinding.cbTermsAndCondition.movementMethod = LinkMovementMethod.getInstance()
-        mBinding.cbTermsAndCondition.setText(spanString, TextView.BufferType.SPANNABLE)
-        mBinding.cbTermsAndCondition.isSelected = true
 
         mBinding.tieName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -77,16 +102,26 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-
         mBinding.btRegister.setOnClickListener {
             if (mBinding.tieName.text!!.isEmpty())
                 mBinding.tilName.error = getString(R.string.valid_name)
             else if (mBinding.tieEmail.text!!.isEmpty())
                 mBinding.tilEmail.error = getString(R.string.valid_email)
-            else
-                if (mBinding.cbTermsAndCondition.isChecked) {
-                    navigateTo(DashboardActivity::class.java)
+            else {
+                if (isEditProfile) {
+                    user.name = mBinding.tieName.text.toString()
+                    user.email = mBinding.tieEmail.text.toString()
+                    mViewModel.updateUser(user) {
+                        showToast("Profile Updated Successfully")
+                    }
+                } else if (mBinding.cbTermsAndCondition.isChecked) {
+                    user.name = mBinding.tieName.text.toString()
+                    user.email = mBinding.tieEmail.text.toString()
+                    mViewModel.updateUser(user) {
+                        navigateTo(DashboardActivity::class.java)
+                    }
                 } else showToast(R.string.accept_terms)
+            }
         }
 
         val loadImage =

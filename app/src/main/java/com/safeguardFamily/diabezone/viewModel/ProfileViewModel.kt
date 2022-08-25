@@ -12,38 +12,33 @@ import retrofit2.Response
 
 class ProfileViewModel : BaseViewModel() {
 
-    var userResponse = MutableLiveData<ProfileResponse>()
-
-    fun getProfile() {
-        apiLoader.postValue(true)
-        val request = IdRequest()
-        RetrofitClient.apiInterface.getProfile(request)
-            .enqueue(object : Callback<BaseResponse<ProfileResponse>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<ProfileResponse>>,
-                    response: Response<BaseResponse<ProfileResponse>>
-                ) {
-                    if (response.isSuccessful)
-                        if (response.body()?.success!!) {
-                            userResponse.postValue(response.body()?.data!!)
-                            SharedPref.putUser(response.body()?.data!!.user)
-                            SharedPref.putMembership(response.body()?.data!!.membership)
-                            SharedPref.write(
-                                SharedPref.Pref.PrefIsMember,
-                                response.body()!!.data!!.is_member
-                            )
-                        } else apiError.postValue(response.body()!!.error)
-                    else apiError.postValue(response.message())
-                    apiLoader.postValue(false)
-                }
-
-                override fun onFailure(
-                    call: Call<BaseResponse<ProfileResponse>>,
-                    t: Throwable
-                ) {
-                    apiError.postValue(t.message)
-                    apiLoader.postValue(false)
-                }
-            })
-    }
+//    var userResponse = MutableLiveData<ProfileResponse>()
+//
+//    fun getProfile() {
+//        apiLoader.postValue(true)
+//        val request = IdRequest()
+//        RetrofitClient.apiInterface.getProfile(request)
+//            .enqueue(object : Callback<BaseResponse<ProfileResponse>> {
+//                override fun onResponse(
+//                    call: Call<BaseResponse<ProfileResponse>>,
+//                    response: Response<BaseResponse<ProfileResponse>>
+//                ) {
+//                    if (response.isSuccessful)
+//                        if (response.body()?.success!!) {
+//                            userResponse.postValue(response.body()?.data!!)
+//                            SharedPref.putProfileDetails(response.body()?.data!!)
+//                        } else apiError.postValue(response.body()!!.error)
+//                    else apiError.postValue(response.message())
+//                    apiLoader.postValue(false)
+//                }
+//
+//                override fun onFailure(
+//                    call: Call<BaseResponse<ProfileResponse>>,
+//                    t: Throwable
+//                ) {
+//                    apiError.postValue(t.message)
+//                    apiLoader.postValue(false)
+//                }
+//            })
+//    }
 }

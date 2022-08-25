@@ -1,15 +1,21 @@
 package com.safeguardFamily.diabezone.base
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.LayoutRes
@@ -17,12 +23,14 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.ui.activity.MobileActivity
 import com.safeguardFamily.diabezone.viewModel.BaseViewModel
+
 
 abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layout: Int,
@@ -31,7 +39,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
 
     protected lateinit var mBinding: VB
 
-    protected lateinit var mViewModel: VM
+    lateinit var mViewModel: VM
 
     protected abstract fun onceCreated()
 
@@ -46,7 +54,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         mViewModel.apiError.observe(this) { showToast(it) }
         mViewModel.successToast.observe(this) { showToast(it) }
         mViewModel.apiLoader.observe(this) { if (it) showLoading() else hideLoading() }
-
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
     fun expand(v: View) {
@@ -106,19 +114,33 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         this, getString(resId), if (isShort) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
     ).show()
 
-    open fun sendMessage(message: String) {
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
 
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.setPackage("com.whatsapp")
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
 
-        intent.putExtra(Intent.EXTRA_TEXT, message)
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
-        if (intent.resolveActivity(packageManager) == null) {
-            showToast("Please install whatsapp first.")
-            return
+    open fun openWhatsApp(num: String) {
+        val appInstalled = try {
+            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
         }
-        startActivity(intent)
+        if (appInstalled) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data =
+                Uri.parse("http://api.whatsapp.com/send?phone=+91$num")
+            startActivity(intent)
+        } else showToast("WhatsApp not available in you mobile")
     }
 
 

@@ -16,6 +16,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
 ) {
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
+
         val home = HomeFragment()
         val healthVault = HealthVaultFragment()
         val appointment = AppointmentFragment()

@@ -65,6 +65,7 @@
                 style="@style/Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="9988776650"
                 android:background="@drawable/bg_grey_round"
                 android:inputType="phone"
                 android:maxLength="10" />

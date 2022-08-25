@@ -1,10 +1,13 @@
 package com.safeguardFamily.diabezone.base
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -70,21 +73,20 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         if (doFinish) requireActivity().finish()
     }
 
-    open fun sendMessage(message: String) {
-
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.setPackage("com.whatsapp")
-
-        intent.putExtra(Intent.EXTRA_TEXT, message)
-
-        if (intent.resolveActivity(requireContext().packageManager) == null) {
-            showToast("Please install whatsapp first.")
-            return
-        }
-        startActivity(intent)
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
     }
 
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    open fun openWhatsApp(num: String) = (activity as BaseActivity<*, *>).openWhatsApp(num)
     open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
     open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
     open fun longLog(sb: String) = (activity as BaseActivity<*, *>).longLog(sb)

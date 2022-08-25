@@ -3,12 +3,43 @@ package com.safeguardFamily.diabezone.apiService
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
 import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
 import com.safeguardFamily.diabezone.model.request.IdRequest
+import com.safeguardFamily.diabezone.model.request.MobileNumberRequest
 import com.safeguardFamily.diabezone.model.response.*
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+
 
 interface ApiInterface {
+
+    //    https://safeguardfamily.com/apis/send-otp
+    @POST("send-otp")
+    fun postOtp(@Body body: MobileNumberRequest): Call<BaseResponse<OtpResponse>>
+
+    //    https://safeguardfamily.com/apis/verify-otp
+    @POST("verify-otp")
+    fun postVerifyOtp(@Body body: MobileNumberRequest): Call<BaseResponse<UserResponse>>
+
+    //    https://safeguardfamily.com/apis/update-user
+    @POST("update-user")
+    fun postUpdateUser(@Body body: User): Call<BaseResponse<UserResponse>>
+
+    @Multipart
+    @POST("update-user-details")
+    fun multipartUpdateUser(
+        @Part part: Part?,
+        @Part("somedata") requestBody: RequestBody?
+    ): Call<RequestBody?>?
+
+    @Multipart
+    @POST("image/")
+    fun multipartUpdateUser(
+        @Part("data") data: RequestBody?,
+        @Part("pic\"; filename=\"image.png\" ") pic: RequestBody?
+    ): Call<BaseResponse<UserResponse>>
 
     @POST("providers")
     fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<ProvidersResponse>>

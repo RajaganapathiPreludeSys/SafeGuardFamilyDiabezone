@@ -12,9 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
+import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
 import com.safeguardFamily.diabezone.model.DoctorModel
+import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
@@ -59,6 +61,8 @@ class HomeFragment :
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
 
         mViewModel.getServicesApiCall()
+
+        hideKeyboard()
     }
 
     private fun loadNotification() {

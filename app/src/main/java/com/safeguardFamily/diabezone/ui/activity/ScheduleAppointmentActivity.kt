@@ -20,7 +20,6 @@ import com.safeguardFamily.diabezone.common.DateUtils.apiDateFormat
 import com.safeguardFamily.diabezone.common.DateUtils.formatDate
 import com.safeguardFamily.diabezone.common.DateUtils.getTimeStampFromSting
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefIsMember
 import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBinding
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
 import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
@@ -30,7 +29,6 @@ import com.safeguardFamily.diabezone.viewModel.ScheduleAppointmentViewModel
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-
 
 class ScheduleAppointmentActivity :
     BaseActivity<ActivityScheduleAppointmentBinding, ScheduleAppointmentViewModel>(
@@ -86,7 +84,12 @@ class ScheduleAppointmentActivity :
 
             mProvider = mAppointment.provider
             if (mProvider.available_slots == null || mProvider.available_slots?.isEmpty() == true) {
-                mViewModel.getSlots(GetSlotsRequest(puid = mProvider.puid)) { slots ->
+                mViewModel.getSlots(
+                    GetSlotsRequest(
+                        puid = mProvider.puid,
+                        uid = SharedPref.getUserId()!!
+                    )
+                ) { slots ->
                     mProvider.available_slots = slots
                     loadCalendar()
                 }
@@ -98,12 +101,18 @@ class ScheduleAppointmentActivity :
         }
 
         mBinding.btJoinOnline.setOnClickListener {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(mProvider.vchat_url)
+
+            val c = Calendar.getInstance()
+            c.timeInMillis = getTimeStampFromSting(mAppointment.booking_date)
+
+            if (c.timeInMillis > getTimeStampFromSting(mAppointment.booking_date))
+
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(mProvider.vchat_url)
+                    )
                 )
-            )
         }
 
         mViewModel.isBookingCompleted.observe(this) {
@@ -114,7 +123,12 @@ class ScheduleAppointmentActivity :
         }
 
         if (mProvider.available_slots == null || mProvider.available_slots?.isEmpty() == true) {
-            mViewModel.getSlots(GetSlotsRequest(puid = mProvider.puid)) { slots ->
+            mViewModel.getSlots(
+                GetSlotsRequest(
+                    puid = mProvider.puid,
+                    uid = SharedPref.getUserId()!!
+                )
+            ) { slots ->
                 mProvider.available_slots = slots
                 loadCalendar()
             }
@@ -185,15 +199,14 @@ class ScheduleAppointmentActivity :
         mProvider.available_slots?.forEach { slot ->
             if (slot.month.startsWith(monthName[calendar[Calendar.MONTH]], true)) {
                 slot.days.forEach { day ->
-                    if (day.date == calendar[Calendar.DAY_OF_MONTH]) {
-                        openTimeSelectorDialog(day.slots, tempSlot)
-                    }
+                    if (day.date == calendar[Calendar.DAY_OF_MONTH])
+                        openTimeSelectorDialog(day.slots as ArrayList<String>, tempSlot)
                 }
             }
         }
     }
 
-    private fun openTimeSelectorDialog(slots: List<String>, tempSlot: String? = "") {
+    private fun openTimeSelectorDialog(slots: ArrayList<String>, tempSlot: String? = "") {
         apiTime = ""
         if (slots.isNotEmpty()) {
             mBinding.icBottomSheetTime.rvTimes.visibility = View.VISIBLE
@@ -202,7 +215,12 @@ class ScheduleAppointmentActivity :
             mBinding.icBottomSheetTime.rvTimes.visibility = View.GONE
             mBinding.icBottomSheetTime.tvTimes.visibility = View.VISIBLE
         }
-        mBinding.icBottomSheetTime.rvTimes.adapter = TimeAdapter(slots, tempSlot) {
+//            slots += tempSlot
+        mBinding.icBottomSheetTime.tvSelectedSlot.text =
+            if (tempSlot?.length!! > 1) "Selected slot ${
+                DateUtils.formatTo12Hrs(tempSlot)!!.uppercase()
+            }" else ""
+        mBinding.icBottomSheetTime.rvTimes.adapter = TimeAdapter(slots) {
             apiTime = it
             mBinding.icBottomSheetConfirm.time = DateUtils.formatTo12Hrs(it)!!.uppercase()
         }
@@ -230,12 +248,13 @@ class ScheduleAppointmentActivity :
     private fun openConfirmDialog() {
         mBinding.date = DateUtils.displayingDateFormat(apiDate)
         mBinding.time = DateUtils.formatTo12Hrs(apiTime)!!.uppercase()
-        mBinding.icBottomSheetConfirm.isMember = SharedPref.read(PrefIsMember, false)
+
         mBinding.icBottomSheetConfirm.btConfirm.setOnClickListener {
             isConfirmed = true
-            if (SharedPref.read(PrefIsMember, false)) {
+            if (SharedPref.isMember()) {
                 if (isReschedule) mViewModel.reScheduleAppointment(
                     CreateAppointmentRequest(
+                        uid = SharedPref.getUserId()!!,
                         puid = mProvider.puid,
                         sel_date = apiDate,
                         slot = apiTime,
@@ -244,6 +263,7 @@ class ScheduleAppointmentActivity :
                 )
                 else mViewModel.createAppointment(
                     CreateAppointmentRequest(
+                        uid = SharedPref.getUserId()!!,
                         puid = mProvider.puid,
                         sel_date = apiDate,
                         slot = apiTime
@@ -252,6 +272,7 @@ class ScheduleAppointmentActivity :
             } else {
                 if (isReschedule) mViewModel.reScheduleAppointment(
                     CreateAppointmentRequest(
+                        uid = SharedPref.getUserId()!!,
                         puid = mProvider.puid,
                         sel_date = apiDate,
                         slot = apiTime,
@@ -259,7 +280,7 @@ class ScheduleAppointmentActivity :
                     )
                 )
                 else {
-                    val amount = 800 * 100
+                    val amount = mProvider.fees.toInt() * 100
                     val checkout = Checkout()
                     checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
                     checkout.setImage(R.drawable.ic_app_logo)
@@ -270,8 +291,8 @@ class ScheduleAppointmentActivity :
                         obj.put("theme.color", "")
                         obj.put("currency", "INR")
                         obj.put("amount", amount)
-                        obj.put("prefill.contact", "9003440134")
-                        obj.put("prefill.email", "test@mail.com")
+                        obj.put("prefill.contact", SharedPref.getUser().mobile)
+                        obj.put("prefill.email", SharedPref.getUser().email)
                         checkout.open(this, obj)
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -279,6 +300,16 @@ class ScheduleAppointmentActivity :
                 }
             }
         }
+
+        var feeText = if (SharedPref.isMember()) "Free for members"
+        else "\u20B9${mProvider.fees} Fee"
+        if (isReschedule) feeText = " Already Paid"
+        mBinding.icBottomSheetConfirm.tvFee.text = feeText
+
+        var title = if (SharedPref.isMember()) "Please confirm"
+        else "Please pay online"
+        if (isReschedule) title = "Please confirm"
+        mBinding.icBottomSheetConfirm.tvSelectedDate.text = title
     }
 
     override fun onPaymentSuccess(p0: String?) {
@@ -287,6 +318,7 @@ class ScheduleAppointmentActivity :
         isConfirmed = true
         mViewModel.createAppointment(
             CreateAppointmentRequest(
+                uid = SharedPref.getUserId()!!,
                 puid = mProvider.puid,
                 sel_date = apiDate,
                 slot = apiTime
