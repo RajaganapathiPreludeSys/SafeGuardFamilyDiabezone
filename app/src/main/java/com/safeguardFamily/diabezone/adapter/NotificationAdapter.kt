@@ -4,16 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.model.DoctorModel
+import com.safeguardFamily.diabezone.model.response.Notification
 
-class NotificationAdapter(items: List<DoctorModel>) :
+class NotificationAdapter(
+    items: List<Notification>,
+    private var onItemClicked: ((time: String) -> Unit)
+) :
     RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder?>() {
 
-    private val mItems: List<DoctorModel>
+    private val mItems: List<Notification>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         return NotificationViewHolder(
@@ -27,22 +31,31 @@ class NotificationAdapter(items: List<DoctorModel>) :
         holder.setOnBoardingData(mItems[position])
     }
 
-    override fun getItemCount(): Int {return mItems.size }
+    override fun getItemCount(): Int {
+        return mItems.size
+    }
 
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
         private val tvDesc: TextView
         private val ivProfileImage: ImageView
-        fun setOnBoardingData(item: DoctorModel) {
+        private val rlContainer: RelativeLayout
+
+        fun setOnBoardingData(item: Notification) {
             tvTitle.text = item.title
-            tvDesc.text = item.desc
-            Glide.with(itemView.context).load(item.image).into(ivProfileImage)
+            tvDesc.text = item.ndesc
+            Glide.with(itemView.context).load(item.pic).into(ivProfileImage)
+            rlContainer.setOnClickListener {
+                onItemClicked(item.screen!!)
+            }
         }
 
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
             tvDesc = itemView.findViewById(R.id.tvDesc)
             ivProfileImage = itemView.findViewById(R.id.ivProfileImages)
+            rlContainer = itemView.findViewById(R.id.rlContainer)
+
         }
     }
 

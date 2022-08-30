@@ -36,10 +36,10 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             mBinding.profile = userResponse
         }
 
-        val mobileArray = arrayListOf<String>()
+        val pastHistory = arrayListOf<String>()
 
         userResponse.past_appointments!!.forEach {
-            mobileArray.add("${it.provider!!.name} ${displayingDateTimeFormat(it.booking_date!!)}")
+            pastHistory.add("${it.provider!!.name} ${displayingDateTimeFormat(it.booking_date!!)}")
         }
 
         mBinding.tvMemberShip.text = "Member - ${userResponse.membership!![0].pack_name}"
@@ -48,9 +48,10 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             displayingDateFormat(userResponse.membership!![0].validity)
         )
 
-        mBinding.lvHistory.adapter = ArrayAdapter(this, R.layout.item_history, mobileArray)
-
-        getListViewSize(mBinding.lvHistory)
+        if (pastHistory.size > 0) {
+            mBinding.lvHistory.adapter = ArrayAdapter(this, R.layout.item_history, pastHistory)
+            getListViewSize(mBinding.lvHistory)
+        } else mBinding.tvNoHistory.visibility = View.VISIBLE
 
         mBinding.rlDoctorContainer.setOnClickListener {
             val bundle = android.os.Bundle()
@@ -61,7 +62,7 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
 
     }
 
-    fun getListViewSize(myListView: ListView) {
+    private fun getListViewSize(myListView: ListView) {
         val myListAdapter: ListAdapter = myListView.adapter ?: return
         var totalHeight = 0
         for (size in 0 until myListAdapter.count) {

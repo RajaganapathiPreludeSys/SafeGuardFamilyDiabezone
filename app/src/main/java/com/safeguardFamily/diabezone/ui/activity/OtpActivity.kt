@@ -87,6 +87,7 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
             mBinding.pvOtp.value = otp[0]
             mBinding.btProceed.isEnabled = true
         }
+
         mBinding.pvOtp.setPinViewEventListener(object : OtpPinView.PinViewEventListener {
             override fun onDataEntered(otpPinView: OtpPinView?, fromUser: Boolean) {
                 mBinding.btProceed.isEnabled = true

@@ -87,7 +87,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvProfession"
                         android:layout_marginTop="5dp"
-                        android:layout_toStartOf="@id/cvProfileImages">
+                        android:layout_toStartOf="@id/cvProfileImages"
+                        android:visibility="invisible">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivRating"

@@ -29,7 +29,7 @@ class DoctorDetailsActivity :
             mBinding.tvTitle.text = intent.extras?.getString(Bundle.KEY_TITLE)
             mBinding.cvAvailability.visibility = View.GONE
             mBinding.llMakeAppointment.visibility = View.GONE
-        }
+        } else mBinding.llContainer.visibility = View.GONE
 
         mBinding.llMakeAppointment.setOnClickListener {
             val bundle = android.os.Bundle()

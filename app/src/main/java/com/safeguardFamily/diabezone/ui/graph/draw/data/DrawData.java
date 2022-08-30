@@ -2,41 +2,41 @@ package com.safeguardFamily.diabezone.ui.graph.draw.data;
 
 public class DrawData {
 
-	private int startX;
-	private int startY;
+    private int startX;
+    private int startY;
 
-	private int stopX;
-	private int stopY;
+    private int stopX;
+    private int stopY;
 
-	public int getStartX() {
-		return startX;
-	}
+    public int getStartX() {
+        return startX;
+    }
 
-	public void setStartX(int startX) {
-		this.startX = startX;
-	}
+    public void setStartX(int startX) {
+        this.startX = startX;
+    }
 
-	public int getStartY() {
-		return startY;
-	}
+    public int getStartY() {
+        return startY;
+    }
 
-	public void setStartY(int startY) {
-		this.startY = startY;
-	}
+    public void setStartY(int startY) {
+        this.startY = startY;
+    }
 
-	public int getStopX() {
-		return stopX;
-	}
+    public int getStopX() {
+        return stopX;
+    }
 
-	public void setStopX(int stopX) {
-		this.stopX = stopX;
-	}
+    public void setStopX(int stopX) {
+        this.stopX = stopX;
+    }
 
-	public int getStopY() {
-		return stopY;
-	}
+    public int getStopY() {
+        return stopY;
+    }
 
-	public void setStopY(int stopY) {
-		this.stopY = stopY;
-	}
+    public void setStopY(int stopY) {
+        this.stopY = stopY;
+    }
 }

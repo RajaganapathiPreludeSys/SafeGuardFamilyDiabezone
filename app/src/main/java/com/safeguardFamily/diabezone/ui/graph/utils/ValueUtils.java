@@ -136,7 +136,6 @@ public class ValueUtils {
         return drawData;
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     private static int getCoordinateX(@NonNull Chart chart, int index) {
         int width = chart.getWidth();
         int titleWidth = chart.getTitleWidth();
@@ -155,7 +154,6 @@ public class ValueUtils {
         return coordinate;
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     private static int getCoordinateY(@NonNull Chart chart, float value) {
         int height = chart.getHeight() - chart.getPadding() - chart.getTextSize();
         int heightOffset = chart.getHeightOffset();

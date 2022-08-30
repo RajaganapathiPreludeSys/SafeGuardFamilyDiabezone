@@ -10,7 +10,7 @@
 
         <variable
             name="profile"
-            type="com.safeguardFamily.diabezone.model.response.ProfileResponse" />
+            type="com.safeguardFamily.diabezone.model.response.User" />
     </data>
 
     <LinearLayout
@@ -18,9 +18,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/icHeader"
-            layout="@layout/include_header" />
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/xLarge.MontserratBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="Profile" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/rlDiabetes"
@@ -48,9 +53,9 @@
                         android:id="@+id/ivProfileImages"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:loadImage="@{profile.user.pic}"
                         android:background="@color/bgGrey"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        app:loadImage="@{profile.pic}" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -66,7 +71,7 @@
                         style="@style/Large.MontserratBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{profile.user.name}" />
+                        android:text="@{profile.name}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDesc"
@@ -76,7 +81,7 @@
                         android:layout_marginTop="6dp"
                         android:drawableStart="@drawable/ic_call_filled"
                         android:drawablePadding="5dp"
-                        android:text="@{profile.user.mobile}" />
+                        android:text="@{profile.mobile}" />
 
                 </LinearLayout>
 

@@ -19,8 +19,7 @@ class AppointmentViewModel : BaseViewModel() {
 
     fun getAppointmentData() {
         apiLoader.postValue(true)
-        val request = IdRequest(uid = SharedPref.getUserId()!!)
-        RetrofitClient.apiInterface.getAppointmentDate(request)
+        RetrofitClient.apiInterface.getAppointmentDate(IdRequest(uid = SharedPref.getUserId()!!))
             .enqueue(object : Callback<BaseResponse<ProvidersResponse>> {
                 override fun onResponse(
                     call: Call<BaseResponse<ProvidersResponse>>,

@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProfession"
-        android:layout_marginTop="5dp"
-        android:layout_toStartOf="@id/cvProfileImages">
+        android:layout_toStartOf="@id/cvProfileImages"
+        android:visibility="invisible">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivRating"
@@ -79,7 +79,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvFee"
-        android:layout_marginTop="15dp"
         android:background="@drawable/bg_blue_round"
         android:padding="15dp">
 

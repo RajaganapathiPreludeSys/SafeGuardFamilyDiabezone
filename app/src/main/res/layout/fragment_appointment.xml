@@ -18,9 +18,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/icHeader"
-                layout="@layout/include_header" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/xLarge.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:text="@string/appointment" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBanner"

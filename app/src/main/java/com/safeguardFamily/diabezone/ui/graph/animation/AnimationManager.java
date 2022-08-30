@@ -32,11 +32,6 @@ public class AnimationManager {
     private final AnimationListener listener;
     private AnimationValue lastValue;
 
-    public interface AnimationListener {
-
-        void onAnimationUpdated(@NonNull AnimationValue value);
-    }
-
     public AnimationManager(@NonNull Chart chart, @Nullable AnimationListener listener) {
         this.chart = chart;
         this.listener = listener;
@@ -118,5 +113,10 @@ public class AnimationManager {
         } else {
             return alpha;
         }
+    }
+
+    public interface AnimationListener {
+
+        void onAnimationUpdated(@NonNull AnimationValue value);
     }
 }

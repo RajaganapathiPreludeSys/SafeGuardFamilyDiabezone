@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityOnBoardingBinding
 
 class OnBoardingActivity : AppCompatActivity() {
@@ -19,14 +20,19 @@ class OnBoardingActivity : AppCompatActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_boarding)
-        mBinding.lifecycleOwner = this
-
-        mBinding.btSkip.setOnClickListener {
-            startActivity(Intent(applicationContext, MobileActivity::class.java))
+        if (SharedPref.getUserId()!!.length > 2) {
+            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
+        } else {
+            mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_boarding)
+            mBinding.lifecycleOwner = this
+
+            mBinding.btSkip.setOnClickListener {
+                startActivity(Intent(applicationContext, MobileActivity::class.java))
+                finish()
+            }
+            loadVideoView()
         }
-        loadVideoView()
     }
 
 

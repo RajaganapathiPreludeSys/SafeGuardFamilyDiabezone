@@ -1,6 +1,5 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +11,6 @@ import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.AppointmentAdapter
 import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
-import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.databinding.FragmentAppointmentBinding
 import com.safeguardFamily.diabezone.viewModel.AppointmentViewModel
 
@@ -23,7 +21,6 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
-        mBinding.icHeader.tvTitle.text = getString(R.string.appointment)
         loadDoctor()
         loadAppointment()
     }
@@ -59,33 +56,35 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
             val mAdapter = AppointmentAdapter(it)
             mBinding.vpAppointment.adapter = mAdapter
 
-            val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
-            val layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            layoutParams.setMargins(8, 0, 8, 0)
-            for (i in indicators.indices) {
-                indicators[i] = ImageView(context)
-                indicators[i]!!.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.onboarding_indicator_inactive
-                    )
+            if (it.size > 1) {
+                val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                indicators[i]!!.layoutParams = layoutParams
-                mBinding.llAppointmentIndicator.addView(indicators[i])
-            }
-
-            setCurrentIndicators(0)
-
-            mBinding.vpAppointment.registerOnPageChangeCallback(object :
-                ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    setCurrentIndicators(position)
+                layoutParams.setMargins(8, 0, 8, 0)
+                for (i in indicators.indices) {
+                    indicators[i] = ImageView(context)
+                    indicators[i]!!.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.onboarding_indicator_inactive
+                        )
+                    )
+                    indicators[i]!!.layoutParams = layoutParams
+                    mBinding.llAppointmentIndicator.addView(indicators[i])
                 }
-            })
+
+                setCurrentIndicators(0)
+
+                mBinding.vpAppointment.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        setCurrentIndicators(position)
+                    }
+                })
+            }
         }
     }
 

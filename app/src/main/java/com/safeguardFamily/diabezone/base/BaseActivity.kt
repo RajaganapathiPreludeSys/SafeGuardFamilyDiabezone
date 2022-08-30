@@ -43,7 +43,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
 
     protected abstract fun onceCreated()
 
-    var dialog: Dialog? = null
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

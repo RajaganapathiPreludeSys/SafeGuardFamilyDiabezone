@@ -1,17 +1,13 @@
 package com.safeguardFamily.diabezone.apiService
 
-import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
-import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
-import com.safeguardFamily.diabezone.model.request.IdRequest
-import com.safeguardFamily.diabezone.model.request.MobileNumberRequest
+import com.safeguardFamily.diabezone.model.request.*
 import com.safeguardFamily.diabezone.model.response.*
-import okhttp3.RequestBody
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-
 
 interface ApiInterface {
 
@@ -23,6 +19,10 @@ interface ApiInterface {
     @POST("verify-otp")
     fun postVerifyOtp(@Body body: MobileNumberRequest): Call<BaseResponse<UserResponse>>
 
+    //    https://safeguardfamily.com/apis/main
+    @POST("main")
+    fun getHome(@Body body: IdRequest): Call<BaseResponse<HomeResponse>>
+
     //    https://safeguardfamily.com/apis/update-user
     @POST("update-user")
     fun postUpdateUser(@Body body: User): Call<BaseResponse<UserResponse>>
@@ -30,16 +30,17 @@ interface ApiInterface {
     @Multipart
     @POST("update-user-details")
     fun multipartUpdateUser(
-        @Part part: Part?,
-        @Part("somedata") requestBody: RequestBody?
-    ): Call<RequestBody?>?
-
-    @Multipart
-    @POST("image/")
-    fun multipartUpdateUser(
-        @Part("data") data: RequestBody?,
-        @Part("pic\"; filename=\"image.png\" ") pic: RequestBody?
+        @Part data: MultipartBody.Part,
+        @Part pic: MultipartBody.Part?
     ): Call<BaseResponse<UserResponse>>
+
+    //  https://safeguardfamily.com/apis/add-diabetes-log
+    @POST("add-diabetes-log")
+    fun addEditDiabetesLog(@Body body: DiabetesLogRequest): Call<BaseResponse<DiabetesLogResponse>>
+
+    //  https://safeguardfamily.com/apis/diabetes-logs
+    @POST("diabetes-logs")
+    fun getLogs(@Body body: IdRequest): Call<BaseResponse<DiabetesResponse>>
 
     @POST("providers")
     fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<ProvidersResponse>>

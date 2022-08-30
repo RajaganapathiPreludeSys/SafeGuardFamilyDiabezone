@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.safeguardFamily.diabezone.model.DiabetesModel" />
+            type="com.safeguardFamily.diabezone.model.response.Log" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -40,7 +40,7 @@
                     android:contentDescription="@string/app_name"
                     android:paddingStart="1dp"
                     android:paddingEnd="10dp"
-                    android:src="@drawable/ic_alert" />
+                    android:src="@{item.symbol.equals(`down`) ? @drawable/ic_arrow_down : @drawable/ic_arrow_up}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvStatus"
@@ -50,7 +50,7 @@
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
                     android:minLines="2"
-                    android:text="Alert" />
+                    android:text="@{item.status}" />
 
             </RelativeLayout>
 
@@ -69,8 +69,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_blue"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@{item.time}" />
+                    android:padding="5dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBloodSugar"
@@ -81,7 +80,7 @@
                     android:background="@drawable/bg_blue"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@{item.bloodSugar}" />
+                    android:text="@{item.logValue + ` `+ item.measureUnit}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvType"
@@ -90,8 +89,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_blue"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@{item.type}" />
+                    android:padding="5dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvContact"
@@ -99,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/contact_diabezone_health_coach" />
+                    android:text="@{item.message}" />
 
             </LinearLayout>
 

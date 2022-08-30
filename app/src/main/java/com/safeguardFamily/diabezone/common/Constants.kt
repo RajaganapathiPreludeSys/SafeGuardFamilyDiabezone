@@ -16,6 +16,15 @@ class Constants {
     }
 }
 
+object NotificationNavigationFlat {
+    const val appointment = "appointment"
+    const val providers = "providers"
+    const val diabetesLog = "diabetes_log"
+    const val healthVault = "health_vault"
+    const val programs = "programs"
+
+}
+
 object Bundle {
     const val TAG = "RRR :: "
     const val KEY_EDIT_PROFILE = "KEY_EDIT_PROFILE"
@@ -31,7 +40,7 @@ object Bundle {
     const val DATE_FORMAT = "LLL dd, yyyy"
     const val DATE_TIME_FORMAT = "LLL dd, yyyy hh:mm a"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
-    const val FROM_API_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    const val API_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"
     const val date24Format = "HH:mm"
 

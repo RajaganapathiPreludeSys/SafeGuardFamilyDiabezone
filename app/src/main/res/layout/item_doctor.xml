@@ -68,7 +68,8 @@
             android:drawablePadding="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{item.rating}" />
+            android:text="@{item.rating}"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -9,15 +9,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.KEY_APPOINTMENT
+import com.safeguardFamily.diabezone.common.DateUtils
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFromAPI
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
-import com.safeguardFamily.diabezone.common.DateUtils.fromAPIFormat
 import com.safeguardFamily.diabezone.model.response.Appointment
 import com.safeguardFamily.diabezone.ui.activity.ScheduleAppointmentActivity
+import java.util.*
 
 class AppointmentAdapter(items: List<Appointment>) :
     RecyclerView.Adapter<AppointmentAdapter.NotificationViewHolder?>() {
@@ -53,16 +56,24 @@ class AppointmentAdapter(items: List<Appointment>) :
             tvName.text = item.provider.name
             tvProfession.text = item.provider.speciality
             tvRatingVal.text = item.provider.rating + " out of 5"
-            tvDate.text = fromAPIFormat(item.booking_date)
+            tvDate.text = displayingDateFromAPI(item.booking_date)
             tvTime.text = formatTo12Hrs(item.slot)?.uppercase()
             Glide.with(itemView.context).load(item.provider.pic).into(ivProfileImage)
             btJoinOnline.setOnClickListener {
-                itemView.context.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(item.provider.vchat_url)
+                val c = Calendar.getInstance()
+                c.timeInMillis = DateUtils.getTimeStampFromSting(item.booking_date)
+                if (c.timeInMillis > DateUtils.getTimeStampFromSting(item.booking_date))
+                    itemView.context.startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(item.provider.vchat_url)
+                        )
                     )
-                )
+                else Toast.makeText(
+                    itemView.context,
+                    "You can only join at the allocated time slot",
+                    Toast.LENGTH_LONG
+                ).show()
             }
             btReschedule.setOnClickListener {
                 val bundle = Bundle()

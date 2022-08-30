@@ -193,7 +193,8 @@
                         android:background="@drawable/bg_blue_round"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/Large"

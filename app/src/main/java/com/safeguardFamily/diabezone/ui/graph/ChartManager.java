@@ -12,41 +12,40 @@ import com.safeguardFamily.diabezone.ui.graph.draw.data.Chart;
 
 public class ChartManager implements AnimationManager.AnimationListener {
 
-	private final DrawManager drawManager;
-	private final AnimationManager animationManager;
-	private final AnimationListener listener;
+    private final DrawManager drawManager;
+    private final AnimationManager animationManager;
+    private final AnimationListener listener;
 
-	public interface AnimationListener {
+    public ChartManager(@NonNull Context context, @Nullable AnimationListener listener) {
+        this.drawManager = new DrawManager(context);
+        this.animationManager = new AnimationManager(drawManager.chart(), this);
+        this.listener = listener;
+    }
 
-		void onAnimationUpdated();
-	}
+    public Chart chart() {
+        return drawManager.chart();
+    }
 
+    public DrawManager drawer() {
+        return drawManager;
+    }
 
-	public ChartManager(@NonNull Context context, @Nullable AnimationListener listener) {
-		this.drawManager = new DrawManager(context);
-		this.animationManager = new AnimationManager(drawManager.chart(), this);
-		this.listener = listener;
-	}
+    public void animate() {
+        if (!drawManager.chart().getDrawData().isEmpty()) {
+            animationManager.animate();
+        }
+    }
 
-	public Chart chart() {
-		return drawManager.chart();
-	}
+    @Override
+    public void onAnimationUpdated(@NonNull AnimationValue value) {
+        drawManager.updateValue(value);
+        if (listener != null) {
+            listener.onAnimationUpdated();
+        }
+    }
 
-	public DrawManager drawer() {
-		return drawManager;
-	}
+    public interface AnimationListener {
 
-	public void animate() {
-		if (!drawManager.chart().getDrawData().isEmpty()) {
-			animationManager.animate();
-		}
-	}
-
-	@Override
-	public void onAnimationUpdated(@NonNull AnimationValue value) {
-		drawManager.updateValue(value);
-		if (listener != null) {
-			listener.onAnimationUpdated();
-		}
-	}
+        void onAnimationUpdated();
+    }
 }

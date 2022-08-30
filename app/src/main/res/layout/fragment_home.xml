@@ -261,7 +261,8 @@
                 android:id="@+id/charView"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -12,10 +13,19 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
-import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.base.BaseFragment
+import com.safeguardFamily.diabezone.common.Bundle.TAG
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDateTimeFormatToAPIFormat
+import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.appointment
+import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.diabetesLog
+import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.healthVault
+import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.programs
+import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.providers
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
 import com.safeguardFamily.diabezone.model.DoctorModel
+import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
@@ -30,6 +40,8 @@ class HomeFragment :
         HomeViewModel::class.java
     ) {
 
+    private var formatedDate = ""
+
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
@@ -42,17 +54,31 @@ class HomeFragment :
         mBinding.spType.adapter = adapter
 
         mBinding.btAddToLog.setOnClickListener {
-            if (mBinding.tvTimeValue.text == "Select Time")
-                showToast("Select a valid date and time")
-            else if (mBinding.etBloodSugar.text?.isNotEmpty() == false)
-                showToast("Enter a valid blood sugar value")
-            else if (mBinding.spType.selectedItem == " Select meal type")
-                showToast("Select a valid meal type")
-            else {
-                mBinding.tvTimeValue.text = getString(R.string.select_time)
-                mBinding.etBloodSugar.text = null
-                mBinding.spType.adapter = adapter
-                showToast("Value saved")
+            when {
+                mBinding.tvTimeValue.text == "Select Time" -> showToast("Select a valid date and time")
+                mBinding.etBloodSugar.text?.isNotEmpty() == false -> showToast("Enter a valid blood sugar value")
+                mBinding.spType.selectedItem == " Select meal type" -> showToast("Select a valid meal type")
+                mBinding.etBloodSugar.text.toString()
+                    .toInt() <= 0 -> showToast("Enter a valid blood sugar value")
+                else -> {
+                    val request = DiabetesLogRequest(
+                        measureDate = formatedDate,
+                        logValue = mBinding.etBloodSugar.text.toString().toInt(),
+                        uid = SharedPref.getUserId()!!,
+                        period = when (mBinding.spType.selectedItem) {
+                            "Before Meal" -> "before_meal"
+                            "After Meal" -> "after_meal"
+                            "Random" -> "random"
+                            else -> ""
+                        }
+                    )
+                    mViewModel.addDiabetesLog(request) {
+                        mBinding.tvTimeValue.text = getString(R.string.select_time)
+                        mBinding.etBloodSugar.text = null
+                        mBinding.spType.adapter = adapter
+                        showToast("Diabetes Log Saved")
+                    }
+                }
             }
         }
 
@@ -60,58 +86,75 @@ class HomeFragment :
 
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
 
-        mViewModel.getServicesApiCall()
-
-        hideKeyboard()
     }
 
     private fun loadNotification() {
 
-        var json = ""
-        try {
+        val json = try {
             val inputStream = requireContext().assets.open("docter.json")
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.use { it.read(buffer) }
-            json = String(buffer)
+            String(buffer)
         } catch (ioException: IOException) {
             ioException.printStackTrace()
-            json = ""
+            ""
         }
 
         val list: List<DoctorModel> = Gson()
             .fromJson(json, Array<DoctorModel>::class.java).toList()
 
-        val mAdapter = NotificationAdapter(list)
-        mBinding.vpNotification.adapter = mAdapter
+        mViewModel.notifications.observe(this) {
+            val mAdapter = NotificationAdapter(it) { string ->
+                when (string) {
+                    appointment -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                        (activity as DashboardActivity?)!!.appointment
+                    )
+                    providers -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                        (activity as DashboardActivity?)!!.appointment
+                    )
+                    diabetesLog -> navigateTo(LogBookActivity::class.java)
+                    healthVault -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                        (activity as DashboardActivity?)!!.healthVault
+                    )
+                    programs -> {
 
-        val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
-        val layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.setMargins(8, 0, 8, 0)
-        for (i in indicators.indices) {
-            indicators[i] = ImageView(context)
-            indicators[i]!!.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.onboarding_indicator_inactive
+                    }
+                }
+            }
+            mBinding.vpNotification.adapter = mAdapter
+
+            if (it.size > 1) {
+                val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-            )
-            indicators[i]!!.layoutParams = layoutParams
-            mBinding.llNotificationIndicator.addView(indicators[i])
+                layoutParams.setMargins(8, 0, 8, 0)
+                for (i in indicators.indices) {
+                    indicators[i] = ImageView(context)
+                    indicators[i]!!.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.onboarding_indicator_inactive
+                        )
+                    )
+                    indicators[i]!!.layoutParams = layoutParams
+                    mBinding.llNotificationIndicator.addView(indicators[i])
+                }
+
+                setCurrentIndicators(0)
+
+                mBinding.vpNotification.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        setCurrentIndicators(position)
+                    }
+                })
+            }
         }
 
-        setCurrentIndicators(0)
-
-        mBinding.vpNotification.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                setCurrentIndicators(position)
-            }
-        })
     }
 
     private fun setCurrentIndicators(index: Int) {
@@ -159,8 +202,8 @@ class HomeFragment :
             mCalendar.get(Calendar.DAY_OF_MONTH)
         ) { view, year, month, day ->
             val _month = month + 1
-            dateString = "$day/$_month/$year"
-            dialogBinding.tvSelectedVal.text = "$dateString$timeString"
+            dateString = "$year-$_month-$day"
+            dialogBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}$timeString"
             timeValidator.set(year, _month, day)
         }
 
@@ -181,20 +224,11 @@ class HomeFragment :
             }
             val hourString = if (hour < 10) "0$hour" else hour
             val min = if (minute < 10) "0$minute" else minute
-            timeString = ", $hourString:$min $am_pm"
-            dialogBinding.tvSelectedVal.text = "$dateString$timeString"
+            timeString = " $hourString:$min $am_pm"
+            dialogBinding.tvSelectedVal.text =
+                if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
+                else timeString
 
-//            val simpleDateFormat = SimpleDateFormat("hh:mm a")
-//
-//            val date1 = simpleDateFormat.parse("08:00 AM")
-//            val date2 = simpleDateFormat.parse("$hour:$minute $am_pm")
-//
-//            try {
-//                val difference: Long = date2!!.time - date1!!.time
-//                Log.d("RRR - ", "showCustomDialog: $difference")
-//            } catch (e1: Exception) {
-//                e1.printStackTrace()
-//            }
         }
 
         dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
@@ -202,7 +236,12 @@ class HomeFragment :
             if (dateString.isEmpty()) showToast("Select a valid date")
             else if (timeString.isEmpty()) showToast("Select a valid time")
             else {
-                mBinding.tvTimeValue.text = "$dateString$timeString"
+                mBinding.tvTimeValue.text =
+                    if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
+                    else timeString
+                formatedDate =
+                    displayingDateTimeFormatToAPIFormat("${displayingDateFormat(dateString)}$timeString")!!
+                Log.d(TAG, "showDateTimeDialog formatedDate: $formatedDate")
                 mDialog.dismiss()
             }
         }

@@ -14,14 +14,14 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
     R.layout.activity_dashboard,
     DashboardViewModel::class.java
 ) {
+
+    val home = HomeFragment()
+    val healthVault = HealthVaultFragment()
+    val appointment = AppointmentFragment()
+    val profile = ProfileFragment()
+
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
-
-        val home = HomeFragment()
-        val healthVault = HealthVaultFragment()
-        val appointment = AppointmentFragment()
-        val profile = ProfileFragment()
-
         setCurrentFragment(home)
 
         mBinding.bottomNavigationView.setOnItemSelectedListener {
@@ -36,7 +36,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
 
     }
 
-    private fun setCurrentFragment(fragment: Fragment) =
+    fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, fragment)
             commit()

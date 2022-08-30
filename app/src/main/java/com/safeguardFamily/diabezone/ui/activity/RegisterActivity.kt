@@ -12,13 +12,10 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_EDIT_PROFILE
@@ -28,16 +25,20 @@ import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityRegisterBinding
 import com.safeguardFamily.diabezone.viewModel.RegisterViewModel
+import lv.chi.photopicker.PhotoPickerFragment
 import java.io.File
+
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(
     R.layout.activity_register,
     RegisterViewModel::class.java
-) {
+), PhotoPickerFragment.Callback {
 
-    val user = SharedPref.getUser()
+    private val user = SharedPref.getUser()
 
-    var isEditProfile = false
+    private var isEditProfile = false
+
+    private var tempImageUri: Uri? = null
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
@@ -75,6 +76,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             mBinding.tvWelcome.text = "Update User Profile"
             mBinding.tieName.text = Editable.Factory.getInstance().newEditable(user.name)
             mBinding.tieEmail.text = Editable.Factory.getInstance().newEditable(user.email)
+            Glide.with(this).load(user.pic).into(mBinding.ivProfileImage)
         }
 
         mBinding.tieName.addTextChangedListener(object : TextWatcher {
@@ -94,8 +96,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 mBinding.tilEmail.error =
-                    if (p0.toString().isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(p0.toString())
-                            .matches()
+                    if (p0.toString().isNotEmpty()
+                        && Patterns.EMAIL_ADDRESS.matcher(p0.toString()).matches()
                     ) null else getString(R.string.valid_email)
             }
 
@@ -111,7 +113,15 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 if (isEditProfile) {
                     user.name = mBinding.tieName.text.toString()
                     user.email = mBinding.tieEmail.text.toString()
-                    mViewModel.updateUser(user) {
+                    if (tempImageUri != null && tempImageUri!!.path!!.length > 2) {
+//                        Log.d(TAG, "getRealPath: ${RealPathUtil.getRealPath(this, tempImageUri)!!}")
+//                        val f = File(RealPathUtil.getRealPath(this, tempImageUri)!!)
+                        val f = File(tempImageUri!!.path!!)
+                        mViewModel.multiPartUser(user, f) {
+                            showToast("Profile Updated Successfully")
+                            tempImageUri = null
+                        }
+                    } else mViewModel.updateUser(user) {
                         showToast("Profile Updated Successfully")
                     }
                 } else if (mBinding.cbTermsAndCondition.isChecked) {
@@ -124,42 +134,16 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             }
         }
 
-        val loadImage =
-            registerForActivityResult(ActivityResultContracts.GetContent()) {
-                it?.let { mBinding.ivProfileImage.setImageURI(it) }
-                Log.d("RRR -- ", "onceCreated: $it")
-            }
-
-        val tempImageUri = initTempUri()
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            mBinding.ivProfileImage.setImageURI(tempImageUri)
-        }
-
         mBinding.ivProfileImage.setOnClickListener {
-            val alertDialog: AlertDialog = this@RegisterActivity.let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    setMessage("Select an option for profile picture...")
-                    setPositiveButton("Pick from gallery") { dialog, id ->
-                        loadImage.launch("image/*")
-                    }
-                    setNegativeButton("Take picture") { dialog, id ->
-                        resultLauncher.launch(tempImageUri)
-                    }
-                }
-                builder.create()
-            }
-            alertDialog.show()
+            PhotoPickerFragment.newInstance(allowCamera = false)
+                .show(supportFragmentManager, "picker")
         }
+
     }
 
-    private fun initTempUri(): Uri {
-        val tempImagesDir = File(applicationContext.filesDir, "temp_images")
-        tempImagesDir.mkdir()
-        return FileProvider.getUriForFile(
-            applicationContext,
-            "com.example.fileprovider",
-            File(tempImagesDir, "image.jpg")
-        )
+    override fun onImagesPicked(photos: ArrayList<Uri>) {
+        mBinding.ivProfileImage.setImageURI(photos[0])
+        tempImageUri = photos[0]
     }
+
 }

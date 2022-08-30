@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <data>
 
         <variable
             name="item"
-            type="com.safeguardFamily.diabezone.model.DiabetesModel" />
+            type="com.safeguardFamily.diabezone.model.response.Log" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:paddingStart="5dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,10 +23,10 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.MontserratBold"
+                style="@style/Medium.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/time" />
 
@@ -43,8 +45,7 @@
                     android:layout_toStartOf="@+id/ivPickTime"
                     android:gravity="center"
                     android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
-                    android:text="@{item.time}" />
+                    android:paddingBottom="7dp" />
 
                 <ImageView
                     android:id="@+id/ivPickTime"
@@ -66,11 +67,12 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.MontserratBold"
+                style="@style/Medium.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:gravity="center"
+                android:minLines="2"
                 android:text="@string/blood_sugar" />
 
             <RelativeLayout
@@ -93,7 +95,7 @@
                     android:maxLength="3"
                     android:paddingTop="7dp"
                     android:paddingBottom="7dp"
-                    android:text="@{item.bloodSugar}" />
+                    android:text="@{item.logValue}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvLabel"
@@ -119,10 +121,10 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.MontserratBold"
+                style="@style/Medium.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/type" />
 
@@ -141,8 +143,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
-                    android:text="@string/type" />
+                    android:paddingBottom="7dp" />
 
                 <ImageView
                     android:id="@+id/ivTypePicker"

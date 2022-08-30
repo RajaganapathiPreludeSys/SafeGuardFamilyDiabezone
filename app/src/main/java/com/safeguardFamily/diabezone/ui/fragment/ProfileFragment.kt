@@ -8,6 +8,7 @@ import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.Bundle.URL_ABOUT
 import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.FragmentProfileBinding
 import com.safeguardFamily.diabezone.ui.activity.BookingDetailsActivity
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
@@ -26,7 +27,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         mBinding.mViewModel = mViewModel
 
         viewModel = (activity as DashboardActivity).mViewModel
-        mBinding.profile = viewModel.userResponse.value
 
         mBinding.rlBookingContainer.setOnClickListener {
             val bundle = android.os.Bundle()
@@ -70,7 +70,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
     override fun onResume() {
         super.onResume()
-        viewModel.getProfile()
+        mBinding.profile = SharedPref.getUser()
     }
 
 }

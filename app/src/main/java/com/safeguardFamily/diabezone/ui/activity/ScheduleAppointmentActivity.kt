@@ -17,7 +17,7 @@ import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.DateUtils.apiDateFormat
-import com.safeguardFamily.diabezone.common.DateUtils.formatDate
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFromTimeStamp
 import com.safeguardFamily.diabezone.common.DateUtils.getTimeStampFromSting
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBinding
@@ -101,18 +101,17 @@ class ScheduleAppointmentActivity :
         }
 
         mBinding.btJoinOnline.setOnClickListener {
-
             val c = Calendar.getInstance()
             c.timeInMillis = getTimeStampFromSting(mAppointment.booking_date)
 
             if (c.timeInMillis > getTimeStampFromSting(mAppointment.booking_date))
-
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse(mProvider.vchat_url)
                     )
                 )
+            else showToast("You can only join at the allocated time slot")
         }
 
         mViewModel.isBookingCompleted.observe(this) {
@@ -194,8 +193,9 @@ class ScheduleAppointmentActivity :
 
     private fun getAvailableSlots(calendar: Calendar, tempSlot: String? = "") {
         apiDate = apiDateFormat(calendar.timeInMillis)
-        mBinding.icBottomSheetConfirm.date = formatDate(calendar.timeInMillis)
-        mBinding.icBottomSheetTime.tvSelectedDate.text = formatDate(calendar.timeInMillis)
+        mBinding.icBottomSheetConfirm.date = displayingDateFromTimeStamp(calendar.timeInMillis)
+        mBinding.icBottomSheetTime.tvSelectedDate.text =
+            displayingDateFromTimeStamp(calendar.timeInMillis)
         mProvider.available_slots?.forEach { slot ->
             if (slot.month.startsWith(monthName[calendar[Calendar.MONTH]], true)) {
                 slot.days.forEach { day ->
