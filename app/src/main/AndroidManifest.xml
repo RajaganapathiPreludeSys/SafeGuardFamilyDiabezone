@@ -37,15 +37,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MobileActivity" />
-        <activity android:name=".ui.activity.OtpActivity" />
-        <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.WebViewActivity" />
-        <activity android:name=".ui.activity.DashboardActivity" />
-        <activity android:name=".ui.activity.LogBookActivity" />
-        <activity android:name=".ui.activity.DoctorDetailsActivity" />
-        <activity android:name=".ui.activity.ScheduleAppointmentActivity" />
-        <activity android:name=".ui.activity.BookingDetailsActivity" />
+        <activity
+            android:name=".ui.activity.MobileActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.OtpActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.WebViewActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.DashboardActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.LogBookActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.DoctorDetailsActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.ScheduleAppointmentActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.BookingDetailsActivity"
+            android:screenOrientation="nosensor" />
         <activity android:name="lv.chi.photopicker.utils.CameraActivity" />
 
         <receiver

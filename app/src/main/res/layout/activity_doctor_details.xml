@@ -25,7 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@color/royalBlue"
+                android:background="@color/blue"
                 android:padding="15dp">
 
                 <androidx.appcompat.widget.AppCompatImageView

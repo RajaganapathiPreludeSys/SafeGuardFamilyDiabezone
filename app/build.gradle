@@ -84,4 +84,7 @@ dependencies {
 
     //  For Image and Gallery Picker
     implementation "com.github.ChiliLabs:ChiliPhotoPicker:0.3.1"
+
+    //  For Chart
+    implementation 'com.github.highcharts:highcharts-android:10.2.0'
 }

@@ -24,7 +24,6 @@ class LogBookViewModel : BaseViewModel() {
     private fun getLogBook() {
         apiLoader.postValue(true)
         RetrofitClient.apiInterface.getLogs((IdRequest(uid = SharedPref.getUserId()!!)))
-//        RetrofitClient.apiInterface.getLogs(IdRequest(uid = "166080591250800878"))
             .enqueue(object : Callback<BaseResponse<DiabetesResponse>> {
                 override fun onResponse(
                     call: Call<BaseResponse<DiabetesResponse>>,

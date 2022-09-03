@@ -2,16 +2,21 @@ package com.safeguardFamily.diabezone.ui.fragment
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.gson.Gson
+import com.highsoft.highcharts.common.HIColor
+import com.highsoft.highcharts.common.hichartsclasses.*
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
@@ -24,28 +29,24 @@ import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.programs
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.providers
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
-import com.safeguardFamily.diabezone.model.DoctorModel
+import com.safeguardFamily.diabezone.databinding.FragmentHomeBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
-import com.safeguardFamily.diabezone.ui.graph.draw.data.InputData
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
-import java.io.IOException
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class HomeFragment :
-    BaseFragment<com.safeguardFamily.diabezone.databinding.FragmentHomeBinding, HomeViewModel>(
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(
         R.layout.fragment_home,
         HomeViewModel::class.java
     ) {
 
-    private var formatedDate = ""
+    private var formattedDate = ""
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        mBinding.charView.setData(createChartData())
         loadNotification()
 
         val items = arrayOf(" Select meal type", "Before Meal", "After Meal", "Random")
@@ -62,7 +63,7 @@ class HomeFragment :
                     .toInt() <= 0 -> showToast("Enter a valid blood sugar value")
                 else -> {
                     val request = DiabetesLogRequest(
-                        measureDate = formatedDate,
+                        measureDate = formattedDate,
                         logValue = mBinding.etBloodSugar.text.toString().toInt(),
                         uid = SharedPref.getUserId()!!,
                         period = when (mBinding.spType.selectedItem) {
@@ -86,24 +87,46 @@ class HomeFragment :
 
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
 
+        val date = arrayOf("Last week's data", "Last month's data", "All data")
+        mBinding.spDate.adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, date)
+
+        mBinding.spDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Log.d(TAG, "onItemSelected() called with:  p2 = $p2, p3 = $p3")
+                val chartCount = when (p2) {
+                    0 -> 7
+                    1 -> 30
+                    2 -> 50
+                    else -> 7
+                }
+                Log.d(TAG, "onItemSelected() called with:  chartCount = $chartCount")
+                loadChart(chartCount)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
+        mBinding.ivOne.setOnClickListener {
+            (activity as DashboardActivity?)!!.setCurrentFragment(
+                (activity as DashboardActivity?)!!.appointment
+            )
+        }
+        mBinding.ivTwo.setOnClickListener {
+            (activity as DashboardActivity?)!!.setCurrentFragment(
+                (activity as DashboardActivity?)!!.healthVault
+            )
+        }
+        mBinding.ivThree.setOnClickListener {
+            (activity as DashboardActivity?)!!.setCurrentFragment(
+                (activity as DashboardActivity?)!!.healthVault
+            )
+        }
+
     }
 
     private fun loadNotification() {
-
-        val json = try {
-            val inputStream = requireContext().assets.open("docter.json")
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.use { it.read(buffer) }
-            String(buffer)
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            ""
-        }
-
-        val list: List<DoctorModel> = Gson()
-            .fromJson(json, Array<DoctorModel>::class.java).toList()
-
         mViewModel.notifications.observe(this) {
             val mAdapter = NotificationAdapter(it) { string ->
                 when (string) {
@@ -200,31 +223,31 @@ class HomeFragment :
             mCalendar.get(Calendar.YEAR),
             mCalendar.get(Calendar.MONTH),
             mCalendar.get(Calendar.DAY_OF_MONTH)
-        ) { view, year, month, day ->
-            val _month = month + 1
-            dateString = "$year-$_month-$day"
+        ) { _, year, month, day ->
+            val m = month + 1
+            dateString = "$year-$m-$day"
             dialogBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}$timeString"
-            timeValidator.set(year, _month, day)
+            timeValidator.set(year, m, day)
         }
 
-        dialogBinding.timePicker.setOnTimeChangedListener { tp, _hour, minute ->
+        dialogBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
             var hour = _hour
-            var am_pm = ""
+            val amPm: String
             when {
                 hour == 0 -> {
                     hour += 12
-                    am_pm = "AM"
+                    amPm = "AM"
                 }
-                hour == 12 -> am_pm = "PM"
+                hour == 12 -> amPm = "PM"
                 hour > 12 -> {
                     hour -= 12
-                    am_pm = "PM"
+                    amPm = "PM"
                 }
-                else -> am_pm = "AM"
+                else -> amPm = "AM"
             }
             val hourString = if (hour < 10) "0$hour" else hour
             val min = if (minute < 10) "0$minute" else minute
-            timeString = " $hourString:$min $am_pm"
+            timeString = " $hourString:$min $amPm"
             dialogBinding.tvSelectedVal.text =
                 if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
                 else timeString
@@ -239,32 +262,173 @@ class HomeFragment :
                 mBinding.tvTimeValue.text =
                     if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
                     else timeString
-                formatedDate =
+                formattedDate =
                     displayingDateTimeFormatToAPIFormat("${displayingDateFormat(dateString)}$timeString")!!
-                Log.d(TAG, "showDateTimeDialog formatedDate: $formatedDate")
+                Log.d(TAG, "showDateTimeDialog formattedDate: $formattedDate")
                 mDialog.dismiss()
             }
         }
     }
 
-    private fun createChartData(): List<InputData> {
-        val dataList = ArrayList<InputData>()
-        dataList.add(InputData(110))
-        dataList.add(InputData(25))
-        dataList.add(InputData(0))
-        dataList.add(InputData(200))
-        dataList.add(InputData(20))
-        dataList.add(InputData(80))
-        dataList.add(InputData(40))
+    private fun loadChart(chartCount: Int) {
+        val options = HIOptions()
+        mBinding.hc.options = options
+        val chart = HIChart()
+        chart.zoomType = "x"
+        options.chart = chart
 
-        var currMillis = System.currentTimeMillis()
-        currMillis -= currMillis % TimeUnit.DAYS.toMillis(1)
-        for (i in dataList.indices) {
-            val position = (dataList.size - 1 - i).toLong()
-            val offsetMillis = TimeUnit.DAYS.toMillis(position)
-            val millis = currMillis - offsetMillis
-            dataList[i].millis = millis
+        val title = HITitle()
+        title.text = "Blood Sugar mg/dl"
+        options.title = title
+
+        val xAxis = HIXAxis()
+        xAxis.title = HITitle()
+        xAxis.title.text = "Date"
+        val charArray = ArrayList<String>()
+        for (i in chartCount..1) charArray.add(i.toString())
+        xAxis.categories = charArray
+        options.xAxis = object : ArrayList<HIXAxis?>() {
+            init {
+                add(xAxis)
+            }
         }
-        return dataList
+
+        val yAxis = HIYAxis()
+        yAxis.title = HITitle()
+        yAxis.title.text = "mg/dl"
+        options.yAxis = object : ArrayList<HIYAxis?>() {
+            init {
+                add(yAxis)
+            }
+        }
+
+        val plotOptions = HIPlotOptions()
+        plotOptions.line = HILine()
+        plotOptions.line.dataLabels = arrayListOf<HIDataLabels>()
+        plotOptions.line.enableMouseTracking = false
+        options.plotOptions = plotOptions
+
+        val series1 = HILine()
+        series1.name = "Before meal"
+        series1.color = HIColor.initWithName("red")
+        val s1 = ArrayList<Int>()
+        for (i in 1..chartCount) s1.add((110..160).random())
+        val series1Data =
+            arrayOf<Number>(
+                7.0,
+                6.9,
+                9.5,
+                14.5,
+                18.4,
+                21.5,
+                25.2,
+                26.5,
+                23.3,
+                18.3,
+                13.9,
+                9.6,
+                7.0,
+                6.9,
+                9.5,
+                14.5,
+                18.4,
+                21.5,
+                25.2,
+                26.5,
+                23.3,
+                18.3,
+                13.9,
+                9.6,
+                40
+            )
+        series1.data = s1
+//        series1.data = ArrayList(listOf(*series1Data))
+
+        val series2 = HILine()
+        series2.name = "After meal"
+        series2.color = HIColor.initWithName("blue")
+        val s2 = ArrayList<Int>()
+        for (i in 1..chartCount) s2.add((100..150).random())
+        val series2Data =
+            arrayOf<Number?>(
+                3.9,
+                4.2,
+                0,
+                0,
+                0,
+                5.7,
+                15.2,
+                11.9,
+                15.2,
+                null,
+                null,
+                null,
+                0,
+                0,
+                0,
+                0,
+                0,
+                null,
+                15.2,
+                null,
+                null,
+                null,
+                15.2,
+                null,
+                17.0,
+                16.6,
+                14.2,
+                10.3,
+                6.6,
+                4.8,
+                40
+            )
+//        series2.data = s2
+        series2.data = ArrayList(listOf(*series2Data))
+
+        val series3 = HILine()
+        series3.name = "Random"
+        series3.color = HIColor.initWithName("green")
+        val s3 = ArrayList<Int>()
+        for (i in 1..chartCount) s3.add((120..170).random())
+        val series3Data =
+            arrayOf<Number?>(
+                3.9,
+                4.2,
+                0,
+                0,
+                0,
+                5.7,
+                15.2,
+                11.9,
+                15.2,
+                null,
+                null,
+                null,
+                0,
+                0,
+                0,
+                0,
+                0,
+                null,
+                15.2,
+                null,
+                null,
+                null,
+                15.2,
+                null,
+                17.0,
+                16.6,
+                14.2,
+                10.3,
+                6.6,
+                4.8,
+                25
+            )
+        series3.data = s3
+
+        options.series = ArrayList(listOf(series1, series2, series3))
+        mBinding.hc.options = options
     }
+
 }

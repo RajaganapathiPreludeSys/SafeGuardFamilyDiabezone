@@ -1,36 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="royalBlue">#1648CE</color>
-    <color name="black">#091F44</color>
-    <color name="white">#FFFFFF</color>
+    <color name="bgBlue">#EDF8FF</color>    //  Common BG Blue
 
-    <color name="bgGrey">#E5E8F4</color>
-    // For edittext
+    <color name="black">#14305E</color>     //  Common Black Font
+    <color name="blue">#0957DE</color>      //  Common Blue Font
+    <color name="red">#F6696D</color>       //  Common Red Font
+    <color name="grey">#717171</color>      //  Common Grey Font
+    <color name="white">#FFFFFF</color>     //  Common White Font
+    <color name="yellow">#F1A33B</color>
 
-    <color name="bgBlue">#E9F5FE</color>
-    <color name="bgRed">#FAE9E9</color>
-    <color name="bgGreen">#E4F8EB</color>
-    <color name="bgOrange">#FEF3E7</color>
-    <color name="bgBackground">#F2F4F7</color>
-
-    <color name="red">#D20D00</color>
-    <color name="green">#55A06F</color>
-    <color name="orange">#EF802F</color>
-
-
-    <color name="gray_50">#FAFAFA</color>
-    <color name="gray_100">#F5F5F5</color>
-    <color name="gray_200">#EEEEEE</color>
-    <color name="gray_300">#E0E0E0</color>
-    <color name="gray_400">#BDBDBD</color>
-    <color name="gray_500">#9E9E9E</color>
-    <color name="gray_600">#757575</color>
-    <color name="gray_700">#616161</color>
-    <color name="gray_800">#424242</color>
-    <color name="gray_900">#212121</color>
-
-    <color name="gray">#f4f2ee</color>
-    <color name="light_blue">#b2ccde</color>
-    <color name="blue">#6dbef4</color>
+    <color name="blueLine">#D6E3EC</color>
+    <color name="bgWhite">#FAFDFF</color>
+    <color name="bgGrey">#EEEEEE</color>
 
 </resources>
