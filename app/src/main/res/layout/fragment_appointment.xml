@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/xLarge.MontserratBold"
+                style="@style/Large.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -27,67 +27,24 @@
                 android:padding="15dp"
                 android:text="@string/appointment" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/clBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@drawable/bg_orange"
-                android:padding="20dp"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv1"
-                    style="@style/xxLarge.MontserratBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="1 on 1 Sessions"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv2"
-                    style="@style/Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Top Diabetes Doctors\nAvaiable To You"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv3"
-                    style="@style/xLarge.MontserratBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Get Consultation From  Home"
-                    android:textColor="#EF802F"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv2" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_layer"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_appointment_banner"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvUpcomingAppointment"
-                style="@style/Large"
+                style="@style/Large.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:text="Upcoming Appointment"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="gone" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvContainer"
@@ -95,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,15 +77,14 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large"
+                android:id="@+id/tvBookAnother"
+                style="@style/Large.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:text="Make An Appointment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="gone"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:text="Book Another Appointments" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDoctors"

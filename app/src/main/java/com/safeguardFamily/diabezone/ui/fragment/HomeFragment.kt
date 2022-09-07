@@ -2,38 +2,39 @@ package com.safeguardFamily.diabezone.ui.fragment
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.highsoft.highcharts.common.HIColor
 import com.highsoft.highcharts.common.hichartsclasses.*
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
+import com.safeguardFamily.diabezone.common.Bundle.date12Format
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDateTimeFormatToAPIFormat
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDayFromAPI
+import com.safeguardFamily.diabezone.common.DateUtils.formatTo24Hrs
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.appointment
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.diabetesLog
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.healthVault
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.programs
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.providers
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
+import com.safeguardFamily.diabezone.databinding.DialogDateBinding
+import com.safeguardFamily.diabezone.databinding.DialogTimeBinding
 import com.safeguardFamily.diabezone.databinding.FragmentHomeBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
+import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeFragment :
@@ -42,39 +43,59 @@ class HomeFragment :
         HomeViewModel::class.java
     ) {
 
-    private var formattedDate = ""
+    private var mProfile = SharedPref.getUser()
+    private var dateString = ""
+    private var timeString = ""
+
+    private var isGraphLoaded = false
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
         loadNotification()
 
-        val items = arrayOf(" Select meal type", "Before Meal", "After Meal", "Random")
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
+        val items = arrayOf("Select type", "Fasting Blood Sugar", "After Meal", "Random")
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, items)
         mBinding.spType.adapter = adapter
 
-        mBinding.btAddToLog.setOnClickListener {
+        var mCalendar = Calendar.getInstance()
+        dateString = "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        }"
+        mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+        timeString = SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
+        mBinding.tvTime.text = timeString
+
+        mBinding.btAddLog.setOnClickListener {
             when {
-                mBinding.tvTimeValue.text == "Select Time" -> showToast("Select a valid date and time")
                 mBinding.etBloodSugar.text?.isNotEmpty() == false -> showToast("Enter a valid blood sugar value")
-                mBinding.spType.selectedItem == " Select meal type" -> showToast("Select a valid meal type")
+                mBinding.spType.selectedItem == "Select type" -> showToast("Select a valid meal type")
                 mBinding.etBloodSugar.text.toString()
                     .toInt() <= 0 -> showToast("Enter a valid blood sugar value")
                 else -> {
+
+                    Log.d(TAG, "onceCreated: $dateString $timeString")
+                    Log.d(TAG, "onceCreated: $dateString ${formatTo24Hrs(timeString)}")
                     val request = DiabetesLogRequest(
-                        measureDate = formattedDate,
+                        measureDate = "$dateString ${formatTo24Hrs(timeString)}",
                         logValue = mBinding.etBloodSugar.text.toString().toInt(),
                         uid = SharedPref.getUserId()!!,
                         period = when (mBinding.spType.selectedItem) {
-                            "Before Meal" -> "before_meal"
+                            "Fasting Blood Sugar" -> "before_meal"
                             "After Meal" -> "after_meal"
                             "Random" -> "random"
-                            else -> ""
+                            else -> "before_meal"
                         }
                     )
                     mViewModel.addDiabetesLog(request) {
-                        mBinding.tvTimeValue.text = getString(R.string.select_time)
+                        mCalendar = Calendar.getInstance()
+                        dateString =
+                            "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
+                                mCalendar.get(Calendar.DAY_OF_MONTH)
+                            }"
+                        mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                        mBinding.tvTime.text =
+                            SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
                         mBinding.etBloodSugar.text = null
                         mBinding.spType.adapter = adapter
                         showToast("Diabetes Log Saved")
@@ -83,45 +104,50 @@ class HomeFragment :
             }
         }
 
-        mBinding.tlTimeContainer.setOnClickListener { showDateTimeDialog() }
-
+        mBinding.tlDateContainer.setOnClickListener { showDateDialog() }
+        mBinding.tlTimeContainer.setOnClickListener { showTimeDialog() }
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
 
-        val date = arrayOf("Last week's data", "Last month's data", "All data")
-        mBinding.spDate.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, date)
-
-        mBinding.spDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d(TAG, "onItemSelected() called with:  p2 = $p2, p3 = $p3")
-                val chartCount = when (p2) {
-                    0 -> 7
-                    1 -> 30
-                    2 -> 50
-                    else -> 7
-                }
-                Log.d(TAG, "onItemSelected() called with:  chartCount = $chartCount")
-                loadChart(chartCount)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-
-        mBinding.ivOne.setOnClickListener {
+        mBinding.cvOne.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.appointment
             )
         }
-        mBinding.ivTwo.setOnClickListener {
+        mBinding.cvTwo.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.healthVault
             )
         }
-        mBinding.ivThree.setOnClickListener {
+        mBinding.cvThree.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.healthVault
             )
+        }
+
+        loadProfileImg(mProfile.pic, mBinding.ivProfileImage)
+        mBinding.tvName.text = mProfile.name
+
+//        if (!isGraphLoaded)
+        mViewModel.getHome {
+            mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
+                when (i) {
+                    mBinding.radioButton1.id -> loadChart(
+                        it.last_7_days!!.before_meal!!,
+                        "Fasting Blood Sugar"
+                    )
+                    mBinding.radioButton2.id -> loadChart(
+                        it.last_7_days!!.after_meal!!,
+                        "After Meal"
+                    )
+                    mBinding.radioButton3.id -> loadChart(
+                        it.last_7_days!!.random!!,
+                        "Random"
+                    )
+                }
+            }
+            mBinding.radioGroup1.check(mBinding.radioButton1.id)
+            loadChart(it.last_7_days!!.before_meal!!, "Fasting Blood Sugar")
+            isGraphLoaded = true
         }
 
     }
@@ -198,14 +224,11 @@ class HomeFragment :
         }
     }
 
-    private fun showDateTimeDialog() {
-        var dateString = ""
-        var timeString = ""
-        val timeValidator = Calendar.getInstance()
-        val dialogBinding: DialogDateTimeBinding =
+    private fun showDateDialog() {
+        val dialogDateBinding: DialogDateBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(requireContext()),
-                R.layout.dialog_date_time,
+                R.layout.dialog_date,
                 null,
                 false
             )
@@ -213,24 +236,54 @@ class HomeFragment :
         val mDialog = AlertDialog.Builder(requireContext(), 0).create()
 
         mDialog.apply {
-            setView(dialogBinding.root)
+            setView(dialogDateBinding.root)
             setCancelable(false)
         }.show()
 
         val mCalendar = Calendar.getInstance()
-        dialogBinding.datePicker.maxDate = mCalendar.timeInMillis
-        dialogBinding.datePicker.init(
+        dialogDateBinding.datePicker.maxDate = mCalendar.timeInMillis
+
+        dateString = "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH)}-${
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        }"
+        dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
+        dialogDateBinding.datePicker.init(
             mCalendar.get(Calendar.YEAR),
             mCalendar.get(Calendar.MONTH),
             mCalendar.get(Calendar.DAY_OF_MONTH)
         ) { _, year, month, day ->
             val m = month + 1
             dateString = "$year-$m-$day"
-            dialogBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}$timeString"
-            timeValidator.set(year, m, day)
+            dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
         }
 
-        dialogBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
+        dialogDateBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+        dialogDateBinding.btPickDate.setOnClickListener {
+            if (dateString.isEmpty()) showToast("Select a valid date")
+            else {
+                mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                mDialog.dismiss()
+            }
+        }
+    }
+
+    private fun showTimeDialog() {
+        val dialogTimeBinding: DialogTimeBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(requireContext()),
+                R.layout.dialog_time,
+                null,
+                false
+            )
+
+        val mDialog = AlertDialog.Builder(requireContext(), 0).create()
+
+        mDialog.apply {
+            setView(dialogTimeBinding.root)
+            setCancelable(false)
+        }.show()
+
+        dialogTimeBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
             var hour = _hour
             val amPm: String
             when {
@@ -248,26 +301,80 @@ class HomeFragment :
             val hourString = if (hour < 10) "0$hour" else hour
             val min = if (minute < 10) "0$minute" else minute
             timeString = " $hourString:$min $amPm"
-            dialogBinding.tvSelectedVal.text =
-                if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
-                else timeString
-
+            dialogTimeBinding.tvSelectedVal.text = timeString
         }
 
-        dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
-        dialogBinding.btPickDate.setOnClickListener {
-            if (dateString.isEmpty()) showToast("Select a valid date")
-            else if (timeString.isEmpty()) showToast("Select a valid time")
+        dialogTimeBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+        dialogTimeBinding.btPickTime.setOnClickListener {
+            if (timeString.isEmpty()) showToast("Select a valid time")
             else {
-                mBinding.tvTimeValue.text =
-                    if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
-                    else timeString
-                formattedDate =
-                    displayingDateTimeFormatToAPIFormat("${displayingDateFormat(dateString)}$timeString")!!
-                Log.d(TAG, "showDateTimeDialog formattedDate: $formattedDate")
+                mBinding.tvTime.text = timeString
                 mDialog.dismiss()
             }
         }
+    }
+
+    private val options = HIOptions()
+    private fun loadChart(chartData: GraphItems, type: String) {
+
+        mBinding.tvAvg.text = chartData.summary!!.avg.toString()
+        mBinding.tvTaget.text = chartData.summary!!.target.toString()
+        mBinding.tvMin.text = chartData.summary!!.min.toString()
+        mBinding.tvMax.text = chartData.summary!!.max.toString()
+        mBinding.tvHyper.text = chartData.summary!!.incident!!.hyper.toString()
+        mBinding.tvHypo.text = chartData.summary!!.incident!!.hypo.toString()
+
+//        val options = HIOptions()
+//        mBinding.hc.options = options
+
+        val xAxis = HIXAxis()
+        xAxis.title = HITitle()
+        xAxis.title.text = "Log Date"
+        val charArray = ArrayList<String>()
+
+        val title = HITitle()
+        title.text = "Blood Sugar mg/dl"
+        options.title = title
+
+        val s1 = ArrayList<Int>()
+
+        chartData.list!!.asReversed().forEach {
+            charArray.add(displayingDayFromAPI(it.measure_date!!)!!)
+            s1.add(it.log_value!!.toInt())
+        }
+
+        xAxis.categories = charArray
+        options.xAxis = object : ArrayList<HIXAxis?>() {
+            init {
+                add(xAxis)
+            }
+        }
+
+        val yAxis = HIYAxis()
+        yAxis.title = HITitle()
+        yAxis.title.text = "mg/dl"
+        options.yAxis = object : ArrayList<HIYAxis?>() {
+            init {
+                add(yAxis)
+            }
+        }
+
+        val plotOptions = HIPlotOptions()
+        plotOptions.line = HILine()
+        plotOptions.line.dataLabels = arrayListOf<HIDataLabels>()
+        plotOptions.line.enableMouseTracking = false
+        options.plotOptions = plotOptions
+
+        val series1 = HILine()
+        series1.name = type
+        series1.color = HIColor.initWithName("red")
+
+        series1.data = s1
+
+        options.series = ArrayList(listOf(series1))
+        if (mBinding.hc.options == null)
+            mBinding.hc.options = options
+        else mBinding.hc.update(options)
     }
 
     private fun loadChart(chartCount: Int) {
@@ -309,7 +416,7 @@ class HomeFragment :
         options.plotOptions = plotOptions
 
         val series1 = HILine()
-        series1.name = "Before meal"
+        series1.name = "Fasting Blood Sugar"
         series1.color = HIColor.initWithName("red")
         val s1 = ArrayList<Int>()
         for (i in 1..chartCount) s1.add((110..160).random())

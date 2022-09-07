@@ -1,85 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rlContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/tvSelectedDate"
-    android:layout_marginTop="5dp"
     android:background="@drawable/bg_white_round"
-    android:padding="15dp">
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvName"
-        style="@style/Large.MontserratBold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/cvProfileImages" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvProfession"
-        style="@style/Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvName"
-        android:layout_toStartOf="@id/cvProfileImages"
-        android:minLines="2" />
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/tvFee"
+        android:id="@+id/rlDiabetes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvProfession"
-        android:layout_toStartOf="@id/cvProfileImages"
-        android:visibility="invisible">
+        android:padding="15dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star_filled" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cvProfileImages"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_profile_thumb"
+            app:civ_border_color="@color/blue"
+            app:civ_border_width="1dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRating"
-            style="@style/Small"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ivRating"
-            android:text="Rating" />
+            android:layout_toEndOf="@id/cvProfileImages"
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRatingVal"
-            style="@style/Small.MontserratBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvRating"
-            android:layout_toEndOf="@id/ivRating"
-            android:text="4.78 out of 5" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
+                style="@style/Medium.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProfession"
+                style="@style/Medium.Blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEducation"
+                style="@style/Small.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvProfileImages"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentEnd="true"
-        app:cardCornerRadius="15dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivProfileImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@color/bgGrey"
-            android:scaleType="centerCrop" />
-
-    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blueLine" />
 
     <LinearLayout
         android:id="@+id/llDateTimeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvFee"
-        android:background="@drawable/bg_blue_round"
         android:padding="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -88,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_calendar"
+            android:drawableStart="@drawable/ic_appointment"
+            android:drawableTint="@color/blue"
             android:drawablePadding="5dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -97,39 +83,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_clock"
+            android:drawableStart="@drawable/ic_schedule"
             android:drawablePadding="5dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/llDateTimeContainer"
-        android:layout_marginTop="15dp">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btJoinOnline"
-            style="@style/Large.White"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_royal_blue_round"
-            android:gravity="center"
-            android:text="@string/join_online"
-            android:textAllCaps="false" />
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btReschedule"
-            style="@style/Large.Blue"
+            style="@style/Medium.Blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/bg_blue_border"
             android:gravity="center"
             android:text="@string/reschedule"
             android:textAllCaps="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btJoinOnline"
+            style="@style/Medium.White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_royal_blue_round"
+            android:gravity="center"
+            android:text="@string/join_online"
+            android:textAllCaps="false" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

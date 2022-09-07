@@ -9,68 +9,119 @@
             type="com.safeguardFamily.diabezone.model.response.Provider" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rlDiabetes"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvProfileImages"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="15dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivProfileImages"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/bgGrey"
-                android:scaleType="centerCrop" />
-
-        </androidx.cardview.widget.CardView>
+        android:layout_margin="10dp">
 
         <LinearLayout
-            android:id="@+id/llContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/cvProfileImages"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTitle"
-                style="@style/Large.MontserratBold"
+            <RelativeLayout
+                android:id="@+id/rlDiabetes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.name}" />
+                android:padding="15dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/cvProfileImages"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/ic_profile_thumb"
+                    app:civ_border_color="@color/blue"
+                    app:civ_border_width="1dp"
+                    app:loadImage="@{item.pic}" />
+
+                <LinearLayout
+                    android:id="@+id/llContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/cvProfileImages"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{item.name}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{item.speciality}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Small.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{item.education}" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/blueLine" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDesc"
-                style="@style/Medium"
+                style="@style/Small.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_language"
+                android:drawablePadding="5dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{item.speciality}" />
+                android:text="@{item.languages}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDays"
+                    style="@style/Small.Grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableStart="@drawable/ic_appointment"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/blue"
+                    android:ellipsize="end"
+                    android:maxLines="2" />
+
+                <LinearLayout
+                    android:id="@+id/llDays"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llContainer"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/cvProfileImages"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="5dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{item.rating}"
-            android:visibility="gone" />
-
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>

@@ -5,10 +5,7 @@ import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.request.IdRequest
-import com.safeguardFamily.diabezone.model.response.BaseResponse
-import com.safeguardFamily.diabezone.model.response.DiabetesLogResponse
-import com.safeguardFamily.diabezone.model.response.DiabetesResponse
-import com.safeguardFamily.diabezone.model.response.Log
+import com.safeguardFamily.diabezone.model.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +13,8 @@ import retrofit2.Response
 class LogBookViewModel : BaseViewModel() {
 
     var logs = MutableLiveData<List<Log>>()
+    var pdfUrl = MutableLiveData<String>()
+    var graphData = MutableLiveData<Graph>()
 
     init {
         getLogBook()
@@ -30,7 +29,11 @@ class LogBookViewModel : BaseViewModel() {
                     response: Response<BaseResponse<DiabetesResponse>>
                 ) {
                     if (response.isSuccessful)
-                        if (response.body()!!.success!!) logs.postValue(response.body()!!.data!!.logs!!)
+                        if (response.body()!!.success!!) {
+                            logs.postValue(response.body()!!.data!!.logs!!)
+                            pdfUrl.postValue(response.body()!!.data!!.pdfUrl)
+                            graphData.postValue(response.body()!!.data!!.graph)
+                        }
                         else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

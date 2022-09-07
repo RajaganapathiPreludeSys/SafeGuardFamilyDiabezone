@@ -37,8 +37,9 @@ object Bundle {
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
     const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
 
-    const val DATE_FORMAT = "LLL dd, yyyy"
-    const val DATE_TIME_FORMAT = "LLL dd, yyyy hh:mm a"
+    const val DATE_FORMAT = "dd LLL, yyyy"
+    const val DAY_FORMAT = "dd LLL"
+    const val DATE_TIME_FORMAT = "dd LLL, yyyy hh:mm a"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
     const val API_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"

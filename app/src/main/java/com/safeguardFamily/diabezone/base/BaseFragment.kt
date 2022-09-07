@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -87,10 +88,14 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    open fun loadProfileImg(url: String, imageView: ImageView) =
+        (activity as BaseActivity<*, *>).loadProfileImg(url, imageView)
+
     open fun openWhatsApp(num: String) = (activity as BaseActivity<*, *>).openWhatsApp(num)
     open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
     open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
     open fun longLog(sb: String) = (activity as BaseActivity<*, *>).longLog(sb)
     open fun logout() = (activity as BaseActivity<*, *>).logout()
+
 
 }

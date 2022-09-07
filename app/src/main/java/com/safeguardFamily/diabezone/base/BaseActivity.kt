@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.LayoutRes
@@ -25,6 +26,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.SharedPref
@@ -118,9 +120,11 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         view?.let { activity?.hideKeyboard(it) }
     }
 
-    fun Activity.hideKeyboard() {
-        hideKeyboard(currentFocus ?: View(this))
+    open fun loadProfileImg(url: String, imageView: ImageView){
+        Glide.with(this).load(url).into(imageView)
     }
+
+    fun Activity.hideKeyboard() = hideKeyboard(currentFocus ?: View(this))
 
     private fun Context.hideKeyboard(view: View) {
         val inputMethodManager =

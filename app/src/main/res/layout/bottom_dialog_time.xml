@@ -14,13 +14,13 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSelectedDate"
-            style="@style/xLarge.White.MontserratBold"
+            style="@style/Large.White.MontserratBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSelectedSlot"
-            style="@style/xLarge.White.MontserratBold"
+            style="@style/Large.White.MontserratBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvSelectedDate"
@@ -29,7 +29,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTime"
-            style="@style/xLarge.White"
+            style="@style/Large.White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvSelectedSlot"
@@ -50,7 +50,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTimes"
-                style="@style/xxLarge.White"
+                style="@style/xLarge.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
@@ -61,7 +61,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btMakeAppointment"
-            style="@style/Large.Blue"
+            style="@style/Medium.Blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlContainer"

@@ -46,16 +46,16 @@ class AppointmentAdapter(items: List<Appointment>) :
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvName: TextView
         private val tvProfession: TextView
-        private val tvRatingVal: TextView
         private val tvDate: TextView
         private val tvTime: TextView
+        private val tvEducation: TextView
         private val btJoinOnline: Button
         private val btReschedule: Button
         private val ivProfileImage: ImageView
         fun setOnBoardingData(item: Appointment) {
             tvName.text = item.provider.name
             tvProfession.text = item.provider.speciality
-            tvRatingVal.text = item.provider.rating + " out of 5"
+            tvEducation.text = item.provider.education
             tvDate.text = displayingDateFromAPI(item.booking_date)
             tvTime.text = formatTo12Hrs(item.slot)?.uppercase()
             Glide.with(itemView.context).load(item.provider.pic).into(ivProfileImage)
@@ -90,12 +90,12 @@ class AppointmentAdapter(items: List<Appointment>) :
         init {
             tvName = itemView.findViewById(R.id.tvName)
             tvProfession = itemView.findViewById(R.id.tvProfession)
-            tvRatingVal = itemView.findViewById(R.id.tvRatingVal)
+            tvEducation = itemView.findViewById(R.id.tvEducation)
             tvDate = itemView.findViewById(R.id.tvDate)
             tvTime = itemView.findViewById(R.id.tvTime)
             btJoinOnline = itemView.findViewById(R.id.btJoinOnline)
             btReschedule = itemView.findViewById(R.id.btReschedule)
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImage)
+            ivProfileImage = itemView.findViewById(R.id.cvProfileImages)
         }
     }
 

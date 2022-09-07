@@ -10,10 +10,7 @@ import com.safeguardFamily.diabezone.common.Bundle.URL_ABOUT
 import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.FragmentProfileBinding
-import com.safeguardFamily.diabezone.ui.activity.BookingDetailsActivity
-import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
-import com.safeguardFamily.diabezone.ui.activity.RegisterActivity
-import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
+import com.safeguardFamily.diabezone.ui.activity.*
 import com.safeguardFamily.diabezone.viewModel.DashboardViewModel
 import com.safeguardFamily.diabezone.viewModel.ProfileViewModel
 
@@ -39,7 +36,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
         mBinding.clTermsService.setOnClickListener {
             val mBundle = android.os.Bundle()
-            mBundle.putString(Bundle.KEY_WEB_KEY, "Teams and Service")
+            mBundle.putString(Bundle.KEY_WEB_KEY, "Terms and Service")
             mBundle.putString(Bundle.KEY_WEB_URL, URL_TERMS)
             navigateTo(WebViewActivity::class.java, mBundle)
         }
@@ -52,15 +49,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         }
 
         mBinding.clContact.setOnClickListener {
-            val dialIntent = Intent(Intent.ACTION_DIAL)
-            dialIntent.data =
-                Uri.parse("tel:" + viewModel.userResponse.value!!.health_coach!!.mobile)
-            startActivity(dialIntent)
+
+            if (SharedPref.isMember()) {
+                val dialIntent = Intent(Intent.ACTION_DIAL)
+                dialIntent.data =
+                    Uri.parse("tel:" + viewModel.userResponse.value!!.health_coach!!.mobile)
+                startActivity(dialIntent)
+            } else {
+                showToast("Only members can contact their Health Coach")
+                navigateTo(SubscriptionActivity::class.java)
+            }
         }
 
         mBinding.clLogout.setOnClickListener { logout() }
 
-        mBinding.ivEdit.setOnClickListener {
+        mBinding.rlDiabetes.setOnClickListener {
             val mBundle = android.os.Bundle()
             mBundle.putBoolean(Bundle.KEY_EDIT_PROFILE, true)
             navigateTo(RegisterActivity::class.java, mBundle)

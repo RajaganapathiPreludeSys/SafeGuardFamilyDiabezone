@@ -1,8 +1,11 @@
 package com.safeguardFamily.diabezone.ui.activity
 
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.adapter.DaysAdapter
+import com.safeguardFamily.diabezone.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityDoctorDetailsBinding
@@ -27,11 +30,10 @@ class DoctorDetailsActivity :
 
         if (intent.extras?.containsKey(Bundle.KEY_TITLE) == true) {
             mBinding.tvTitle.text = intent.extras?.getString(Bundle.KEY_TITLE)
-            mBinding.cvAvailability.visibility = View.GONE
             mBinding.llMakeAppointment.visibility = View.GONE
         } else mBinding.llContainer.visibility = View.GONE
 
-        mBinding.llMakeAppointment.setOnClickListener {
+        mBinding.llBookAppointment.setOnClickListener {
             val bundle = android.os.Bundle()
             bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(provider))
             navigateTo(ScheduleAppointmentActivity::class.java, bundle, true)
@@ -47,6 +49,10 @@ class DoctorDetailsActivity :
             navigateTo(ScheduleAppointmentActivity::class.java, bundle, true)
         }
 
+        mBinding.rvAvailability.adapter = DaysAdapter(provider.timings.days.split(" "))
+        mBinding.rvAvailability.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        mBinding.rvAvailability.setHasFixedSize(true)
     }
 
 }

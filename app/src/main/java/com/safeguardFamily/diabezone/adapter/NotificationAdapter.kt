@@ -55,7 +55,6 @@ class NotificationAdapter(
             tvDesc = itemView.findViewById(R.id.tvDesc)
             ivProfileImage = itemView.findViewById(R.id.ivProfileImages)
             rlContainer = itemView.findViewById(R.id.rlContainer)
-
         }
     }
 

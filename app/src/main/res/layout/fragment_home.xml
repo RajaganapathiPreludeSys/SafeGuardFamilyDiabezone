@@ -19,24 +19,93 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vpNotification"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
-                    android:id="@+id/llNotificationIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvProfileImages"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="5dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivProfileImage"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@color/bgGrey"
+                                android:scaleType="centerCrop" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/cvProfileImages"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/welcome" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvName"
+                                style="@style/xLarge.Blue.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:minLines="2" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/vpNotification"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:id="@+id/llNotificationIndicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingBottom="10dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,12 +115,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="25dp">
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="15dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Large.MontserratBold"
+                        style="@style/xLarge.Blue.MontserratSemi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -59,197 +127,213 @@
 
                     <ImageView
                         android:id="@+id/ivOpenLogs"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
                         android:contentDescription="@string/app_name"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_menu" />
+                        android:src="@drawable/ic_arrow_circle_right" />
 
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/rlDiabetes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_margin="10dp"
+                        android:baselineAligned="false"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:baselineAligned="false">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Large.MontserratBold"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/time" />
-
-                            <RelativeLayout
-                                android:id="@+id/tlTimeContainer"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_blue">
+                                android:orientation="vertical">
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvTimeValue"
-                                    style="@style/Large"
+                                    style="@style/Medium.Grey.MontserratSemi"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@+id/ivPickTime"
-                                    android:gravity="center"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
-                                    android:text="@string/select_time" />
+                                    android:text="@string/date" />
 
-                                <ImageView
-                                    android:id="@+id/ivPickTime"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:padding="9dp"
-                                    android:src="@drawable/ic_down_arrow_blue" />
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Large.MontserratBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/blood_sugar" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_blue"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:id="@+id/etBloodSugar"
-                                    style="@style/Large"
+                                <RelativeLayout
+                                    android:id="@+id/tlDateContainer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@id/tvLabel"
-                                    android:background="@null"
-                                    android:gravity="center"
-                                    android:hint="@string/blood_sugar_value"
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="3"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp" />
+                                    android:layout_marginTop="3dp"
+                                    android:background="@drawable/bg_blue_border">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvDate"
+                                        style="@style/Medium.Black"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toStartOf="@+id/ivDate"
+                                        android:gravity="center"
+                                        android:paddingTop="7dp"
+                                        android:paddingBottom="7dp"
+                                        android:text="@string/select_date" />
+
+                                    <ImageView
+                                        android:id="@+id/ivDate"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerInParent="true"
+                                        android:contentDescription="@string/app_name"
+                                        android:padding="9dp"
+                                        android:src="@drawable/ic_down_arrow_blue" />
+
+                                </RelativeLayout>
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvLabel"
-                                    style="@style/Large"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:gravity="center"
-                                    android:paddingStart="10dp"
-                                    android:paddingTop="7dp"
-                                    android:paddingEnd="10dp"
-                                    android:paddingBottom="7dp"
-                                    android:text="mg/dL" />
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Large.MontserratBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/type" />
-
-                            <RelativeLayout
-                                android:id="@+id/rlTypeContainer"
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_blue">
-
-                                <androidx.appcompat.widget.AppCompatSpinner
-                                    android:id="@+id/spType"
-                                    style="@style/Large"
+                                    style="@style/Medium.Grey.MontserratSemi"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:gravity="center"
-                                    android:paddingTop="7dp"
-                                    android:paddingBottom="7dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="@string/blood_sugar" />
+
+                                <RelativeLayout
+                                    android:id="@+id/tlBloodSugarContainer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:background="@drawable/bg_blue_border">
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/etBloodSugar"
+                                        style="@style/Medium.Black"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toStartOf="@+id/ivBloodSugar"
+                                        android:background="@null"
+                                        android:gravity="center"
+                                        android:hint="0"
+                                        android:inputType="number"
+                                        android:maxLength="3"
+                                        android:paddingTop="7dp"
+                                        android:paddingBottom="7dp" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/ivBloodSugar"
+                                        style="@style/Medium.Grey.MontserratSemi"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerInParent="true"
+                                        android:paddingStart="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:text="Mg/dL" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Medium.Grey.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/time" />
+
+                                <RelativeLayout
+                                    android:id="@+id/tlTimeContainer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:background="@drawable/bg_blue_border">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvTime"
+                                        style="@style/Medium.Black"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toStartOf="@+id/ivTime"
+                                        android:gravity="center"
+                                        android:paddingTop="7dp"
+                                        android:paddingBottom="7dp"
+                                        android:text="@string/select_time" />
+
+                                    <ImageView
+                                        android:id="@+id/ivTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerInParent="true"
+                                        android:contentDescription="@string/app_name"
+                                        android:padding="9dp"
+                                        android:src="@drawable/ic_down_arrow_blue" />
+
+                                </RelativeLayout>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Medium.Grey.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
                                     android:text="@string/type" />
 
-                                <ImageView
-                                    android:id="@+id/ivTypePicker"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:padding="9dp"
-                                    android:src="@drawable/ic_down_arrow_blue" />
+                                <RelativeLayout
+                                    android:id="@+id/rlTypeContainer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="38dp"
+                                    android:layout_marginTop="3dp"
+                                    android:background="@drawable/bg_blue_border">
 
-                            </RelativeLayout>
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        android:id="@+id/spType"
+                                        style="@style/Large"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toStartOf="@id/ivTypePicker"
+                                        android:background="@null"
+                                        android:gravity="center"
+                                        android:text="@string/type" />
+
+                                    <ImageView
+                                        android:id="@+id/ivTypePicker"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerInParent="true"
+                                        android:contentDescription="@string/app_name"
+                                        android:padding="9dp"
+                                        android:src="@drawable/ic_down_arrow_blue" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btAddLog"
+                            style="@style/Medium.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/btAddToLog"
-                                style="@style/Large.White"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                android:layout_marginEnd="15dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_royal_blue_round"
-                                android:gravity="center"
-                                android:text="@string/add_to_logs"
-                                android:textAllCaps="false" />
-
-                        </LinearLayout>
+                            android:layout_margin="10dp"
+                            android:background="@drawable/bg_royal_blue_round"
+                            android:gravity="center"
+                            android:text="@string/add_to_logs"
+                            android:textAllCaps="false" />
 
                     </LinearLayout>
 
@@ -257,307 +341,439 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@drawable/bg_blue_border">
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spDate"
-                    style="@style/Large"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/spDateIndicator"
-                    android:background="@null"
-                    android:gravity="center" />
-
-                <ImageView
-                    android:id="@+id/spDateIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:contentDescription="@string/app_name"
-                    android:padding="9dp"
-                    android:src="@drawable/ic_down_arrow_blue" />
-
-            </RelativeLayout>
-
-            <com.highsoft.highcharts.core.HIChartView
-                android:id="@+id/hc"
-                android:layout_width="match_parent"
-                android:layout_height="350dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/bg_blue"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/xLarge.Blue.MontserratSemi"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                        android:text="Blood Sugar " />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Avg:" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="120" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Grey"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Target:" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="120" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Min:" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="90" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Max:" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="180" />
-
-                    </LinearLayout>
+                        android:text=" mg/dL" />
 
                 </LinearLayout>
 
-                <LinearLayout
+                <com.highsoft.highcharts.core.HIChartView
+                    android:id="@+id/hc"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_marginTop="10dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/radioButton1"
+                        style="@style/Small.Grey"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:buttonTint="@color/blue"
+                        android:text="Fasting Blood Sugar" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Incidents:" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        style="@style/Small.Grey"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:buttonTint="@color/blue"
+                        android:text="After meal" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hyper - " />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_down_arrow_blue"
-                            app:tint="@color/red" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        style="@style/Small.Grey"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hyper - " />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_down_arrow_blue"
-                            app:tint="@color/red" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@color/red"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_alert"
-                    android:tint="@color/white" />
+                        android:buttonTint="@color/blue"
+                        android:text="Random" />
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="10dp">
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvAvg"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Avg" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTaget"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Target" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMin"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Min" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMax"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Max" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/grey" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Large.White"
+                        style="@style/Small.Blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:layout_marginBottom="10dp"
-                        android:text="You are far from the target." />
+                        android:text="Incidents:" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Large.White.MontserratBold"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="You Need Help" />
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/bgBlue"
+                        android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Large.White.MontserratBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Enrol In  Daibezone Program Now" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_red_border"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Hyper - " />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvHyper"
+                                    style="@style/Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:contentDescription="@string/app_name"
+                                    android:src="@drawable/ic_red_up_arrow" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Hypo - " />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvHypo"
+                                    style="@style/Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:contentDescription="@string/app_name"
+                                    android:src="@drawable/ic_red_down_arrow" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/red"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="15dp"
+                                android:src="@drawable/ic_white_drop" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Large.White"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="You are far from the target." />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Large.White.MontserratBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="You Need Help" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Large.White.MontserratBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="Enrol In  Daibezone Program Now" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/ivOne"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvOne"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_book_doctor_appointment" />
+                    app:cardCornerRadius="20dp">
 
-                <ImageView
-                    android:id="@+id/ivTwo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_consolidated_prescription" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/ivThree"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_book_appointment" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:minLines="3"
+                            android:text="Book Doctor Appointment" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvTwo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_health_vault" />
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_consolidated_prescription" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:minLines="3"
+                            android:text="Consolidated Prescription" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FAFAFA"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_health_vault" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:minLines="3"
+                            android:text="Health Vault" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProgram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_program_banner" />
 
         </LinearLayout>
 

@@ -240,7 +240,7 @@ class ScheduleAppointmentActivity :
                 bsbConfirmDialog.state = BottomSheetBehavior.STATE_EXPANDED
                 openConfirmDialog()
                 isTimeSelected = true
-                Log.d(TAG, " calendar = $apiDate + $apiTime")
+                Log.d(TAG, " calendar = $apiDate $apiTime")
             } else showToast("Time slot not selected/available")
         }
     }
@@ -314,7 +314,7 @@ class ScheduleAppointmentActivity :
 
     override fun onPaymentSuccess(p0: String?) {
         showToast("Payment succeeded")
-        Log.d(TAG, "onPayment Success() called with: p0 = $p0")
+        Log.d(TAG, "Razorpay onPayment Success() called with: p0 = $p0")
         isConfirmed = true
         mViewModel.createAppointment(
             CreateAppointmentRequest(
@@ -328,7 +328,7 @@ class ScheduleAppointmentActivity :
 
     override fun onPaymentError(p0: Int, p1: String?) {
         showToast("Payment failed")
-        Log.d(TAG, "onPayment Error() called with: p0 = $p0, p1 = $p1")
+        Log.d(TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
     }
 
 }

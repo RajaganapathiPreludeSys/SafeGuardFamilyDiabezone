@@ -1,23 +1,31 @@
 package com.safeguardFamily.diabezone.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.Bundle.TAG
-import com.safeguardFamily.diabezone.common.DateUtils
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDateTimeFormat
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
+import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
+import com.safeguardFamily.diabezone.common.DateUtils.splitDate
+import com.safeguardFamily.diabezone.common.DateUtils.splitTime
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
+import com.safeguardFamily.diabezone.databinding.DialogDateBinding
 import com.safeguardFamily.diabezone.databinding.DialogDiabetesBinding
+import com.safeguardFamily.diabezone.databinding.DialogTimeBinding
 import com.safeguardFamily.diabezone.databinding.ItemDiabetesBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.response.Log
+import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 import java.util.*
 
 class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -> Unit)) :
@@ -43,16 +51,52 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
         mOnDone: (request: DiabetesLogRequest) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
+        var dateString = ""
+        var timeString24 = ""
+        private lateinit var dialogBinding: DialogDiabetesBinding
         fun bind(item: Log, mOnDone: (request: DiabetesLogRequest) -> Unit) {
-            binding.item = item
+            dateString = splitDate(item.measureDate!!)!!
+            timeString24 = splitTime(item.measureDate!!)!!
+
+            android.util.Log.d(TAG, "bind: $dateString $timeString24")
+            binding.ivEdit.bringToFront()
             binding.ivEdit.setOnClickListener {
                 editDiabetes(itemView.context, item) {
                     mOnDone(it)
                 }
             }
-            binding.tvTime.text = displayingDateTimeFormat(item.measureDate!!)
+            binding.tvDate.text = displayingDateFormat(item.measureDate!!)
+            binding.etBloodSugar.text = "${item.logValue} ${item.measureUnit}"
+            binding.tvTime.text = formatTo12Hrs(timeString24)
+
+            Glide.with(itemView.context).load(
+                when (item.symbol) {
+                    "up" -> R.drawable.ic_red_up_arrow
+                    "down" -> R.drawable.ic_red_down_arrow
+                    "fire" -> R.drawable.ic_red_drop
+                    else -> R.drawable.ic_red_up_arrow
+                }
+            ).into(binding.ivBloodSugar)
+
+            if (item.status == "hyper") binding.llHyperContainer.visibility = View.VISIBLE
+
+            binding.llHyperContainer.setOnClickListener {
+                val bundle = android.os.Bundle()
+                bundle.putString(
+                    Bundle.KEY_DOCTOR,
+                    SharedPref.read(SharedPref.Pref.PrefHealthCoach, "")
+                )
+                bundle.putString(Bundle.KEY_TITLE, "Health Coach")
+                itemView.context.startActivity(
+                    Intent(
+                        itemView.context,
+                        DoctorDetailsActivity::class.java
+                    ).putExtras(bundle)
+                )
+            }
+
             binding.tvType.text = when (item.period) {
-                "before_meal" -> "Before Meal"
+                "before_meal" -> "Fasting Blood Sugar"
                 "after_meal" -> "After Meal"
                 "random" -> "Random"
                 else -> "Random"
@@ -64,8 +108,8 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             item: Log,
             onDone: ((request: DiabetesLogRequest) -> Unit)
         ) {
-            var formattedDate = item.measureDate!!
-            val dialogBinding: DialogDiabetesBinding =
+
+            dialogBinding =
                 DataBindingUtil.inflate(
                     LayoutInflater.from(mContext),
                     R.layout.dialog_diabetes,
@@ -82,7 +126,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             dialogBinding.item = item
 
-            val items = arrayOf("Before Meal", "After Meal", "Random")
+            val items = arrayOf("Fasting Blood Sugar", "After Meal", "Random")
 
             dialogBinding.spType.adapter =
                 ArrayAdapter(mContext, android.R.layout.simple_list_item_1, items)
@@ -94,23 +138,14 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                     else -> 0
                 }
             )
-            dialogBinding.tvTimeValue.text = displayingDateTimeFormat(item.measureDate!!)
+            dialogBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+            dialogBinding.tvTime.text = "${formatTo12Hrs(timeString24)}"
+            dialogBinding.etBloodSugar.setText(item.logValue)
+
             dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
-            dialogBinding.tlTimeContainer.setOnClickListener {
-                showCustomDialog(mContext, item) {
-                    dialogBinding.tvTimeValue.text = it
-                    formattedDate = DateUtils.displayingDateTimeFormatToAPIFormat(it)!!
-                    android.util.Log.d(
-                        TAG,
-                        "editDiabetes: $it"
-                    )
-                    android.util.Log.d(
-                        TAG,
-                        "editDiabetes: ${DateUtils.displayingDateTimeFormatToAPIFormat(it)}"
-                    )
-                }
-            }
-            dialogBinding.btSubmit.setOnClickListener {
+            dialogBinding.tlDateContainer.setOnClickListener { showDateDialog(itemView.context) }
+            dialogBinding.tlTimeContainer.setOnClickListener { showTimeDialog(itemView.context) }
+            dialogBinding.btAddLog.setOnClickListener {
                 if (dialogBinding.etBloodSugar.text?.isNotEmpty() == false ||
                     dialogBinding.etBloodSugar.text.toString().toInt() <= 0
                 )
@@ -120,14 +155,15 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                         Toast.LENGTH_LONG
                     ).show()
                 else {
+                    android.util.Log.d(TAG, "editDiabetes: $dateString$timeString24")
                     onDone(
                         DiabetesLogRequest(
                             lid = item.lid!!,
-                            measureDate = formattedDate,
+                            measureDate = "$dateString $timeString24",
                             logValue = dialogBinding.etBloodSugar.text.toString().toInt(),
                             uid = SharedPref.getUserId()!!,
                             period = when (dialogBinding.spType.selectedItem) {
-                                "Before Meal" -> "before_meal"
+                                "Fasting Blood Sugar" -> "before_meal"
                                 "After Meal" -> "after_meal"
                                 "Random" -> "random"
                                 else -> ""
@@ -140,18 +176,11 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
         }
 
-        private fun showCustomDialog(
-            mContext: Context,
-            item: Log,
-            onSelected: ((time: String) -> Unit)
-        ) {
-            var dateString = ""
-            var timeString = ""
-            val timeValidator = Calendar.getInstance()
-            val dialogBinding: DialogDateTimeBinding =
+        private fun showDateDialog(mContext: Context) {
+            val dialogDateBinding: DialogDateBinding =
                 DataBindingUtil.inflate(
                     LayoutInflater.from(mContext),
-                    R.layout.dialog_date_time,
+                    R.layout.dialog_date,
                     null,
                     false
                 )
@@ -159,65 +188,74 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             val mDialog = AlertDialog.Builder(mContext, 0).create()
 
             mDialog.apply {
-                setView(dialogBinding.root)
+                setView(dialogDateBinding.root)
                 setCancelable(false)
             }.show()
 
             val mCalendar = Calendar.getInstance()
-            dialogBinding.datePicker.maxDate = mCalendar.timeInMillis
-            dialogBinding.datePicker.init(
+            dialogDateBinding.datePicker.maxDate = mCalendar.timeInMillis
+
+            dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
+            dialogDateBinding.datePicker.init(
                 mCalendar.get(Calendar.YEAR),
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)
-            ) { view, year, month, day ->
-                val _month = month + 1
-                dateString = "$year-$_month-$day"
-                dialogBinding.tvSelectedVal.text =
-                    if (dateString.length > 1) "${DateUtils.displayingDateFormat(dateString)}$timeString"
-                    else timeString
-                timeValidator.set(year, _month, day)
+            ) { _, year, month, day ->
+                val m = month + 1
+                dateString = "$year-$m-$day"
+                dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
             }
 
-            dialogBinding.timePicker.setOnTimeChangedListener { tp, _hour, minute ->
+            dialogDateBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+            dialogDateBinding.btPickDate.setOnClickListener {
+                dialogBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                mDialog.dismiss()
+            }
+        }
+
+        private fun showTimeDialog(mContext: Context) {
+            val dialogTimeBinding: DialogTimeBinding =
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(mContext),
+                    R.layout.dialog_time,
+                    null,
+                    false
+                )
+
+            val mDialog = AlertDialog.Builder(mContext, 0).create()
+
+            mDialog.apply {
+                setView(dialogTimeBinding.root)
+                setCancelable(false)
+            }.show()
+            timeString24 = "${formatTo12Hrs(timeString24)}"
+            dialogTimeBinding.tvSelectedVal.text = timeString24
+            dialogTimeBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
                 var hour = _hour
-                var am_pm = ""
+                val amPm: String
                 when {
                     hour == 0 -> {
                         hour += 12
-                        am_pm = "AM"
+                        amPm = "AM"
                     }
-                    hour == 12 -> am_pm = "PM"
+                    hour == 12 -> amPm = "PM"
                     hour > 12 -> {
                         hour -= 12
-                        am_pm = "PM"
+                        amPm = "PM"
                     }
-                    else -> am_pm = "AM"
+                    else -> amPm = "AM"
                 }
                 val hourString = if (hour < 10) "0$hour" else hour
                 val min = if (minute < 10) "0$minute" else minute
-                timeString = " $hourString:$min $am_pm"
-                dialogBinding.tvSelectedVal.text =
-                    if (dateString.length > 1) "${DateUtils.displayingDateFormat(dateString)}$timeString"
-                    else timeString
+                timeString24 = " $hourString:$min $amPm"
+                dialogTimeBinding.tvSelectedVal.text = timeString24
+                timeString24 = "${formatTo12Hrs(timeString24)}"
             }
 
-            dialogBinding.tvSelectedVal.text = displayingDateTimeFormat(item.measureDate!!)
-            dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
-            dialogBinding.btPickDate.setOnClickListener {
-                if (dateString.isEmpty()) Toast.makeText(
-                    itemView.context,
-                    "Select a valid date",
-                    Toast.LENGTH_LONG
-                ).show()
-                else if (timeString.isEmpty()) Toast.makeText(
-                    itemView.context,
-                    "Select a valid time",
-                    Toast.LENGTH_LONG
-                ).show()
-                else {
-                    onSelected("${DateUtils.displayingDateFormat(dateString)}$timeString")
-                    mDialog.dismiss()
-                }
+            dialogTimeBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+            dialogTimeBinding.btPickTime.setOnClickListener {
+                dialogBinding.tvTime.text = timeString24
+                mDialog.dismiss()
             }
         }
     }

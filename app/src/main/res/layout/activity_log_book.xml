@@ -18,12 +18,192 @@
             android:id="@+id/icToolbar"
             layout="@layout/include_header" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDiabetes"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_diabetes" />
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_vertical"
+                        android:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/xLarge.Blue.MontserratSemi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Blood Sugar " />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" mg/dL" />
+
+                    </LinearLayout>
+
+                    <com.highsoft.highcharts.core.HIChartView
+                        android:id="@+id/hc"
+                        android:layout_width="match_parent"
+                        android:layout_height="320dp"
+                        android:layout_marginTop="10dp" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton1"
+                            style="@style/Small.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/blue"
+                            android:text="Fasting Blood Sugar" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            style="@style/Small.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/blue"
+                            android:text="After meal" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            style="@style/Small.Grey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/blue"
+                            android:text="Random" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvAvg"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Avg" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTaget"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Target" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMin"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Min" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMax"
+                                style="@style/xxLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Max" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDiabetes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_diabetes" />
+                
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 </layout>

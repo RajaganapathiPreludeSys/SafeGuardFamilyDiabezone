@@ -44,10 +44,12 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
         mViewModel.upcomingAppointment.observe(this) {
             if (it.isNotEmpty()) {
                 mBinding.tvUpcomingAppointment.visibility = View.VISIBLE
+                mBinding.tvBookAnother.visibility = View.VISIBLE
                 mBinding.cvContainer.visibility = View.VISIBLE
                 mBinding.clBanner.visibility = View.GONE
             } else {
                 mBinding.tvUpcomingAppointment.visibility = View.GONE
+                mBinding.tvBookAnother.visibility = View.GONE
                 mBinding.cvContainer.visibility = View.GONE
                 mBinding.clBanner.visibility = View.VISIBLE
             }
@@ -105,5 +107,4 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
             )
         }
     }
-
 }

@@ -12,48 +12,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="25dp">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBack"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_back" />
+        <include
+            android:id="@+id/icHeader"
+            layout="@layout/include_header" />
 
-        <LinearLayout
-            android:id="@+id/llWelcomeContainer"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWelcomeDesc"
+            style="@style/Medium.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="40dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="5dp"
+            android:padding="15dp"
+            android:text="@string/lets_setup_your_account_in_30_seconds" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWelcome"
-                style="@style/xxLarge.MontserratBold"
+        <RelativeLayout
+            android:id="@+id/llProfilePickerContainer"
+            android:layout_width="90dp"
+            android:padding="2dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:contentDescription="@string/app_name"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile_thumb" />
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome" />
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/app_name"
+                android:padding="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add_circle" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWelcomeDesc"
-                style="@style/Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="@string/lets_setup_your_account_in_30_seconds" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/enter_full_name"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
@@ -73,6 +85,8 @@
             android:id="@+id/tilEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/enter_email_address"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
@@ -88,53 +102,26 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/llProfilePickerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:id="@+id/ivProfileImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_upload_picture" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.MontserratBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/upload_profile_picture" />
-
-        </LinearLayout>
-
         <CheckBox
             android:id="@+id/cbTermsAndCondition"
-            style="@style/Medium"
+            style="@style/Medium.Grey.MontserratSemi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:buttonTint="@color/blue"
             android:paddingStart="10dp"
             android:paddingEnd="1dp"
             android:text="@string/terms_and_conditions" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btRegister"
-            style="@style/Large.White.MontserratBold"
+            style="@style/Medium.White.MontserratBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/bg_royal_blue_round"
             android:gravity="center"
             android:text="@string/sign_up"

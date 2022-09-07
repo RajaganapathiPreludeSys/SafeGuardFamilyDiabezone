@@ -20,6 +20,9 @@ data class Provider(
     val about: String,
     var available_slots: List<AvailableSlot>?,
     val experience: String,
+    val education: String,
+    val languages: String,
+    val reg_no: String,
     val fees: String,
     val name: String,
     val num_patient: String,
@@ -31,6 +34,7 @@ data class Provider(
     val type: String,
     val vchat_url: String,
     val mobile: String,
+    val whatsapp_no: String,
     val cc: String
 )
 

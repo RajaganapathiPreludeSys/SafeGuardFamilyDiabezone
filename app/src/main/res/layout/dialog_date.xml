@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="calendar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSelectedVal"
+            style="@style/Large.MontserratBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Please select your date" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btCancel"
+                style="@style/Large.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_royal_blue_round"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textAllCaps="false" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btPickDate"
+                style="@style/Large.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_royal_blue_round"
+                android:gravity="center"
+                android:text="@string/select_date"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

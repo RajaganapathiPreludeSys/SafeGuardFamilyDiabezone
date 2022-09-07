@@ -1,20 +1,24 @@
 package com.safeguardFamily.diabezone.ui.activity
 
-import android.util.Log
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.ListView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.adapter.PastAppointmentAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDateTimeFormat
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityBookingDetailsBinding
 import com.safeguardFamily.diabezone.model.response.ProfileResponse
 import com.safeguardFamily.diabezone.viewModel.BookingDetailsViewModel
+
 
 class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, BookingDetailsViewModel>(
     R.layout.activity_booking_details,
@@ -27,6 +31,7 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
         mBinding.mViewModel = mViewModel
 
         mBinding.icHeader.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.tvTitle.text = "Member Details"
 
         if (intent.extras?.containsKey(Bundle.KEY_BOOKING_DETAILS) == true) {
             userResponse = Gson().fromJson(
@@ -36,43 +41,107 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             mBinding.profile = userResponse
         }
 
-        val pastHistory = arrayListOf<String>()
-
-        userResponse.past_appointments!!.forEach {
-            pastHistory.add("${it.provider!!.name} ${displayingDateTimeFormat(it.booking_date!!)}")
+        if (userResponse.past_appointments!!.isEmpty()) {
+            mBinding.tvPlaceholder.visibility = View.VISIBLE
+            mBinding.rvPastAppointments.visibility = View.GONE
+        } else {
+            mBinding.tvPlaceholder.visibility = View.GONE
+            mBinding.rvPastAppointments.visibility = View.VISIBLE
+            mBinding.rvPastAppointments.adapter =
+                PastAppointmentAdapter(userResponse.past_appointments!!)
+            mBinding.rvPastAppointments.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            mBinding.rvPastAppointments.setHasFixedSize(true)
         }
 
-        mBinding.tvMemberShip.text = "Member - ${userResponse.membership!![0].pack_name}"
-        mBinding.tvPackValid.text = getString(
-            R.string.package_valid,
-            displayingDateFormat(userResponse.membership!![0].validity)
-        )
-
-        if (pastHistory.size > 0) {
-            mBinding.lvHistory.adapter = ArrayAdapter(this, R.layout.item_history, pastHistory)
-            getListViewSize(mBinding.lvHistory)
-        } else mBinding.tvNoHistory.visibility = View.VISIBLE
-
-        mBinding.rlDoctorContainer.setOnClickListener {
+        mBinding.rlHealthCoach.setOnClickListener {
             val bundle = android.os.Bundle()
             bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(userResponse.health_coach))
-            bundle.putString(Bundle.KEY_TITLE, "Your Health Coach")
+            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
             navigateTo(DoctorDetailsActivity::class.java, bundle)
         }
 
+        mBinding.ivRenew.setOnClickListener { navigateTo(SubscriptionActivity::class.java) }
+
+        mBinding.llScheduleAppointment.setOnClickListener {
+            val bundle = android.os.Bundle()
+            bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(userResponse.health_coach))
+            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
+            navigateTo(DoctorDetailsActivity::class.java, bundle)
+        }
+
+        mBinding.llScheduleCall.setOnClickListener {
+            val bundle = android.os.Bundle()
+            bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(userResponse.health_coach))
+            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
+            navigateTo(DoctorDetailsActivity::class.java, bundle)
+        }
+
+        if (SharedPref.isMember()) {
+            mBinding.llPackageDetailsContainer.visibility = View.VISIBLE
+            mBinding.rlHealthCoach.visibility = View.VISIBLE
+            mBinding.tvAskQues.visibility = View.VISIBLE
+            mBinding.tvMemberShip.text = "Member - ${userResponse.membership!![0].pack_name}"
+            mBinding.tvExpireDate.text = displayingDateFormat(userResponse.membership!![0].validity)
+        } else {
+            mBinding.llPackageDetailsContainer.visibility = View.GONE
+            mBinding.rlHealthCoach.visibility = View.GONE
+            mBinding.tvAskQues.visibility = View.GONE
+            mBinding.tvMemberShip.text = "Please subscribe to become a memeber"
+        }
+
+        mBinding.tvCall.setOnClickListener {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.CALL_PHONE
+                    )
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.CALL_PHONE), 1
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.CALL_PHONE), 1
+                    )
+                }
+            } else
+                startActivity(
+                    Intent(
+                        Intent.ACTION_CALL,
+                        Uri.parse("tel:+91" + userResponse.health_coach!!.mobile)
+                    )
+                )
+        }
+
+        mBinding.tvWhatsappCall.setOnClickListener {
+            openWhatsApp(userResponse.health_coach!!.whatsapp_no)
+        }
     }
 
-    private fun getListViewSize(myListView: ListView) {
-        val myListAdapter: ListAdapter = myListView.adapter ?: return
-        var totalHeight = 0
-        for (size in 0 until myListAdapter.count) {
-            val listItem: View = myListAdapter.getView(size, null, myListView)
-            listItem.measure(0, 0)
-            totalHeight += listItem.measuredHeight
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            1 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if ((ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.CALL_PHONE
+                        ) == PackageManager.PERMISSION_GRANTED)
+                    ) {
+                        startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:9988776655")))
+                    }
+                }
+                return
+            }
         }
-        val params: ViewGroup.LayoutParams = myListView.layoutParams
-        params.height = totalHeight + myListView.dividerHeight * (myListAdapter.count - 1)
-        myListView.layoutParams = params
-        Log.i("height of listItem:", totalHeight.toString())
     }
 }

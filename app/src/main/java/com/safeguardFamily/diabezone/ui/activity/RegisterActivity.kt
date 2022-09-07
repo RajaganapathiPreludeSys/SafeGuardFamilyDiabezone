@@ -28,7 +28,6 @@ import com.safeguardFamily.diabezone.viewModel.RegisterViewModel
 import lv.chi.photopicker.PhotoPickerFragment
 import java.io.File
 
-
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(
     R.layout.activity_register,
     RegisterViewModel::class.java
@@ -43,7 +42,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        mBinding.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener { finish() }
 
         if (intent.extras?.containsKey(KEY_EDIT_PROFILE) == true)
             isEditProfile = intent.extras?.getBoolean(KEY_EDIT_PROFILE)!!
@@ -54,7 +53,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             val termsAndCondition: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(p0: View) {
                     val mBundle = Bundle()
-                    mBundle.putString(KEY_WEB_KEY, "Teams and Service")
+                    mBundle.putString(KEY_WEB_KEY, "Terms and Service")
                     mBundle.putString(KEY_WEB_URL, URL_TERMS)
                     navigateTo(WebViewActivity::class.java, mBundle)
                 }
@@ -62,8 +61,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
             spanString.setSpan(termsAndCondition, 47, 67, 0)
             spanString.setSpan(ForegroundColorSpan(Color.BLACK), 47, 67, 0)
-            spanString.setSpan(UnderlineSpan(), 47, 67, 0)
             spanString.setSpan(StyleSpan(Typeface.BOLD), 47, 67, 0)
+            spanString.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 47, 67, 0)
 
             mBinding.cbTermsAndCondition.movementMethod = LinkMovementMethod.getInstance()
             mBinding.cbTermsAndCondition.setText(spanString, TextView.BufferType.SPANNABLE)
@@ -71,12 +70,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         } else {
             mBinding.tvWelcomeDesc.visibility = View.GONE
             mBinding.cbTermsAndCondition.visibility = View.GONE
-            mBinding.ivBack.visibility = View.VISIBLE
+            mBinding.icHeader.ivBack.visibility = View.VISIBLE
             mBinding.btRegister.text = "Update User"
-            mBinding.tvWelcome.text = "Update User Profile"
+            mBinding.icHeader.tvTitle.text = "Update User Profile"
             mBinding.tieName.text = Editable.Factory.getInstance().newEditable(user.name)
             mBinding.tieEmail.text = Editable.Factory.getInstance().newEditable(user.email)
-            Glide.with(this).load(user.pic).into(mBinding.ivProfileImage)
+            Glide.with(this).load(user.pic).placeholder(R.drawable.ic_profile_thumb).into(mBinding.ivProfileImage)
         }
 
         mBinding.tieName.addTextChangedListener(object : TextWatcher {

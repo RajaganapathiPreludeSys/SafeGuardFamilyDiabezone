@@ -59,7 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //  For Splash Screen
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+//    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     //  For ViewPage
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -87,4 +87,7 @@ dependencies {
 
     //  For Chart
     implementation 'com.github.highcharts:highcharts-android:10.2.0'
+
+    //  For Circular Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

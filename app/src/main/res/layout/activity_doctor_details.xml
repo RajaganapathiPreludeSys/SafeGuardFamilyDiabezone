@@ -24,99 +24,42 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:background="@color/blue"
                 android:padding="15dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBack"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_back" />
+                    app:srcCompat="@drawable/ic_back_blue" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTitle"
                     style="@style/xLarge.White.MontserratBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="7dp"
-                    android:layout_toStartOf="@id/ivRight"
                     android:layout_toEndOf="@+id/ivBack"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="Details" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivRight"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentEnd="true" />
+                    android:text="Doctor’s Details" />
 
             </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="25dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/rlDiabetes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cvProfileImages"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        app:cardCornerRadius="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivProfileImages"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@color/bgGrey"
-                            android:scaleType="centerCrop"
-                            app:loadImage="@{provider.pic}" />
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvName"
-                        style="@style/xLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:text="@{provider.name}"
-                        app:layout_constraintBottom_toTopOf="@+id/tvDesc"
-                        app:layout_constraintStart_toEndOf="@+id/cvProfileImages"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDesc"
-                        style="@style/Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:ellipsize="end"
-                        android:minLines="2"
-                        android:text="@{provider.speciality}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/cvProfileImages"
-                        app:layout_constraintTop_toBottomOf="@id/tvName" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ic_profile_thumb"
+                app:civ_border_color="@color/blue"
+                app:civ_border_width="1dp"
+                app:loadImage="@{provider.pic}" />
 
         </RelativeLayout>
 
@@ -129,62 +72,97 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.MontserratBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:text="@{provider.name}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Small.Blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:maxLines="1"
+                    android:text="@{provider.speciality}" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
                     android:baselineAligned="false"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="3dp"
+                        app:cardCornerRadius="20dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="Patients" />
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/xLarge.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{provider.num_patient}" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/xLarge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{provider.num_patient}" />
 
-                    </LinearLayout>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/xSmall.Blue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Patients" />
 
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                        </LinearLayout>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="Exp." />
+                    </androidx.cardview.widget.CardView>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/xLarge.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:text="@{provider.experience}" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="3dp"
+                        app:cardCornerRadius="20dp">
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/xLarge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@{provider.experience}" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/xSmall.Blue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Experience" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="100dp"
@@ -214,8 +192,187 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/blueOpacity" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:baselineAligned="false"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_education" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="Education" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minLines="3"
+                                    android:text="@{provider.education}" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_hospital" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="Hospital" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minLines="3"
+                                    android:text="SafeGuardFamily" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:baselineAligned="false"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_language" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="Languages" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minLines="3"
+                                    android:text="@{provider.languages}" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_verified" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="Registration N0" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minLines="3"
+                                    android:text="@{provider.reg_no}" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/blueOpacity" />
+
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Large.MontserratBold"
+                    style="@style/Small.Blue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -223,96 +380,92 @@
                     android:text="About" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Medium"
+                    style="@style/Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:text="@{provider.about}" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvAvailability"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="10dp"
-                    app:cardCornerRadius="20dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cvClock"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_margin="5dp"
-                            app:cardCornerRadius="20dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="65dp"
-                                android:layout_height="65dp"
-                                android:background="@color/bgGrey"
-                                android:padding="15dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_clock" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvAvailability"
-                            style="@style/Medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="@{`Availability - ` + provider.timings.days}"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvailabilityTime"
-                            app:layout_constraintStart_toEndOf="@+id/cvClock"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvAvailabilityTime"
-                            style="@style/Large.MontserratBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="@{provider.timings.time}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/cvClock"
-                            app:layout_constraintTop_toBottomOf="@id/tvAvailability" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.cardview.widget.CardView>
+                    android:layout_height="1dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/blueOpacity" />
 
                 <LinearLayout
                     android:id="@+id/llMakeAppointment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:background="@drawable/bg_royal_blue_round"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_appointment" />
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Large.White"
+                        style="@style/Medium.Blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/make_an_appointment" />
+                        android:layout_margin="15dp"
+                        android:maxLines="1"
+                        android:text="Availability" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="20dp"
+                        app:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_royal_blue_border"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvAvailability"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_margin="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:drawableStart="@drawable/ic_schedule"
+                                android:drawablePadding="5dp"
+                                android:maxLines="1"
+                                android:text="@{provider.timings.time}" />
+
+                            <LinearLayout
+                                android:id="@+id/llBookAppointment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/blue"
+                                android:gravity="center"
+                                android:padding="10dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.White.MontserratBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:drawableStart="@drawable/ic_video"
+                                    android:drawablePadding="5dp"
+                                    android:maxLines="1"
+                                    android:text="Book An Appointment" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -321,15 +474,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btChat"
-                        style="@style/Large.White"
+                        style="@style/Small.White.MontserratBold"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:layout_weight="1"
+                        android:layout_height="match_parent"
                         android:background="@drawable/bg_royal_blue_round"
                         android:gravity="center"
                         android:text="@string/chat"
@@ -337,10 +489,10 @@
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btCall"
-                        style="@style/Large.Blue"
+                        style="@style/Small.Blue.MontserratBold"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/bg_blue_border"
                         android:gravity="center"
                         android:text="@string/schedule_video_call"
@@ -351,6 +503,5 @@
             </LinearLayout>
 
         </ScrollView>
-
     </LinearLayout>
 </layout>

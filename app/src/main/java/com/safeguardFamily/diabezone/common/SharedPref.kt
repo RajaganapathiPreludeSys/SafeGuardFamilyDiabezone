@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefHealthCoach
 import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefIsMember
 import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefMembership
 import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefUser
@@ -21,6 +22,7 @@ object SharedPref {
         const val PrefUser = "PrefUser"
         const val PrefUserId = "PrefUserId"
         const val PrefMembership = "PrefMembership"
+        const val PrefHealthCoach = "PrefHealthCoach"
     }
 
     fun init(context: Context) {
@@ -34,6 +36,7 @@ object SharedPref {
 
     fun getUser(): User = Gson().fromJson(read(PrefUser, ""), User::class.java)
 
+
     fun putUser(user: User) {
         write(PrefUserId, user.uid)
         write(PrefUser, Gson().toJson(user))
@@ -43,6 +46,7 @@ object SharedPref {
         putUser(profile.user!!)
         write(PrefMembership, Gson().toJson(profile.membership))
         write(PrefIsMember, profile.is_member!!)
+        write(PrefHealthCoach,  Gson().toJson(profile.health_coach))
     }
 
     fun getMembership(): List<Membership> =

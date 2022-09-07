@@ -6,7 +6,7 @@
         android:title="@string/home" />
     <item
         android:id="@+id/healthVault"
-        android:icon="@drawable/ic_health_vault"
+        android:icon="@drawable/ic_vault"
         android:title="@string/health_vault" />
     <item
         android:id="@+id/appointment"

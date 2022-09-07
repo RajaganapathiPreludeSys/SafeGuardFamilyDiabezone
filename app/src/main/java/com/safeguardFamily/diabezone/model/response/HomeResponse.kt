@@ -7,9 +7,9 @@ data class HomeResponse(
 )
 
 data class Graph(
-    var last_30_days: Last30Days?,
-    var last_7_days: Last7Days?,
-    var lifetime: Lifetime?
+    var last_30_days: GraphList?,
+    var last_7_days: GraphList?,
+    var lifetime: GraphList?
 )
 
 data class Notification(
@@ -21,35 +21,13 @@ data class Notification(
     var title: String?
 )
 
-data class Last30Days(
-    var after_meal: AfterMeal?,
-    var before_meal: BeforeMeal?,
-    var random: Random?
+data class GraphList(
+    var after_meal: GraphItems?,
+    var before_meal: GraphItems?,
+    var random: GraphItems?
 )
 
-data class Last7Days(
-    var after_meal: AfterMeal?,
-    var before_meal: BeforeMeal?,
-    var random: Random?
-)
-
-data class Lifetime(
-    var after_meal: AfterMeal?,
-    var before_meal: BeforeMeal?,
-    var random: Random?
-)
-
-data class AfterMeal(
-    var list: List<ListX>?,
-    var summary: Summary?
-)
-
-data class BeforeMeal(
-    var list: List<ListX>?,
-    var summary: Summary?
-)
-
-data class Random(
+data class GraphItems(
     var list: List<ListX>?,
     var summary: Summary?
 )

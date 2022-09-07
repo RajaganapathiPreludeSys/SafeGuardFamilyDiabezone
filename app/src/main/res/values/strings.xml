@@ -4,23 +4,23 @@
     <string name="temp_images_dir">temp_images</string>
     <string name="temp_image">temp_image.jpg</string>
 
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Welcome!</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="mobile_number_desc">Please enter your phone number. We will send you 4-digit code to verify your account.</string>
     <string name="send_code">Send Code</string>
     <string name="phone_placeholder">+91 000 000 0000</string>
-    <string name="enter_phone_number">Enter your phone number</string>
+    <string name="enter_phone_number">Enter Mobile Number</string>
     <string name="valid_phone">Enter a valid phone number</string>`
     <string name="verify_account">Verify Account!</string>
-    <string name="otp_code_desc">Enter 4-digit code we have sent to\nat <u><b>+91 %1$s</b></u></string>
-    <string name="didnt_received_the_code">Didn\'t n received the code?</string>
-    <string name="resend_code"><u>Resend Code</u></string>
+    <string name="otp_code_desc">Enter 4-digit code we have sent to\n <u><b>+91 %1$s</b></u>. Go back to change the phone number</string>
+    <string name="didnt_received_the_code">Didn\'t n receive the code?</string>
+    <string name="resend_code">Resend Code</string>
     <string name="proceed">Proceed</string>
     <string name="skip">Skip</string>
-    <string name="accept_terms_and_privacy">By clicking proceed, you agree to our Privacy Policy our Teams and Conditions</string>
+    <string name="accept_terms_and_privacy">By clicking proceed, you agree to our Privacy Policy our Terms and Conditions</string>
     <string name="lets_setup_your_account_in_30_seconds">Lets setup your account in 30 Seconds</string>
     <string name="enter_full_name">Enter Full Name</string>
-    <string name="terms_and_conditions">By creating your account you agree with to\nour <u>Terms and Conditions</u>.</string>
+    <string name="terms_and_conditions">By creating your account you agree with to our <u>Terms and Conditions</u>.</string>
     <string name="upload_profile_picture">Upload Profile Picture</string>
     <string name="sign_up">Sign up</string>
     <string name="enter_email_address">Enter Email Address</string>
@@ -63,5 +63,7 @@
     <string name="package_valid">Package valid till %1$s - <b>Renew Now</b></string>
     <string name="chat">Chat</string>
     <string name="schedule_video_call">Schedule Video Call</string>
+    <string name="date">Date</string>
+    <string name="save_log">Save Log</string>
 
 </resources>

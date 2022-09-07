@@ -2,124 +2,193 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="item"
-            type="com.safeguardFamily.diabezone.model.response.Log" />
-    </data>
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/ivStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="@string/app_name"
-                    android:paddingStart="1dp"
-                    android:paddingEnd="10dp"
-                    android:src="@{item.symbol.equals(`down`) ? @drawable/ic_arrow_down : @drawable/ic_arrow_up}" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvStatus"
-                    style="@style/Large.MontserratBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center"
-                    android:minLines="2"
-                    android:text="@{item.status}" />
-
-            </RelativeLayout>
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/llContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTime"
-                    style="@style/Large"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_blue"
-                    android:gravity="center"
-                    android:padding="5dp" />
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvBloodSugar"
-                    style="@style/Large"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Grey.MontserratSemi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date" />
+
+                    <RelativeLayout
+                        android:id="@+id/tlDateContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/bg_grey_curved">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDate"
+                            style="@style/Medium.Black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp" />
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Grey.MontserratSemi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/blood_sugar" />
+
+                    <RelativeLayout
+                        android:id="@+id/tlBloodSugarContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/bg_grey_curved">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/etBloodSugar"
+                            style="@style/Medium.Black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/ivBloodSugar"
+                            android:gravity="center"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivBloodSugar"
+                            style="@style/Medium.Grey.MontserratSemi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_blue"
-                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Grey.MontserratSemi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time" />
+
+                    <RelativeLayout
+                        android:id="@+id/tlTimeContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/bg_grey_curved">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTime"
+                            style="@style/Medium.Black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp" />
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Grey.MontserratSemi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/type" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlTypeContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/bg_grey_curved">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvType"
+                            style="@style/Medium.Black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llHyperContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llContainer"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="@{item.logValue + ` `+ item.measureUnit}" />
+                    android:src="@drawable/ic_hyper" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvType"
-                    style="@style/Large"
+                    style="@style/Medium.Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_blue"
-                    android:gravity="center"
-                    android:padding="5dp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvContact"
-                    style="@style/Large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@{item.message}" />
+                    android:text="@string/contact_diabezone_health_coach" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="end">
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_edit_circle_blue" />
 
-                <ImageView
-                    android:id="@+id/ivEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/app_name"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="1dp"
-                    android:paddingBottom="15dp"
-                    android:src="@drawable/ic_edit" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 </layout>

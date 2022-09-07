@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -36,22 +37,28 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
         val extras = intent.extras
+        mBinding.icHeader.tvTitle.text = "Verify Account!"
 
+        var mText = ""
         if (extras?.containsKey(KEY_REGISTER_PHONE) == true) {
             mobileNumber = extras.getString(KEY_REGISTER_PHONE)
-            mBinding.tvWelcomeDesc.text = getString(R.string.otp_code_desc, mobileNumber)
+            mText = getString(R.string.otp_code_desc, mobileNumber)
         }
+
+        val mSS = SpannableString(mText)
+        mSS.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 54, 61, 0)
+        mSS.setSpan(StyleSpan(Typeface.BOLD), 54, 61, 0)
+        mBinding.tvWelcomeDesc.text = mSS
 
         if (extras?.containsKey(KEY_OTPs) == true)
             otp = Gson().fromJson(extras.getString(KEY_OTPs), Array<String>::class.java).toList()
 
-        mBinding.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener { finish() }
         val spanString = SpannableString(getString(R.string.accept_terms_and_privacy))
-
         val termsAndCondition: ClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
                 val mBundle = Bundle()
-                mBundle.putString(KEY_WEB_KEY, "Teams and Service")
+                mBundle.putString(KEY_WEB_KEY, "Terms and Service")
                 mBundle.putString(KEY_WEB_URL, URL_TERMS)
                 navigateTo(WebViewActivity::class.java, mBundle)
             }
