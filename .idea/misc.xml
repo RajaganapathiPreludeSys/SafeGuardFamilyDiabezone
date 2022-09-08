@@ -11,14 +11,17 @@
         <entry key="app/src/main/res/drawable/bg_bottom_nav.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/bg_brey_curved.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/bg_button_style.xml" value="0.2315" />
+        <entry key="app/src/main/res/drawable/bg_green_border.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_grey_curved.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/bg_grey_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_orange.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_orange_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_pin.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/bg_purple_border.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_red_border.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_border.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/bg_royal_blue_border_curved.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round_disabled.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_top_round.xml" value="0.2365" />
@@ -103,10 +106,13 @@
         <entry key="app/src/main/res/layout/item_days.xml" value="0.32037037037037036" />
         <entry key="app/src/main/res/layout/item_diabetes.xml" value="0.55" />
         <entry key="app/src/main/res/layout/item_doctor.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/item_expandable.xml" value="0.32037037037037036" />
         <entry key="app/src/main/res/layout/item_history.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_notification.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/item_past_appointment.xml" value="0.33125" />
+        <entry key="app/src/main/res/layout/item_program_banner.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_spinner.xml" value="0.33125" />
+        <entry key="app/src/main/res/layout/item_subscribe_program.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_time.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.33125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1705" />

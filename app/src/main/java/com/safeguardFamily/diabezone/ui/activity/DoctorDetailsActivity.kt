@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.DaysAdapter
-import com.safeguardFamily.diabezone.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityDoctorDetailsBinding

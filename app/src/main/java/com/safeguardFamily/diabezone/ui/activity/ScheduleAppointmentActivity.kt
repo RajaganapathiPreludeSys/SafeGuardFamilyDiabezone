@@ -327,7 +327,7 @@ class ScheduleAppointmentActivity :
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {
-        showToast("Payment failed")
+        showToast("Payment failed, Please retry later")
         Log.d(TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
     }
 

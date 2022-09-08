@@ -50,9 +50,6 @@ class DoctorsAdapter(
                 )
             }
 
-//            binding.tvDays.text = model.timings.days
-            val list = model.timings.days.split(" ")
-
             for (i in 1..7) {
                 val textView = TextView(binding.root.context)
                 textView.text = when (i) {

@@ -33,6 +33,7 @@ import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
+import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -104,6 +105,7 @@ class HomeFragment :
             }
         }
 
+        mBinding.ivProgram.setOnClickListener { navigateTo(SubscriptionActivity::class.java) }
         mBinding.tlDateContainer.setOnClickListener { showDateDialog() }
         mBinding.tlTimeContainer.setOnClickListener { showTimeDialog() }
         mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }

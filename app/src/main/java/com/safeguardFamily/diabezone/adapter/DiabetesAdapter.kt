@@ -38,7 +38,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiabetesViewHolder {
         binding = ItemDiabetesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DiabetesViewHolder(binding, mOnDone)
+        return DiabetesViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DiabetesViewHolder, position: Int) =
@@ -46,10 +46,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
     override fun getItemCount() = mItems.size
 
-    class DiabetesViewHolder(
-        private val binding: ItemDiabetesBinding,
-        mOnDone: (request: DiabetesLogRequest) -> Unit
-    ) :
+    class DiabetesViewHolder(private val binding: ItemDiabetesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var dateString = ""
         var timeString24 = ""

@@ -42,6 +42,18 @@ interface ApiInterface {
     @POST("diabetes-logs")
     fun getLogs(@Body body: IdRequest): Call<BaseResponse<DiabetesResponse>>
 
+    //  https://safeguardfamily.com/apis/diabezone-program
+    @POST("diabezone-program")
+    fun getPrograms(@Body body: IdRequest): Call<BaseResponse<ProgramsResponse>>
+
+    //  https://safeguardfamily.com/apis/subscribe-program
+    @POST("subscribe-program")
+    fun subscribe(@Body body: SubscriptionRequest): Call<BaseResponse<SubscribeResponse>>
+
+    //  https://safeguardfamily.com/apis/pay-failure
+    @POST("pay-failure")
+    fun payFailed(@Body body: PaymentFailRequest): Call<BaseResponse<SubscribeResponse>>
+
     @POST("providers")
     fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<ProvidersResponse>>
 
