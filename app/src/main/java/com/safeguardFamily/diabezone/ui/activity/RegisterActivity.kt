@@ -11,7 +11,6 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
@@ -75,7 +74,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             mBinding.icHeader.tvTitle.text = "Update User Profile"
             mBinding.tieName.text = Editable.Factory.getInstance().newEditable(user.name)
             mBinding.tieEmail.text = Editable.Factory.getInstance().newEditable(user.email)
-            Glide.with(this).load(user.pic).placeholder(R.drawable.ic_profile_thumb).into(mBinding.ivProfileImage)
+            Glide.with(this).load(user.pic).placeholder(R.drawable.ic_profile_thumb)
+                .into(mBinding.ivProfileImage)
         }
 
         mBinding.tieName.addTextChangedListener(object : TextWatcher {

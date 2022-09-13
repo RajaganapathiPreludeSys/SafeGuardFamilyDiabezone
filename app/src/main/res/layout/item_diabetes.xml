@@ -159,23 +159,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llContainer"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:visibility="gone">
+                android:layout_marginStart="15dp"
+                android:visibility="gone"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStatusRed"
+                    style="@style/Medium.White.MontserratBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_hyper" />
+                    android:background="@drawable/bg_red_curved"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Hyper" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Medium.Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="@string/contact_diabezone_health_coach" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNormalContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llContainer"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Medium.White.MontserratBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_green_curved"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Normal" />
 
             </LinearLayout>
 

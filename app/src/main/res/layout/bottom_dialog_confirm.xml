@@ -31,9 +31,9 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSelectedDate"
             style="@style/Large.White.MontserratBold"
-            android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,10 +52,10 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginEnd="15dp"
-                    app:loadImage="@{provider.pic}"
                     android:src="@drawable/ic_profile_thumb"
                     app:civ_border_color="@color/blue"
-                    app:civ_border_width="1dp" />
+                    app:civ_border_width="1dp"
+                    app:loadImage="@{provider.pic}" />
 
                 <LinearLayout
                     android:id="@+id/llContainer"
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="@{provider.name}"/>
+                        android:text="@{provider.name}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvProfession"
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="@{provider.speciality}"/>
+                        android:text="@{provider.speciality}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvEducation"
@@ -96,7 +96,7 @@
                         style="@style/Large.MontserratBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_marginTop="20dp" />
 
 
                 </LinearLayout>
@@ -120,20 +120,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@{date}"
                     android:drawableStart="@drawable/ic_appointment"
+                    android:drawablePadding="5dp"
                     android:drawableTint="@color/blue"
-                    android:drawablePadding="5dp" />
+                    android:text="@{date}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTime"
                     style="@style/Medium"
-                    android:text="@{time}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_schedule"
-                    android:drawablePadding="5dp" />
+                    android:drawablePadding="5dp"
+                    android:text="@{time}" />
             </LinearLayout>
 
         </LinearLayout>

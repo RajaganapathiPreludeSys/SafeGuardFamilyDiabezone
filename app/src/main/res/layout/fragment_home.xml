@@ -235,7 +235,7 @@
                                         android:layout_centerInParent="true"
                                         android:paddingStart="10dp"
                                         android:paddingEnd="10dp"
-                                        android:text="Mg/dL" />
+                                        android:text="mg/dL" />
 
                                 </RelativeLayout>
 
@@ -370,11 +370,21 @@
 
                 </LinearLayout>
 
-                <com.highsoft.highcharts.core.HIChartView
-                    android:id="@+id/hc"
+                <com.github.mikephil.charting.charts.CombinedChart
+                    android:id="@+id/chart1"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="250dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChartPlaceholder"
+                    style="@style/Large.Blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="No data available" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup1"

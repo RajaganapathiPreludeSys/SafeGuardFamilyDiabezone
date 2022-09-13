@@ -14,6 +14,7 @@ import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivitySubscriptionBinding
+import com.safeguardFamily.diabezone.model.request.Error
 import com.safeguardFamily.diabezone.model.request.PaymentFailRequest
 import com.safeguardFamily.diabezone.model.request.PaymentResponse
 import com.safeguardFamily.diabezone.model.request.SubscriptionRequest
@@ -28,7 +29,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
     SubscriptionViewModel::class.java
 ), PaymentResultListener {
 
-    private lateinit var pid: String
+    private lateinit var pack: Package
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
@@ -53,7 +54,6 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
             loadProgram(it.packages!!)
             loadInfo(it.info!!)
         }
-
     }
 
     private fun loadInfo(info: List<Info>) {
@@ -63,7 +63,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
 
     private fun loadProgram(packages: List<Package>) {
         mBinding.rvPrograms.adapter = SubscribeProgramsAdapter(packages) {
-            pid = it.pid!!
+            pack = it
             val amount = it.programFee!!.toInt() * 100
             val checkout = Checkout()
             checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
@@ -89,7 +89,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
 
     override fun onPaymentSuccess(p0: String?) {
         val sub = SubscriptionRequest(
-            pid = pid,
+            pid = pack.pid,
             uid = SharedPref.getUserId(),
             paymentResponse = PaymentResponse(key = p0)
         )
@@ -104,7 +104,18 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
     override fun onPaymentError(p0: Int, p1: String?) {
         showToast("Payment failed, Please retry later")
         Log.d(Bundle.TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
-        mViewModel.payFailed(Gson().fromJson(p1, PaymentFailRequest::class.java))
+        mViewModel.payFailed(
+            PaymentFailRequest(
+                amount = pack.programFee,
+                error = Gson().fromJson(p1, Error::class.java),
+                pid = pack.pid,
+                puid = "",
+                selDate = "",
+                slot = "",
+                type = "package",
+                uid = SharedPref.getUserId()
+            )
+        )
 
     }
 

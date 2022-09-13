@@ -1,8 +1,9 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
-import com.google.gson.Gson
+import androidx.activity.result.contract.ActivityResultContracts
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle
@@ -26,12 +27,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         viewModel = (activity as DashboardActivity).mViewModel
 
         mBinding.rlBookingContainer.setOnClickListener {
-            val bundle = android.os.Bundle()
-            bundle.putString(
-                Bundle.KEY_BOOKING_DETAILS,
-                Gson().toJson(viewModel.userResponse.value)
-            )
-            navigateTo(BookingDetailsActivity::class.java, bundle)
+            navigateTo(BookingDetailsActivity::class.java)
         }
 
         mBinding.clTermsService.setOnClickListener {
@@ -48,13 +44,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             navigateTo(WebViewActivity::class.java, mBundle)
         }
 
+        val requestSinglePermission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted)
+                startActivity(
+                    Intent(
+                        Intent.ACTION_CALL,
+                        Uri.parse("tel:+91" + viewModel.userResponse.value!!.health_coach!!.mobile)
+                    )
+                )
+            else showToast("Permission Denied by user for making calls")
+        }
+
         mBinding.clContact.setOnClickListener {
 
             if (SharedPref.isMember()) {
-                val dialIntent = Intent(Intent.ACTION_DIAL)
-                dialIntent.data =
-                    Uri.parse("tel:" + viewModel.userResponse.value!!.health_coach!!.mobile)
-                startActivity(dialIntent)
+                requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
             } else {
                 showToast("Only members can contact their Health Coach")
                 navigateTo(SubscriptionActivity::class.java)
@@ -68,12 +74,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             mBundle.putBoolean(Bundle.KEY_EDIT_PROFILE, true)
             navigateTo(RegisterActivity::class.java, mBundle)
         }
-
     }
 
     override fun onResume() {
         super.onResume()
         mBinding.profile = SharedPref.getUser()
     }
-
 }

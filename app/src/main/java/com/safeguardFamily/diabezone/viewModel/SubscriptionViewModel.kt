@@ -41,7 +41,10 @@ class SubscriptionViewModel : BaseViewModel() {
             })
     }
 
-    fun subscribe(request: SubscriptionRequest, onSuccess: ((response: SubscribeResponse) -> Unit)) {
+    fun subscribe(
+        request: SubscriptionRequest,
+        onSuccess: ((response: SubscribeResponse) -> Unit)
+    ) {
         apiLoader.postValue(true)
         RetrofitClient.apiInterface.subscribe(request)
             .enqueue(object : Callback<BaseResponse<SubscribeResponse>> {

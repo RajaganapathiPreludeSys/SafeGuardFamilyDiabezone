@@ -46,7 +46,7 @@ object SharedPref {
         putUser(profile.user!!)
         write(PrefMembership, Gson().toJson(profile.membership))
         write(PrefIsMember, profile.is_member!!)
-        write(PrefHealthCoach,  Gson().toJson(profile.health_coach))
+        write(PrefHealthCoach, Gson().toJson(profile.health_coach))
     }
 
     fun getMembership(): List<Membership> =

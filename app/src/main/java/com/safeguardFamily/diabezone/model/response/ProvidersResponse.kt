@@ -1,4 +1,6 @@
 package com.safeguardFamily.diabezone.model.response
+import com.google.gson.annotations.SerializedName
+
 
 data class ProvidersResponse(
     val appointments: List<Appointment>,
@@ -39,8 +41,18 @@ data class Provider(
 )
 
 data class Timings(
-    val days: String,
-    val time: String
+    var days: Days?,
+    var time: String?
+)
+
+data class Days(
+    var fri: String?,
+    var mon: String?,
+    var sat: String?,
+    var sun: String?,
+    var thu: String?,
+    var tue: String?,
+    var wed: String?
 )
 
 data class AvailableSlot(

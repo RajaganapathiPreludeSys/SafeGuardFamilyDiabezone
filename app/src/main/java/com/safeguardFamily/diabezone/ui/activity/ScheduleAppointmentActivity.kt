@@ -22,7 +22,9 @@ import com.safeguardFamily.diabezone.common.DateUtils.getTimeStampFromSting
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityScheduleAppointmentBinding
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
+import com.safeguardFamily.diabezone.model.request.Error
 import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
+import com.safeguardFamily.diabezone.model.request.PaymentFailRequest
 import com.safeguardFamily.diabezone.model.response.Appointment
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.ScheduleAppointmentViewModel
@@ -329,6 +331,18 @@ class ScheduleAppointmentActivity :
     override fun onPaymentError(p0: Int, p1: String?) {
         showToast("Payment failed, Please retry later")
         Log.d(TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
+        mViewModel.payFailed(
+            PaymentFailRequest(
+                amount = mProvider.fees,
+                error = Gson().fromJson(p1, Error::class.java),
+                pid = "",
+                puid = mProvider.puid,
+                selDate = apiDate,
+                slot = apiTime,
+                type = "appointment",
+                uid = SharedPref.getUserId()
+            )
+        )
     }
 
 }

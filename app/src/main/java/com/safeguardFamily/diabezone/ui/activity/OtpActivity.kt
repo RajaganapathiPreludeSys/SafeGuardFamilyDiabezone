@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -46,15 +45,25 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
         }
 
         val mSS = SpannableString(mText)
-        mSS.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 54, 61, 0)
-        mSS.setSpan(StyleSpan(Typeface.BOLD), 54, 61, 0)
+
+        val goBack: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                finish()
+            }
+        }
+        mSS.setSpan(goBack, 52, 59, 0)
+        mSS.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 52, 59, 0)
+        mSS.setSpan(StyleSpan(Typeface.BOLD), 52, 59, 0)
+        mBinding.tvWelcomeDesc.movementMethod = LinkMovementMethod.getInstance()
         mBinding.tvWelcomeDesc.text = mSS
+        mBinding.tvWelcomeDesc.isSelected = true
 
         if (extras?.containsKey(KEY_OTPs) == true)
             otp = Gson().fromJson(extras.getString(KEY_OTPs), Array<String>::class.java).toList()
 
         mBinding.icHeader.ivBack.setOnClickListener { finish() }
         val spanString = SpannableString(getString(R.string.accept_terms_and_privacy))
+
         val termsAndCondition: ClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
                 val mBundle = Bundle()

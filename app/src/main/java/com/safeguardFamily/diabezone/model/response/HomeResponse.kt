@@ -34,7 +34,7 @@ data class GraphItems(
 
 data class ListX(
     var lid: String?,
-    var log_value: String?,
+    var log_value: Int?,
     var measure_date: String?,
     var measure_unit: String?,
     var period: String?,

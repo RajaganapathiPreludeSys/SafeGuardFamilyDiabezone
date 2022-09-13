@@ -26,6 +26,7 @@ import com.safeguardFamily.diabezone.databinding.ItemDiabetesBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.response.Log
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
+import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
 import java.util.*
 
 class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -> Unit)) :
@@ -54,8 +55,6 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
         fun bind(item: Log, mOnDone: (request: DiabetesLogRequest) -> Unit) {
             dateString = splitDate(item.measureDate!!)!!
             timeString24 = splitTime(item.measureDate!!)!!
-
-            android.util.Log.d(TAG, "bind: $dateString $timeString24")
             binding.ivEdit.bringToFront()
             binding.ivEdit.setOnClickListener {
                 editDiabetes(itemView.context, item) {
@@ -67,29 +66,58 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             binding.tvTime.text = formatTo12Hrs(timeString24)
 
             Glide.with(itemView.context).load(
-                when (item.symbol) {
-                    "up" -> R.drawable.ic_red_up_arrow
-                    "down" -> R.drawable.ic_red_down_arrow
-                    "fire" -> R.drawable.ic_red_drop
-                    else -> R.drawable.ic_red_up_arrow
+                when (item.status) {
+                    "hyper" -> R.drawable.ic_red_up_arrow
+                    "hypo" -> R.drawable.ic_red_down_arrow
+                    "normal" -> null
+                    else -> null
                 }
             ).into(binding.ivBloodSugar)
 
-            if (item.status == "hyper") binding.llHyperContainer.visibility = View.VISIBLE
+            when (item.status) {
+                "hyper" -> {
+                    binding.tvStatusRed.text = "Hyper"
+                    binding.llHyperContainer.visibility = View.VISIBLE
+                    binding.llNormalContainer.visibility = View.GONE
+                }
+                "hypo" -> {
+                    binding.tvStatusRed.text = "Hypo"
+                    binding.llHyperContainer.visibility = View.VISIBLE
+                    binding.llNormalContainer.visibility = View.GONE
+                }
+                "normal" -> {
+                    binding.llHyperContainer.visibility = View.GONE
+                    binding.llNormalContainer.visibility = View.VISIBLE
+                }
+            }
 
             binding.llHyperContainer.setOnClickListener {
-                val bundle = android.os.Bundle()
-                bundle.putString(
-                    Bundle.KEY_DOCTOR,
-                    SharedPref.read(SharedPref.Pref.PrefHealthCoach, "")
-                )
-                bundle.putString(Bundle.KEY_TITLE, "Health Coach")
-                itemView.context.startActivity(
-                    Intent(
+                if (SharedPref.isMember()) {
+                    val bundle = android.os.Bundle()
+                    bundle.putString(
+                        Bundle.KEY_DOCTOR,
+                        SharedPref.read(SharedPref.Pref.PrefHealthCoach, "")
+                    )
+                    bundle.putString(Bundle.KEY_TITLE, "Health Coach")
+                    itemView.context.startActivity(
+                        Intent(
+                            itemView.context,
+                            DoctorDetailsActivity::class.java
+                        ).putExtras(bundle)
+                    )
+                } else {
+                    Toast.makeText(
                         itemView.context,
-                        DoctorDetailsActivity::class.java
-                    ).putExtras(bundle)
-                )
+                        "Only members can contact their Health Coach",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    itemView.context.startActivity(
+                        Intent(
+                            itemView.context,
+                            SubscriptionActivity::class.java
+                        )
+                    )
+                }
             }
 
             binding.tvType.text = when (item.period) {

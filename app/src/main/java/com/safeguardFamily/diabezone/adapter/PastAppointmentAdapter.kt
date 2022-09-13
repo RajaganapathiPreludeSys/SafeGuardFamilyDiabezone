@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFromAPI
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDayFromAPI
-import com.safeguardFamily.diabezone.common.DateUtils.displayingTimeFormat
 import com.safeguardFamily.diabezone.common.DateUtils.displayingTimeFromAPI
 import com.safeguardFamily.diabezone.databinding.ItemPastAppointmentBinding
 import com.safeguardFamily.diabezone.model.response.PastAppointment

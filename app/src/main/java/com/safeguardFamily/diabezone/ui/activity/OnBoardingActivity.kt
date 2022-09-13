@@ -1,12 +1,16 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.safeguardFamily.diabezone.BuildConfig
@@ -23,6 +27,27 @@ class OnBoardingActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_boarding)
         mBinding.lifecycleOwner = this
 
+        if (isInternetAvailable(this))
+            loadApp()
+        else {
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder
+                .setMessage("No data/WIFI connection available. Please connect and retry")
+                .setCancelable(false)
+                .setPositiveButton("Retry") { dialog, id ->
+                    finish()
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancel") { dialog, id ->
+                    finishAffinity()
+                }
+            val alert = dialogBuilder.create()
+            alert.setTitle("Network State")
+            alert.show()
+        }
+    }
+
+    private fun loadApp() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (SharedPref.getUserId()!!.length > 2) {
                 startActivity(Intent(applicationContext, DashboardActivity::class.java))
@@ -60,10 +85,25 @@ class OnBoardingActivity : AppCompatActivity() {
 
         mBinding.vvVideoPlayer.setOnCompletionListener {
             Log.d("RRR -- ", "restarted: ")
-//            mBinding.vvVideoPlayer.start()
             startActivity(Intent(applicationContext, MobileActivity::class.java))
 //            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }
+    }
+
+    private fun isInternetAvailable(context: Context): Boolean {
+        val result: Boolean
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        result = when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+        return result
     }
 }

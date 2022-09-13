@@ -81,10 +81,10 @@
                 style="@style/Large.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:text="Book Another Appointments" />
+                android:text="Book Another Appointments"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDoctors"

@@ -38,15 +38,17 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         if (viewModelClass != null) mViewModel = ViewModelProvider(this)[viewModelClass]
 //        mBinding.lifecycleOwner = this
         mBinding.lifecycleOwner = viewLifecycleOwner
+        onceCreated()
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onceCreated()
+
         mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it) }
         mViewModel.successToast.observe(viewLifecycleOwner) { showToast(it) }
         mViewModel.apiLoader.observe(viewLifecycleOwner) { if (it) showLoading() else hideLoading() }
+        mViewModel.noInternet.observe(viewLifecycleOwner) { if (it) showNoNetwork() else hideNoNetwork() }
     }
 
     open fun showToast(message: String, isShort: Boolean = true) = Toast.makeText(
@@ -94,6 +96,8 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     open fun openWhatsApp(num: String) = (activity as BaseActivity<*, *>).openWhatsApp(num)
     open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
     open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
+    open fun showNoNetwork() = (activity as BaseActivity<*, *>).showNoNetwork()
+    open fun hideNoNetwork() = (activity as BaseActivity<*, *>).hideNoNetwork()
     open fun longLog(sb: String) = (activity as BaseActivity<*, *>).longLog(sb)
     open fun logout() = (activity as BaseActivity<*, *>).logout()
 

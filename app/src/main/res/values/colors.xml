@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bgBlue">#EDF8FF</color>    //  Common BG Blue
+    <color name="bgBlue">#EDF8FF</color>
+    // Common BG Blue
 
-    <color name="black">#14305E</color>     //  Common Black Font
-    <color name="blue">#0957DE</color>      //  Common Blue Font
-    <color name="blueOpacity">#800957DE</color>      //  Common Blue Font
-    <color name="red">#F6696D</color>       //  Common Red Font
-    <color name="grey">#717171</color>      //  Common Grey Font
-    <color name="white">#FFFFFF</color>     //  Common White Font
+    <color name="black">#14305E</color>
+    // Common Black Font
+    <color name="blue">#0957DE</color>
+    // Common Blue Font
+    <color name="blueOpacity">#800957DE</color>
+    // Common Blue Font
+    <color name="red">#F6696D</color>
+    // Common Red Font
+    <color name="grey">#717171</color>
+    // Common Grey Font
+    <color name="white">#FFFFFF</color>
+    // Common White Font
     <color name="yellow">#F1A33B</color>
 
     <color name="blueLine">#D6E3EC</color>

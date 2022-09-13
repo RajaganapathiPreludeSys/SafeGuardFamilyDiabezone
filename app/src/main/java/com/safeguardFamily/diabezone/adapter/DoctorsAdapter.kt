@@ -49,30 +49,27 @@ class DoctorsAdapter(
                     ).putExtras(bundle)
                 )
             }
+            addView("M ", model.timings.days!!.mon!!.length > 2)
+            addView("T ", model.timings.days!!.tue!!.length > 2)
+            addView("W ", model.timings.days!!.wed!!.length > 2)
+            addView("T ", model.timings.days!!.thu!!.length > 2)
+            addView("F ", model.timings.days!!.fri!!.length > 2)
+            addView("S ", model.timings.days!!.sat!!.length > 2)
+            addView("S ", model.timings.days!!.sun!!.length > 2)
+        }
 
-            for (i in 1..7) {
-                val textView = TextView(binding.root.context)
-                textView.text = when (i) {
-                    1 -> "M  "
-                    2 -> "T  "
-                    3 -> "W  "
-                    4 -> "T  "
-                    5 -> "F  "
-                    6 -> "S  "
-                    7 -> "S  "
-                    else -> ""
-                }
-                val params = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                textView.layoutParams = params
-                if (model.timings.days.contains(i.toString()))
-                    textView.setTextColor(binding.root.context.getColor(R.color.blue))
-                else textView.setTextColor(binding.root.context.getColor(R.color.red))
-                textView.textSize = 15F
-                binding.llDays.addView(textView)
-            }
+        private fun addView(text: String, b: Boolean) {
+            val textView = TextView(binding.root.context)
+            textView.text = text
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            textView.layoutParams = params
+            if (b) textView.setTextColor(binding.root.context.getColor(R.color.blue))
+            else textView.setTextColor(binding.root.context.getColor(R.color.red))
+            textView.textSize = 15F
+            binding.llDays.addView(textView)
         }
     }
 }

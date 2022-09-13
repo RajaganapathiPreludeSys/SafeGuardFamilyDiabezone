@@ -1,7 +1,17 @@
 package com.safeguardFamily.diabezone.model.request
 
+import com.google.gson.annotations.SerializedName
+
 data class PaymentFailRequest(
-    var error: Error?
+    var amount: String?,
+    var error: Error?,
+    var pid: String?,
+    var puid: String?,
+    @SerializedName("sel_date")
+    var selDate: String?,
+    var slot: String?,
+    var type: String?,
+    var uid: String?
 )
 
 data class Error(

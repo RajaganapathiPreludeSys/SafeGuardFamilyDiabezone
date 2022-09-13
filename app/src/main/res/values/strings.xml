@@ -13,7 +13,7 @@
     <string name="valid_phone">Enter a valid phone number</string>`
     <string name="verify_account">Verify Account!</string>
     <string name="otp_code_desc">Enter 4-digit code we have sent to\n <u><b>+91 %1$s</b></u>. Go back to change the phone number</string>
-    <string name="didnt_received_the_code">Didn\'t n receive the code?</string>
+    <string name="didnt_received_the_code">Didn\'t receive the code?</string>
     <string name="resend_code">Resend Code</string>
     <string name="proceed">Proceed</string>
     <string name="skip">Skip</string>

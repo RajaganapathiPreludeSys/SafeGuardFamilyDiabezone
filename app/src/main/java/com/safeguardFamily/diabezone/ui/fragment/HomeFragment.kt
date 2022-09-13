@@ -1,7 +1,9 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -10,13 +12,22 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
-import com.highsoft.highcharts.common.HIColor
-import com.highsoft.highcharts.common.hichartsclasses.*
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.CombinedData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
+import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDayFromAPI
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo24Hrs
@@ -133,22 +144,22 @@ class HomeFragment :
         mViewModel.getHome {
             mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
                 when (i) {
-                    mBinding.radioButton1.id -> loadChart(
+                    mBinding.radioButton1.id -> bindChart(
                         it.last_7_days!!.before_meal!!,
                         "Fasting Blood Sugar"
                     )
-                    mBinding.radioButton2.id -> loadChart(
+                    mBinding.radioButton2.id -> bindChart(
                         it.last_7_days!!.after_meal!!,
                         "After Meal"
                     )
-                    mBinding.radioButton3.id -> loadChart(
+                    mBinding.radioButton3.id -> bindChart(
                         it.last_7_days!!.random!!,
                         "Random"
                     )
                 }
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
-            loadChart(it.last_7_days!!.before_meal!!, "Fasting Blood Sugar")
+            bindChart(it.last_7_days!!.before_meal!!, "Fasting Blood Sugar")
             isGraphLoaded = true
         }
 
@@ -316,228 +327,94 @@ class HomeFragment :
         }
     }
 
-    private val options = HIOptions()
-    private fun loadChart(chartData: GraphItems, type: String) {
-
+    private fun bindChart(chartData: GraphItems, s: String) {
         mBinding.tvAvg.text = chartData.summary!!.avg.toString()
         mBinding.tvTaget.text = chartData.summary!!.target.toString()
         mBinding.tvMin.text = chartData.summary!!.min.toString()
         mBinding.tvMax.text = chartData.summary!!.max.toString()
-        mBinding.tvHyper.text = chartData.summary!!.incident!!.hyper.toString()
-        mBinding.tvHypo.text = chartData.summary!!.incident!!.hypo.toString()
 
-//        val options = HIOptions()
-//        mBinding.hc.options = options
-
-        val xAxis = HIXAxis()
-        xAxis.title = HITitle()
-        xAxis.title.text = "Log Date"
-        val charArray = ArrayList<String>()
-
-        val title = HITitle()
-        title.text = "Blood Sugar mg/dl"
-        options.title = title
-
-        val s1 = ArrayList<Int>()
-
-        chartData.list!!.asReversed().forEach {
-            charArray.add(displayingDayFromAPI(it.measure_date!!)!!)
-            s1.add(it.log_value!!.toInt())
+        val months = ArrayList<String>()
+        chartData.list!!.forEach {
+            months.add(DateUtils.displayingDayFromAPI(it.measure_date!!)!!)
         }
 
-        xAxis.categories = charArray
-        options.xAxis = object : ArrayList<HIXAxis?>() {
-            init {
-                add(xAxis)
+        if (chartData.list!!.isNotEmpty()) {
+
+            mBinding.chart1.visibility = View.VISIBLE
+            mBinding.tvChartPlaceholder.visibility = View.GONE
+
+            mBinding.chart1.description.isEnabled = false
+            mBinding.chart1.setBackgroundColor(Color.WHITE)
+            mBinding.chart1.setDrawGridBackground(false)
+            mBinding.chart1.setDrawBarShadow(false)
+            mBinding.chart1.isHighlightFullBarEnabled = false
+            mBinding.chart1.setTouchEnabled(false)
+            mBinding.chart1.setPinchZoom(false)
+            mBinding.chart1.isDoubleTapToZoomEnabled = false
+
+            mBinding.chart1.drawOrder = arrayOf(CombinedChart.DrawOrder.LINE)
+            val l = mBinding.chart1.legend
+            l.isWordWrapEnabled = true
+            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            l.orientation = Legend.LegendOrientation.HORIZONTAL
+            l.setDrawInside(false)
+
+            val rightAxis = mBinding.chart1.axisRight
+            rightAxis.textSize = 12f
+            rightAxis.setDrawGridLines(false)
+
+            val leftAxis = mBinding.chart1.axisLeft
+            leftAxis.textSize = 12f
+            leftAxis.setDrawGridLines(false)
+
+            val xAxis = mBinding.chart1.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.labelRotationAngle = 50f
+            xAxis.axisMinimum = 0f
+            xAxis.granularity = 1f
+            xAxis.textSize = 12f
+
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return months[value.toInt() % months.size]
+                }
             }
+            val data = CombinedData()
+
+            data.setData(generateLineData(chartData, s))
+
+            xAxis.axisMaximum = data.xMax + 0.25f
+
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
+
+            mBinding.chart1.data = data
+            mBinding.chart1.invalidate()
+        } else {
+            mBinding.chart1.visibility = View.GONE
+            mBinding.tvChartPlaceholder.visibility = View.VISIBLE
         }
-
-        val yAxis = HIYAxis()
-        yAxis.title = HITitle()
-        yAxis.title.text = "mg/dl"
-        options.yAxis = object : ArrayList<HIYAxis?>() {
-            init {
-                add(yAxis)
-            }
-        }
-
-        val plotOptions = HIPlotOptions()
-        plotOptions.line = HILine()
-        plotOptions.line.dataLabels = arrayListOf<HIDataLabels>()
-        plotOptions.line.enableMouseTracking = false
-        options.plotOptions = plotOptions
-
-        val series1 = HILine()
-        series1.name = type
-        series1.color = HIColor.initWithName("red")
-
-        series1.data = s1
-
-        options.series = ArrayList(listOf(series1))
-        if (mBinding.hc.options == null)
-            mBinding.hc.options = options
-        else mBinding.hc.update(options)
     }
 
-    private fun loadChart(chartCount: Int) {
-        val options = HIOptions()
-        mBinding.hc.options = options
-        val chart = HIChart()
-        chart.zoomType = "x"
-        options.chart = chart
+    private fun generateLineData(chartData: GraphItems, s: String): LineData {
+        val d = LineData()
+        val entries = ArrayList<Entry>()
 
-        val title = HITitle()
-        title.text = "Blood Sugar mg/dl"
-        options.title = title
-
-        val xAxis = HIXAxis()
-        xAxis.title = HITitle()
-        xAxis.title.text = "Date"
-        val charArray = ArrayList<String>()
-        for (i in chartCount..1) charArray.add(i.toString())
-        xAxis.categories = charArray
-        options.xAxis = object : ArrayList<HIXAxis?>() {
-            init {
-                add(xAxis)
-            }
+        chartData.list!!.forEachIndexed { i, l ->
+            entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
         }
-
-        val yAxis = HIYAxis()
-        yAxis.title = HITitle()
-        yAxis.title.text = "mg/dl"
-        options.yAxis = object : ArrayList<HIYAxis?>() {
-            init {
-                add(yAxis)
-            }
-        }
-
-        val plotOptions = HIPlotOptions()
-        plotOptions.line = HILine()
-        plotOptions.line.dataLabels = arrayListOf<HIDataLabels>()
-        plotOptions.line.enableMouseTracking = false
-        options.plotOptions = plotOptions
-
-        val series1 = HILine()
-        series1.name = "Fasting Blood Sugar"
-        series1.color = HIColor.initWithName("red")
-        val s1 = ArrayList<Int>()
-        for (i in 1..chartCount) s1.add((110..160).random())
-        val series1Data =
-            arrayOf<Number>(
-                7.0,
-                6.9,
-                9.5,
-                14.5,
-                18.4,
-                21.5,
-                25.2,
-                26.5,
-                23.3,
-                18.3,
-                13.9,
-                9.6,
-                7.0,
-                6.9,
-                9.5,
-                14.5,
-                18.4,
-                21.5,
-                25.2,
-                26.5,
-                23.3,
-                18.3,
-                13.9,
-                9.6,
-                40
-            )
-        series1.data = s1
-//        series1.data = ArrayList(listOf(*series1Data))
-
-        val series2 = HILine()
-        series2.name = "After meal"
-        series2.color = HIColor.initWithName("blue")
-        val s2 = ArrayList<Int>()
-        for (i in 1..chartCount) s2.add((100..150).random())
-        val series2Data =
-            arrayOf<Number?>(
-                3.9,
-                4.2,
-                0,
-                0,
-                0,
-                5.7,
-                15.2,
-                11.9,
-                15.2,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0,
-                0,
-                null,
-                15.2,
-                null,
-                null,
-                null,
-                15.2,
-                null,
-                17.0,
-                16.6,
-                14.2,
-                10.3,
-                6.6,
-                4.8,
-                40
-            )
-//        series2.data = s2
-        series2.data = ArrayList(listOf(*series2Data))
-
-        val series3 = HILine()
-        series3.name = "Random"
-        series3.color = HIColor.initWithName("green")
-        val s3 = ArrayList<Int>()
-        for (i in 1..chartCount) s3.add((120..170).random())
-        val series3Data =
-            arrayOf<Number?>(
-                3.9,
-                4.2,
-                0,
-                0,
-                0,
-                5.7,
-                15.2,
-                11.9,
-                15.2,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0,
-                0,
-                null,
-                15.2,
-                null,
-                null,
-                null,
-                15.2,
-                null,
-                17.0,
-                16.6,
-                14.2,
-                10.3,
-                6.6,
-                4.8,
-                25
-            )
-        series3.data = s3
-
-        options.series = ArrayList(listOf(series1, series2, series3))
-        mBinding.hc.options = options
+        val set = LineDataSet(entries, s)
+        set.color = requireContext().getColor(R.color.blueOpacity)
+        set.lineWidth = 2.5f
+        set.setCircleColor(requireContext().getColor(R.color.blue))
+        set.circleRadius = 3f
+        set.fillColor = requireContext().getColor(R.color.blue)
+        set.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set.setDrawValues(true)
+        set.valueTextSize = 12f
+        set.valueTextColor = requireContext().getColor(R.color.black)
+        set.axisDependency = YAxis.AxisDependency.RIGHT
+        d.addDataSet(set)
+        return d
     }
-
 }

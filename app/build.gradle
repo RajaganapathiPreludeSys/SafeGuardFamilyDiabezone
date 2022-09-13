@@ -85,9 +85,9 @@ dependencies {
     //  For Image and Gallery Picker
     implementation "com.github.ChiliLabs:ChiliPhotoPicker:0.3.1"
 
-    //  For Chart
-    implementation 'com.github.highcharts:highcharts-android:10.2.0'
-
     //  For Circular Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //  For Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

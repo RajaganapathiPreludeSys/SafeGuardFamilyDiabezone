@@ -4,10 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.model.request.CreateAppointmentRequest
 import com.safeguardFamily.diabezone.model.request.GetSlotsRequest
-import com.safeguardFamily.diabezone.model.response.AppointmentResponse
-import com.safeguardFamily.diabezone.model.response.AvailableSlot
-import com.safeguardFamily.diabezone.model.response.BaseResponse
-import com.safeguardFamily.diabezone.model.response.SlotsResponse
+import com.safeguardFamily.diabezone.model.request.PaymentFailRequest
+import com.safeguardFamily.diabezone.model.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -106,6 +104,33 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
                     isBookingCompleted.postValue(false)
                 }
 
+            })
+    }
+
+
+    fun payFailed(request: PaymentFailRequest) {
+        apiLoader.postValue(true)
+        RetrofitClient.apiInterface.payFailed(request)
+            .enqueue(object : Callback<BaseResponse<SubscribeResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<SubscribeResponse>>,
+                    response: retrofit2.Response<BaseResponse<SubscribeResponse>>
+                ) {
+                    if (response.isSuccessful)
+                        if (response.body()?.success!!) {
+
+                        } else apiError.postValue(response.body()!!.error)
+                    else apiError.postValue(response.message())
+                    apiLoader.postValue(false)
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<SubscribeResponse>>,
+                    t: Throwable
+                ) {
+                    apiError.postValue(t.message)
+                    apiLoader.postValue(false)
+                }
             })
     }
 

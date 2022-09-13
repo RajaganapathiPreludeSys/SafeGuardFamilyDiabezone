@@ -287,7 +287,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_royal_blue_border"
                                 android:drawableStart="@drawable/ic_call"
-                                android:drawablePadding="12dp"
+                                android:drawablePadding="8dp"
                                 android:gravity="center_vertical"
                                 android:padding="10dp"
                                 android:text="@{profile.health_coach.mobile}" />
@@ -297,11 +297,11 @@
                                 style="@style/Small.Blue.MontserratSemi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="45dp"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="12dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_royal_blue_border"
                                 android:drawableStart="@drawable/ic_whats_app"
-                                android:drawablePadding="5dp"
+                                android:drawablePadding="10dp"
                                 android:gravity="center_vertical"
                                 android:padding="10dp"
                                 android:text="@{profile.health_coach.whatsapp_no}" />

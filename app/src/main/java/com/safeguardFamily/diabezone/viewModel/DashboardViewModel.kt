@@ -17,7 +17,7 @@ class DashboardViewModel : BaseViewModel() {
         getProfile()
     }
 
-    fun getProfile() {
+    private fun getProfile() {
         RetrofitClient.apiInterface.getProfile(IdRequest(uid = SharedPref.getUserId()!!))
             .enqueue(object : Callback<BaseResponse<ProfileResponse>> {
                 override fun onResponse(

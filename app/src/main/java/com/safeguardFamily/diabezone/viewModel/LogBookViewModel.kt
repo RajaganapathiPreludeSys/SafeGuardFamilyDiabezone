@@ -33,8 +33,7 @@ class LogBookViewModel : BaseViewModel() {
                             logs.postValue(response.body()!!.data!!.logs!!)
                             pdfUrl.postValue(response.body()!!.data!!.pdfUrl)
                             graphData.postValue(response.body()!!.data!!.graph)
-                        }
-                        else apiError.postValue(response.body()!!.error)
+                        } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
                 }

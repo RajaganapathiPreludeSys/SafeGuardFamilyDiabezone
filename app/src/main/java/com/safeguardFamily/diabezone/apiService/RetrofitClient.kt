@@ -1,5 +1,6 @@
 package com.safeguardFamily.diabezone.apiService
 
+import com.safeguardFamily.diabezone.AppApplication
 import com.safeguardFamily.diabezone.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,6 +22,7 @@ object RetrofitClient {
         logging.setLevel(levelType)
 
         val okhttpClient = OkHttpClient.Builder()
+        okhttpClient.addInterceptor(ConnectivityInterceptor(AppApplication.applicationContext()))
         okhttpClient.addInterceptor(logging)
         okhttpClient.addInterceptor(
             Interceptor { chain ->
