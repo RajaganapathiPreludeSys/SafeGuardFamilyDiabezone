@@ -85,7 +85,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         mBinding.tvMax.text = chartData.summary!!.max.toString()
 
         val months = ArrayList<String>()
-        chartData.list!!.forEach {
+        chartData.list!!.reversed().forEach {
             months.add(DateUtils.displayingDayFromAPI(it.measure_date!!)!!)
         }
 
@@ -151,7 +151,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         val d = LineData()
         val entries = ArrayList<Entry>()
 
-        chartData.list!!.forEachIndexed { i, l ->
+        chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
         }
         val set = LineDataSet(entries, s)

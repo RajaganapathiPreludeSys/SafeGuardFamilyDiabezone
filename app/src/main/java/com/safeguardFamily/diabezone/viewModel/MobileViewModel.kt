@@ -33,7 +33,7 @@ class MobileViewModel : BaseViewModel() {
                     call: Call<BaseResponse<OtpResponse>>,
                     t: Throwable
                 ) {
-                    if (t is NoConnectivityException){
+                    if (t is NoConnectivityException) {
 
                     }
                     apiError.postValue(t.message)

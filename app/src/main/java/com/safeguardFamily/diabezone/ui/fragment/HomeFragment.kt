@@ -27,7 +27,6 @@ import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
-import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDayFromAPI
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo24Hrs
@@ -334,8 +333,8 @@ class HomeFragment :
         mBinding.tvMax.text = chartData.summary!!.max.toString()
 
         val months = ArrayList<String>()
-        chartData.list!!.forEach {
-            months.add(DateUtils.displayingDayFromAPI(it.measure_date!!)!!)
+        chartData.list!!.reversed().forEach {
+            months.add(displayingDayFromAPI(it.measure_date!!)!!)
         }
 
         if (chartData.list!!.isNotEmpty()) {
@@ -400,7 +399,7 @@ class HomeFragment :
         val d = LineData()
         val entries = ArrayList<Entry>()
 
-        chartData.list!!.forEachIndexed { i, l ->
+        chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
         }
         val set = LineDataSet(entries, s)

@@ -23,7 +23,6 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
 
     override fun onceCreated() {
 
-
         mBinding.mViewModel = mViewModel
 
         mBinding.icHeader.ivBack.setOnClickListener { finish() }

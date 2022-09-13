@@ -53,43 +53,43 @@ class DoctorDetailsActivity :
         if (provider.timings.days!!.mon!!.length > 1)
             mBinding.tvMonTime.text = provider.timings.days!!.mon
         else {
-            mBinding.tvMonTime.text = "No slots available today"
+            mBinding.tvMonTime.text = "No slots available"
             mBinding.tvMon.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.tue!!.length > 1)
             mBinding.tvTueTime.text = provider.timings.days!!.tue
         else {
-            mBinding.tvTueTime.text = "No slots available today"
+            mBinding.tvTueTime.text = "No slots available"
             mBinding.tvTue.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.wed!!.length > 1)
             mBinding.tvWedTime.text = provider.timings.days!!.wed
         else {
-            mBinding.tvWedTime.text = "No slots available today"
+            mBinding.tvWedTime.text = "No slots available"
             mBinding.tvWed.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.thu!!.length > 1)
             mBinding.tvThuTime.text = provider.timings.days!!.thu
         else {
-            mBinding.tvThuTime.text = "No slots available today"
+            mBinding.tvThuTime.text = "No slots available"
             mBinding.tvThu.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.fri!!.length > 1)
             mBinding.tvFriTime.text = provider.timings.days!!.fri
         else {
-            mBinding.tvFriTime.text = "No slots available today"
+            mBinding.tvFriTime.text = "No slots available"
             mBinding.tvFri.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.sat!!.length > 1)
             mBinding.tvSatTime.text = provider.timings.days!!.sat
         else {
-            mBinding.tvSatTime.text = "No slots available today"
+            mBinding.tvSatTime.text = "No slots available"
             mBinding.tvSat.setTextColor(getColor(R.color.red))
         }
         if (provider.timings.days!!.sun!!.length > 1)
             mBinding.tvSunTime.text = provider.timings.days!!.sun
         else {
-            mBinding.tvSunTime.text = "No slots available today"
+            mBinding.tvSunTime.text = "No slots available"
             mBinding.tvSun.setTextColor(getColor(R.color.red))
         }
     }

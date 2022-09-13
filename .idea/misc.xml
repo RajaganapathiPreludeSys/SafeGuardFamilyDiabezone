@@ -42,12 +42,14 @@
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_arrow_up.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_beneficiary.xml" value="0.1735" />
         <entry key="app/src/main/res/drawable/ic_book_appointment.xml" value="0.329" />
         <entry key="app/src/main/res/drawable/ic_book_doctor_appointment.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_booking_details.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_call.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_call_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_consolidated_prescription.xml" value="0.251" />
         <entry key="app/src/main/res/drawable/ic_date.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_dot.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_down_arrow_blue.xml" value="0.3335" />
@@ -66,6 +68,7 @@
         <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_program_banner.xml" value="0.1705" />
+        <entry key="app/src/main/res/drawable/ic_red_drop.xml" value="0.1735" />
         <entry key="app/src/main/res/drawable/ic_red_up_arrow.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.3345" />
         <entry key="app/src/main/res/drawable/ic_schedule.xml" value="0.1705" />
@@ -73,6 +76,7 @@
         <entry key="app/src/main/res/drawable/ic_star_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_statistics.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_terms_service.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_time.xml" value="0.251" />
         <entry key="app/src/main/res/drawable/ic_upload_picture.xml" value="0.3355" />
         <entry key="app/src/main/res/drawable/ic_vault.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_video.xml" value="0.195" />
@@ -103,7 +107,7 @@
         <entry key="app/src/main/res/layout/dialog_time.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/fragment_appointment.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/fragment_appointment_doctor.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.30665380906460943" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/include_header.xml" value="0.34010416666666665" />
@@ -111,8 +115,10 @@
         <entry key="app/src/main/res/layout/item_days.xml" value="0.32037037037037036" />
         <entry key="app/src/main/res/layout/item_diabetes.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_doctor.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/item_emergency_contact.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_expandable.xml" value="0.32037037037037036" />
         <entry key="app/src/main/res/layout/item_history.xml" value="0.33125" />
+        <entry key="app/src/main/res/layout/item_lab_report.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/item_notification.xml" value="0.3390625" />
         <entry key="app/src/main/res/layout/item_past_appointment.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_program_banner.xml" value="0.33125" />
