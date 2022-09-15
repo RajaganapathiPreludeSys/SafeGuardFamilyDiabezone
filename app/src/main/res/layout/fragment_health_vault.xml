@@ -23,7 +23,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/rlDiabetes"
@@ -90,24 +90,23 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_above="@id/tvHVDesc"
+                    android:background="@color/blue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHVDesc"
+                    style="@style/Large.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:background="@color/blue">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvHVDesc"
-                        style="@style/Large.White"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="60dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:text="This is member only benefit. Enrol now in the Diabezone program and get your own Health Vault. \n\nSee example Health Vault of Mrs Mani Below." />
-
-                </LinearLayout>
+                    android:layout_below="@id/rlDiabetes"
+                    android:background="@color/blue"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="This is member only benefit. Enrol now in the Diabezone program and get your own Health Vault. \n\nSee example Health Vault of Mrs Mani Below." />
 
             </RelativeLayout>
 
@@ -116,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_beneficiary"
                 android:drawablePadding="5dp"
@@ -126,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -135,14 +134,15 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/rlMemberContainer"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
+                        android:layout_height="wrap_content">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cvImages"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
+                            android:layout_margin="15dp"
                             android:layout_marginEnd="10dp"
                             app:cardCornerRadius="5dp">
 
@@ -158,6 +158,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
                             android:layout_toEndOf="@id/cvImages"
                             android:orientation="vertical">
 
@@ -183,12 +185,13 @@
 
                         </LinearLayout>
 
-                    </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/bgBlue" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/bgBlue" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -197,6 +200,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEmail"
                             style="@style/Medium.Blue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -205,6 +209,7 @@
                             android:text="mani@gmail.com" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvMobile"
                             style="@style/Medium.Blue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -214,6 +219,7 @@
                             android:text="+91 6876687687" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLocation"
                             style="@style/Medium.Grey"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -232,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -251,6 +257,7 @@
                         android:text="Patron" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPatronName"
                         style="@style/Medium.Grey.MontserratBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -259,6 +266,7 @@
                         android:text="Prem Kumar" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPatronEmail"
                         style="@style/Medium.Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -268,6 +276,7 @@
                         android:text="mani@gmail.com" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPatronContact"
                         style="@style/Medium.Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -278,6 +287,7 @@
                         android:text="+91 6876687687" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPatronAddress"
                         style="@style/Medium.Grey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -308,7 +318,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -338,6 +348,7 @@
                                 android:text="Blood Group" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvBloodGroup"
                                 style="@style/Medium.MontserratBold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -364,6 +375,7 @@
                                 android:text="Primary Doctor" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPrimaryDoctor"
                                 style="@style/Medium.MontserratBold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -389,6 +401,7 @@
                                 android:text="" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvEmergencyContact"
                                 style="@style/Medium.Blue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -417,17 +430,31 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.Blue.MontserratBold"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:drawableStart="@drawable/ic_insurance"
-                android:drawableEnd="@drawable/ic_arrow_circle_right"
-                android:drawablePadding="5dp"
-                android:text="Insurance Details" />
+                android:layout_marginEnd="15dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.Blue.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/ivInsurancePdf"
+                    android:drawableStart="@drawable/ic_insurance"
+                    android:drawablePadding="5dp"
+                    android:text="Insurance Details" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivInsurancePdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
+                    android:src="@drawable/ic_arrow_circle_right" />
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -436,7 +463,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -461,11 +488,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="Insurer" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvInsurer"
                                 style="@style/Medium.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -486,11 +515,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="Policy Name" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPolicyName"
                                 style="@style/Medium.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -511,11 +542,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="Policy No." />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPolicyNo"
                                 style="@style/Medium.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -536,11 +569,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="Policy Period" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPeriod"
                                 style="@style/Medium.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -561,11 +596,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="Sum Assured" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvAmount"
                                 style="@style/Medium.Red.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -599,11 +636,13 @@
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
                                 android:text="TPA" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPolicyHolder"
                                 style="@style/Medium.MontserratSemi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -629,6 +668,7 @@
                                 android:text="" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPolicyEmail"
                                 style="@style/Medium.Blue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -656,6 +696,7 @@
                                 android:text="" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPolicyContact"
                                 style="@style/Medium.Blue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -690,7 +731,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -702,24 +743,49 @@
                         android:id="@+id/rvLabReport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="horizontal"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_lab_report" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLabReport"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Large.Blue.MontserratBold"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:drawableStart="@drawable/ic_consolidated"
-                android:drawableEnd="@drawable/ic_pdf"
-                android:drawablePadding="5dp"
-                android:text="Consolidated  Prescription" />
+                android:layout_marginEnd="15dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.Blue.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/ivConsolidatedPdf"
+                    android:drawableStart="@drawable/ic_insurance"
+                    android:drawablePadding="5dp"
+                    android:text="Consolidated Prescription" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivConsolidatedPdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
+                    android:src="@drawable/ic_pdf" />
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -728,7 +794,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -749,24 +815,24 @@
                         android:text="Prepared by" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPreparedBy"
                         style="@style/Medium.MontserratBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical"
-                        android:text="Dr Meena Garg" />
+                        android:gravity="center_vertical" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHospital"
                         style="@style/Small.Grey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical"
-                        android:text="Safe Guard Family" />
+                        android:gravity="center_vertical" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -784,7 +850,6 @@
                             android:layout_marginEnd="15dp"
                             android:drawableStart="@drawable/ic_date"
                             android:drawablePadding="5dp"
-                            android:text="23/07/22"
                             app:drawableTint="@color/grey" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -795,7 +860,6 @@
                             android:drawableStart="@drawable/ic_time"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
-                            android:text="8:30 PM"
                             app:drawableTint="@color/grey" />
 
                     </LinearLayout>
@@ -804,7 +868,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/bgBlue" />
+                        android:background="@color/bgGrey" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Medium.MontserratBold"
@@ -826,23 +890,23 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLifestyleDate"
                             style="@style/Medium.Grey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="15dp"
                             android:drawableStart="@drawable/ic_date"
                             android:drawablePadding="5dp"
-                            android:text="23/07/22"
                             app:drawableTint="@color/grey" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLifestyleTime"
                             style="@style/Medium.Grey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_time"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
-                            android:text="8:30 PM"
                             app:drawableTint="@color/grey" />
 
                     </LinearLayout>
@@ -851,8 +915,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/bgBlue" />
-
+                        android:background="@color/bgGrey" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Medium.MontserratBold"
@@ -874,26 +937,475 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRecommendationDate"
                             style="@style/Medium.Grey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="15dp"
                             android:drawableStart="@drawable/ic_date"
                             android:drawablePadding="5dp"
-                            android:text="23/07/22"
                             app:drawableTint="@color/grey" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRecommendationTime"
                             style="@style/Medium.Grey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_time"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
-                            android:text="8:30 PM"
                             app:drawableTint="@color/grey" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Red.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_vitals"
+                android:drawablePadding="5dp"
+                android:text="Vitals" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_red_border"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/red"
+                        android:gravity="center_vertical|end"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium.White"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="Last Updated " />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvVitalDate"
+                            style="@style/Large.White.MontserratBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_date"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            app:drawableTint="@color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_blue_round"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="Weight" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvWeight"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="Height" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvHeight"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_blue_round"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="BMI" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvBMI"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="BP" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvBP"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_blue_round"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="RBS" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRBS"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="SPO2" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSPO"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/bg_blue_round"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="Temperature" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTemperature"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:text="Pulse Rate" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPulse"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_allegries"
+                android:drawablePadding="5dp"
+                android:text="Allergies" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAllergies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="horizontal"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_allergy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAllergies"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_history"
+                android:drawablePadding="5dp"
+                android:text="History" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="horizontal"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_history_vault" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHistory"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_diagnosis"
+                android:drawablePadding="5dp"
+                android:text="Diagnosis" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDiagnosis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:padding="15dp"
+                        android:scrollbars="horizontal"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/item_history" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDiagnosis"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 

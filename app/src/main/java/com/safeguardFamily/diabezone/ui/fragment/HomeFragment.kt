@@ -58,8 +58,6 @@ class HomeFragment :
     private var dateString = ""
     private var timeString = ""
 
-    private var isGraphLoaded = false
-
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
@@ -99,6 +97,7 @@ class HomeFragment :
                         }
                     )
                     mViewModel.addDiabetesLog(request) {
+                        loadHomeGraph()
                         mCalendar = Calendar.getInstance()
                         dateString =
                             "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
@@ -138,30 +137,30 @@ class HomeFragment :
 
         loadProfileImg(mProfile.pic, mBinding.ivProfileImage)
         mBinding.tvName.text = mProfile.name
+        loadHomeGraph()
+    }
 
-//        if (!isGraphLoaded)
+    private fun loadHomeGraph() {
         mViewModel.getHome {
             mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
                 when (i) {
                     mBinding.radioButton1.id -> bindChart(
-                        it.last_7_days!!.before_meal!!,
+                        it.lifetime!!.before_meal!!,
                         "Fasting Blood Sugar"
                     )
                     mBinding.radioButton2.id -> bindChart(
-                        it.last_7_days!!.after_meal!!,
+                        it.lifetime!!.after_meal!!,
                         "After Meal"
                     )
                     mBinding.radioButton3.id -> bindChart(
-                        it.last_7_days!!.random!!,
+                        it.lifetime!!.random!!,
                         "Random"
                     )
                 }
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
-            bindChart(it.last_7_days!!.before_meal!!, "Fasting Blood Sugar")
-            isGraphLoaded = true
+            bindChart(it.lifetime!!.before_meal!!, "Fasting Blood Sugar")
         }
-
     }
 
     private fun loadNotification() {
@@ -331,6 +330,10 @@ class HomeFragment :
         mBinding.tvTaget.text = chartData.summary!!.target.toString()
         mBinding.tvMin.text = chartData.summary!!.min.toString()
         mBinding.tvMax.text = chartData.summary!!.max.toString()
+        mBinding.tvHyper.text = chartData.summary!!.incident!!.hyper.toString()
+        mBinding.tvHypo.text = chartData.summary!!.incident!!.hypo.toString()
+        mBinding.tvGraphTitle.text = "Blood Sugar - $s"
+
 
         val months = ArrayList<String>()
         chartData.list!!.reversed().forEach {
@@ -339,7 +342,7 @@ class HomeFragment :
 
         if (chartData.list!!.isNotEmpty()) {
 
-            mBinding.chart1.visibility = View.VISIBLE
+            mBinding.rlGraphContainer.visibility = View.VISIBLE
             mBinding.tvChartPlaceholder.visibility = View.GONE
 
             mBinding.chart1.description.isEnabled = false
@@ -347,9 +350,9 @@ class HomeFragment :
             mBinding.chart1.setDrawGridBackground(false)
             mBinding.chart1.setDrawBarShadow(false)
             mBinding.chart1.isHighlightFullBarEnabled = false
-            mBinding.chart1.setTouchEnabled(false)
-            mBinding.chart1.setPinchZoom(false)
-            mBinding.chart1.isDoubleTapToZoomEnabled = false
+//            mBinding.chart1.setTouchEnabled(false)
+//            mBinding.chart1.setPinchZoom(false)
+//            mBinding.chart1.isDoubleTapToZoomEnabled = false
 
             mBinding.chart1.drawOrder = arrayOf(CombinedChart.DrawOrder.LINE)
             val l = mBinding.chart1.legend
@@ -369,7 +372,7 @@ class HomeFragment :
 
             val xAxis = mBinding.chart1.xAxis
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.labelRotationAngle = 50f
+            xAxis.labelRotationAngle = -50f
             xAxis.axisMinimum = 0f
             xAxis.granularity = 1f
             xAxis.textSize = 12f
@@ -381,34 +384,40 @@ class HomeFragment :
             }
             val data = CombinedData()
 
-            data.setData(generateLineData(chartData, s))
+            data.setData(generateLineData(chartData))
 
             xAxis.axisMaximum = data.xMax + 0.25f
 
-            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack)
 
             mBinding.chart1.data = data
+            mBinding.chart1.axisRight.isEnabled = false
+            mBinding.chart1.legend.isEnabled = false
+            mBinding.chart1.axisLeft.setDrawGridLines(false)
+            mBinding.chart1.xAxis.setDrawGridLines(false)
             mBinding.chart1.invalidate()
+
+            mBinding.tvResetZoom.setOnClickListener { mBinding.chart1.fitScreen() }
         } else {
-            mBinding.chart1.visibility = View.GONE
+            mBinding.rlGraphContainer.visibility = View.GONE
             mBinding.tvChartPlaceholder.visibility = View.VISIBLE
         }
     }
 
-    private fun generateLineData(chartData: GraphItems, s: String): LineData {
+    private fun generateLineData(chartData: GraphItems): LineData {
         val d = LineData()
         val entries = ArrayList<Entry>()
 
         chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
         }
-        val set = LineDataSet(entries, s)
+        val set = LineDataSet(entries, "")
         set.color = requireContext().getColor(R.color.blueOpacity)
         set.lineWidth = 2.5f
         set.setCircleColor(requireContext().getColor(R.color.blue))
         set.circleRadius = 3f
         set.fillColor = requireContext().getColor(R.color.blue)
-        set.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
         set.valueTextSize = 12f
         set.valueTextColor = requireContext().getColor(R.color.black)

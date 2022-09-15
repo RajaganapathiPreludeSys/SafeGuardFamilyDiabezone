@@ -1,7 +1,6 @@
 package com.safeguardFamily.diabezone.ui.activity
 
 import androidx.fragment.app.Fragment
-import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.databinding.ActivityDashboardBinding
@@ -24,9 +23,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        if (BuildConfig.BUILD_TYPE == "debug")
-            setCurrentFragment(healthVault)
-        else setCurrentFragment(home)
+        setCurrentFragment(home)
 
         mBinding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
@@ -37,7 +34,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
             }
             true
         }
-
     }
 
     fun setCurrentFragment(fragment: Fragment) =

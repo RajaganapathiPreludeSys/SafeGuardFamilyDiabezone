@@ -54,6 +54,10 @@ interface ApiInterface {
     @POST("pay-failure")
     fun payFailed(@Body body: PaymentFailRequest): Call<BaseResponse<SubscribeResponse>>
 
+    //  https://safeguardfamily.com/apis/health-vault
+    @POST("health-vault")
+    fun getHealthVault(@Body body: IdRequest): Call<BaseResponse<HealthVaultResponse>>
+
     @POST("providers")
     fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<ProvidersResponse>>
 
@@ -62,6 +66,10 @@ interface ApiInterface {
 
     @POST("reshedule-appointment")
     fun reScheduleAppointment(@Body body: CreateAppointmentRequest): Call<BaseResponse<AppointmentResponse>>
+
+    //  https://safeguardfamily.com/apis/confirm-appointment
+    @POST("confirm-appointment")
+    fun confirmAppointment(@Body body: CreateAppointmentRequest): Call<BaseResponse<AppointmentResponse>>
 
     @POST("provider-slots")
     fun getSlots(@Body body: GetSlotsRequest): Call<BaseResponse<SlotsResponse>>

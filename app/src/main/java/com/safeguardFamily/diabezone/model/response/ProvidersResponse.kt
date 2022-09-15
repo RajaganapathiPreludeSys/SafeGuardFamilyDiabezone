@@ -10,7 +10,7 @@ data class ProvidersResponse(
 data class Appointment(
     val aid: String,
     val booking_date: String,
-    val booking_status: String,
+    val booking_status: Int,
     val provider: Provider,
     val puid: String,
     val slot: String,

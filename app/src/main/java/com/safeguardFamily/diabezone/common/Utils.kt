@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.common
 import com.safeguardFamily.diabezone.common.Bundle.API_DATE_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.API_DATE_TIME_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.DATE_FORMAT
+import com.safeguardFamily.diabezone.common.Bundle.DATE_FORMAT_TWO
 import com.safeguardFamily.diabezone.common.Bundle.DATE_TIME_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.DAY_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
@@ -35,12 +36,20 @@ object DateUtils {
         SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(it) }
 
+    fun displayingDateFormatTwo(time: String): String? =
+        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_FORMAT_TWO, Locale.getDefault()).format(it) }
+
+    fun displayingDateFormatTwoFromAPIDateTime(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_FORMAT_TWO, Locale.getDefault()).format(it) }
+
     fun displayingDateTimeFormat(time: String): String? =
         SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it) }
 
     fun displayingTimeFormat(time: String): String? =
-        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(date12Format, Locale.getDefault()).format(it) }
 
     fun displayingDateTimeFormatToAPIFormat(time: String): String? =

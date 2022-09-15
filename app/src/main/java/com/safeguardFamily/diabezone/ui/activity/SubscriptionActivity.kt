@@ -48,7 +48,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
         mBinding.rvBanner.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvBanner.setHasFixedSize(true)
-        mBinding.rvBanner.addItemDecoration(LinePagerIndicatorDecoration(baseContext))
+        mBinding.rvBanner.addItemDecoration(LinePagerIndicatorDecoration(this))
 
         mViewModel.getPrograms {
             loadProgram(it.packages!!)

@@ -40,6 +40,7 @@ object Bundle {
     const val DATE_FORMAT = "dd LLL, yyyy"
     const val DAY_FORMAT = "dd LLL"
     const val DATE_TIME_FORMAT = "dd LLL, yyyy hh:mm a"
+    const val DATE_FORMAT_TWO = "dd/MM/yy"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
     const val API_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"

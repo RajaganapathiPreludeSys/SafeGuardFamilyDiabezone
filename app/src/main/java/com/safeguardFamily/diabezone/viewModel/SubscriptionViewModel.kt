@@ -54,6 +54,7 @@ class SubscriptionViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
+                            SharedPref.write(SharedPref.Pref.PrefIsMember, true)
                             onSuccess(response.body()!!.data!!)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())

@@ -62,7 +62,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                 }
             }
             binding.tvDate.text = displayingDateFormat(item.measureDate!!)
-            binding.etBloodSugar.text = "${item.logValue} ${item.measureUnit}"
+            binding.etBloodSugar.text = "${item.logValue} mg/dL"
             binding.tvTime.text = formatTo12Hrs(timeString24)
 
             Glide.with(itemView.context).load(

@@ -170,7 +170,6 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/bg_blue_round"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:padding="10dp"
@@ -434,7 +433,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvMon"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -446,7 +445,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvMonTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -465,7 +464,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvTue"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -477,7 +476,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvTueTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -496,7 +495,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvWed"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -508,7 +507,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvWedTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -527,7 +526,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvThu"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -539,7 +538,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvThuTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -558,7 +557,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvFri"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -570,7 +569,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvFriTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -589,7 +588,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvSat"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -601,7 +600,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvSatTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -620,7 +619,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvSun"
-                                    style="@style/Medium.Blue.MontserratBold"
+                                    style="@style/Small.Blue.MontserratBold"
                                     android:layout_width="50dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
@@ -632,7 +631,7 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvSunTime"
-                                    style="@style/Medium"
+                                    style="@style/Small"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"

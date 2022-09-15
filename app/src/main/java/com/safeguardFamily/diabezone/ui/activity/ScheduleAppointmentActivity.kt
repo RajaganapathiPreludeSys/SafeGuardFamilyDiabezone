@@ -103,6 +103,7 @@ class ScheduleAppointmentActivity :
         }
 
         mBinding.btJoinOnline.setOnClickListener {
+            mAppointment = mViewModel.appointment.value!!.appointment
             val c = Calendar.getInstance()
             c.timeInMillis = getTimeStampFromSting(mAppointment.booking_date)
 
@@ -253,52 +254,40 @@ class ScheduleAppointmentActivity :
 
         mBinding.icBottomSheetConfirm.btConfirm.setOnClickListener {
             isConfirmed = true
-            if (SharedPref.isMember()) {
-                if (isReschedule) mViewModel.reScheduleAppointment(
-                    CreateAppointmentRequest(
-                        uid = SharedPref.getUserId()!!,
-                        puid = mProvider.puid,
-                        sel_date = apiDate,
-                        slot = apiTime,
-                        aid = mAppointment.aid
-                    )
+
+            if (isReschedule) mViewModel.reScheduleAppointment(
+                CreateAppointmentRequest(
+                    uid = SharedPref.getUserId()!!,
+                    puid = mProvider.puid,
+                    sel_date = apiDate,
+                    slot = apiTime,
+                    aid = mAppointment.aid
                 )
-                else mViewModel.createAppointment(
-                    CreateAppointmentRequest(
-                        uid = SharedPref.getUserId()!!,
-                        puid = mProvider.puid,
-                        sel_date = apiDate,
-                        slot = apiTime
-                    )
+            )
+            else mViewModel.createAppointment(
+                CreateAppointmentRequest(
+                    uid = SharedPref.getUserId()!!,
+                    puid = mProvider.puid,
+                    sel_date = apiDate,
+                    slot = apiTime
                 )
-            } else {
-                if (isReschedule) mViewModel.reScheduleAppointment(
-                    CreateAppointmentRequest(
-                        uid = SharedPref.getUserId()!!,
-                        puid = mProvider.puid,
-                        sel_date = apiDate,
-                        slot = apiTime,
-                        aid = mAppointment.aid
-                    )
-                )
-                else {
-                    val amount = mProvider.fees.toInt() * 100
-                    val checkout = Checkout()
-                    checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
-                    checkout.setImage(R.drawable.ic_app_logo)
-                    val obj = JSONObject()
-                    try {
-                        obj.put("name", "SafeGuardFamily")
-                        obj.put("description", "Payment for appointment")
-                        obj.put("theme.color", "")
-                        obj.put("currency", "INR")
-                        obj.put("amount", amount)
-                        obj.put("prefill.contact", SharedPref.getUser().mobile)
-                        obj.put("prefill.email", SharedPref.getUser().email)
-                        checkout.open(this, obj)
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
+            ) {
+                val amount = mProvider.fees.toInt() * 100
+                val checkout = Checkout()
+                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setImage(R.drawable.ic_app_logo)
+                val obj = JSONObject()
+                try {
+                    obj.put("name", "SafeGuardFamily")
+                    obj.put("description", "Payment for appointment")
+                    obj.put("theme.color", "")
+                    obj.put("currency", "INR")
+                    obj.put("amount", amount)
+                    obj.put("prefill.contact", SharedPref.getUser().mobile)
+                    obj.put("prefill.email", SharedPref.getUser().email)
+                    checkout.open(this, obj)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
             }
         }
@@ -318,12 +307,13 @@ class ScheduleAppointmentActivity :
         showToast("Payment succeeded")
         Log.d(TAG, "Razorpay onPayment Success() called with: p0 = $p0")
         isConfirmed = true
-        mViewModel.createAppointment(
+        mViewModel.confirmAppointment(
             CreateAppointmentRequest(
                 uid = SharedPref.getUserId()!!,
                 puid = mProvider.puid,
                 sel_date = apiDate,
-                slot = apiTime
+                slot = apiTime,
+                razorPayKey = p0
             )
         )
     }

@@ -43,6 +43,7 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
 
     fun createAppointment(
         request: CreateAppointmentRequest,
+        onSuccess: (() -> Unit)
     ) {
         apiLoader.postValue(true)
         RetrofitClient.apiInterface.createAppointment(request)
@@ -56,7 +57,10 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
                             isBookingCompleted.postValue(true)
-                            successToast.postValue("Appointment Created Successfully")
+                            if (response.body()!!.data!!.appointment.booking_status == 4)
+                                onSuccess()
+                            else if (response.body()!!.data!!.appointment.booking_status == 1)
+                                successToast.postValue("Appointment Created Successfully")
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
@@ -107,6 +111,38 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
             })
     }
 
+    fun confirmAppointment(
+        request: CreateAppointmentRequest,
+    ) {
+        apiLoader.postValue(true)
+        RetrofitClient.apiInterface.confirmAppointment(request)
+            .enqueue(object : Callback<BaseResponse<AppointmentResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<AppointmentResponse>>,
+                    response: Response<BaseResponse<AppointmentResponse>>
+                ) {
+                    isBookingCompleted.postValue(false)
+                    if (response.isSuccessful)
+                        if (response.body()?.success!!) {
+                            appointment.postValue(response.body()!!.data)
+                            isBookingCompleted.postValue(true)
+                            successToast.postValue("Appointment Created Successfully")
+                        } else apiError.postValue(response.body()!!.error)
+                    else apiError.postValue(response.message())
+                    apiLoader.postValue(false)
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<AppointmentResponse>>,
+                    t: Throwable
+                ) {
+                    apiError.postValue(t.message)
+                    apiLoader.postValue(false)
+                    isBookingCompleted.postValue(false)
+                }
+
+            })
+    }
 
     fun payFailed(request: PaymentFailRequest) {
         apiLoader.postValue(true)

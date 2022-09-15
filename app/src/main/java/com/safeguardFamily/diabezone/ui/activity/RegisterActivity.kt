@@ -115,8 +115,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     if (tempImageUri != null && tempImageUri!!.path!!.length > 2) {
 //                        Log.d(TAG, "getRealPath: ${RealPathUtil.getRealPath(this, tempImageUri)!!}")
 //                        val f = File(RealPathUtil.getRealPath(this, tempImageUri)!!)
-                        val f = File(tempImageUri!!.path!!)
-                        mViewModel.multiPartUser(user, f) {
+                        mViewModel.multiPartUser(user, File(tempImageUri!!.path!!)) {
                             showToast("Profile Updated Successfully")
                             tempImageUri = null
                         }
@@ -126,8 +125,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 } else if (mBinding.cbTermsAndCondition.isChecked) {
                     user.name = mBinding.tieName.text.toString()
                     user.email = mBinding.tieEmail.text.toString()
-                    mViewModel.updateUser(user) {
+                    if (tempImageUri != null && tempImageUri!!.path!!.length > 2) {
+                        mViewModel.multiPartUser(user, File(tempImageUri!!.path!!)) {
+                            navigateTo(DashboardActivity::class.java)
+                            finishAffinity()
+                        }
+                    } else mViewModel.updateUser(user) {
                         navigateTo(DashboardActivity::class.java)
+                        finishAffinity()
                     }
                 } else showToast(R.string.accept_terms)
             }

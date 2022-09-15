@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:paddingTop="10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,12 +15,12 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
             style="@style/Medium.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:layout_weight="2"
-            android:text="Lipid Profile" />
+            android:layout_weight="2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,47 +29,92 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Medium.MontserratBold"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_medication"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="Dr Meena Garg" />
+                android:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDate"
-                style="@style/Medium.Grey"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_medication" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPreparedBy"
+                    style="@style/Medium.Grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:drawableStart="@drawable/ic_date"
-                android:drawablePadding="5dp"
-                android:text="23/07/22"
-                app:drawableTint="@color/grey" />
+                android:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTime"
-                style="@style/Medium.Grey"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_date" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDate"
+                    style="@style/Medium.Grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:drawableStart="@drawable/ic_time"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="8:30 PM"
-                app:drawableTint="@color/grey" />
+                android:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Medium.Red.MontserratSemi"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_time" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTime"
+                    style="@style/Medium.Grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/llAlert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:drawableStart="@drawable/ic_red_drop"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="V High HDL" />
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAlert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_red_drop" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAlert"
+                    style="@style/Medium.Red.MontserratSemi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center_vertical"
+                    android:text="V High HDL" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -86,7 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/llCon"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/bgBlue" />
 
 </RelativeLayout>

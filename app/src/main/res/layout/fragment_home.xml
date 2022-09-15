@@ -353,27 +353,45 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
-                    android:visibility="gone">
+                    android:gravity="center_vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/xLarge.Blue.MontserratSemi"
+                        android:id="@+id/tvGraphTitle"
+                        style="@style/Large.Blue.MontserratSemi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Blood Sugar " />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Medium.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" mg/dL" />
-
                 </LinearLayout>
 
-                <com.github.mikephil.charting.charts.CombinedChart
-                    android:id="@+id/chart1"
+                <RelativeLayout
+                    android:id="@+id/rlGraphContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/xSmall.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mg/dL" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvResetZoom"
+                        style="@style/xSmall.MontserratBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/reset_zoom" />
+
+                    <com.github.mikephil.charting.charts.CombinedChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_below="@id/tvResetZoom" />
+
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvChartPlaceholder"
@@ -390,30 +408,35 @@
                     android:id="@+id/radioGroup1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioButton1"
                         style="@style/Small.Grey"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:buttonTint="@color/blue"
                         android:text="Fasting Blood Sugar" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
                         style="@style/Small.Grey"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:buttonTint="@color/blue"
                         android:text="After meal" />
 
                     <RadioButton
                         android:id="@+id/radioButton3"
                         style="@style/Small.Grey"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:buttonTint="@color/blue"
                         android:text="Random" />
                 </RadioGroup>
@@ -532,132 +555,112 @@
                         style="@style/Small.Blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:text="Incidents:" />
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:background="@color/bgBlue"
-                        android:orientation="vertical">
+                        app:cardCornerRadius="5dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/bg_red_border"
-                            android:baselineAligned="false"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="1dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:background="@drawable/bg_blue_round"
+                                android:baselineAligned="false"
                                 android:orientation="horizontal"
                                 android:padding="5dp">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Medium"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Hyper - " />
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvHyper"
-                                    style="@style/Medium"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0" />
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        style="@style/Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hyper - " />
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvHyper"
+                                        style="@style/Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:contentDescription="@string/app_name"
+                                        android:src="@drawable/ic_red_up_arrow" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:contentDescription="@string/app_name"
-                                    android:src="@drawable/ic_red_up_arrow" />
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        style="@style/Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hypo - " />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvHypo"
+                                        style="@style/Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:contentDescription="@string/app_name"
+                                        android:src="@drawable/ic_red_down_arrow" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:padding="5dp">
+                                android:background="#E7565A"
+                                android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Medium"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Hypo - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvHypo"
-                                    style="@style/Medium"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="2" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:contentDescription="@string/app_name"
-                                    android:src="@drawable/ic_red_down_arrow" />
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="110dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/ic_red_banner" />
 
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/red"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="15dp"
-                                android:src="@drawable/ic_white_drop" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:paddingTop="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Large.White"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="You are far from the target." />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Large.White.MontserratBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="You Need Help" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Large.White.MontserratBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="Enrol In  Daibezone Program Now" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -781,7 +784,7 @@
                 android:id="@+id/ivProgram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="5dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_program_banner" />
 

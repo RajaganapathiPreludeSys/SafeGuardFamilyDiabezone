@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:minLines="2" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProfession"
@@ -42,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:minLines="2" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEducation"
@@ -50,7 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:minLines="2" />
 
         </LinearLayout>
 
