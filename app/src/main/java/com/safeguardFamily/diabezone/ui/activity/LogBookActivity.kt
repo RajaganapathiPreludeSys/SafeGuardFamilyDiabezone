@@ -80,7 +80,8 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
 
     private fun bindChart(chartData: GraphItems, s: String) {
         mBinding.tvAvg.text = chartData.summary!!.avg.toString()
-        mBinding.tvTaget.text = chartData.summary!!.target.toString()
+        mBinding.tvTaget.text =
+            "${chartData.summary!!.minTarget}-${chartData.summary!!.maxTarget}"
         mBinding.tvMin.text = chartData.summary!!.min.toString()
         mBinding.tvMax.text = chartData.summary!!.max.toString()
         mBinding.tvGraphTitle.text = "Blood Sugar - $s"
@@ -157,8 +158,12 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         val d = LineData()
         val entries = ArrayList<Entry>()
 
+        val colors = java.util.ArrayList<Int>()
         chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
+            if (l.status == "hyper" || l.status == "hypo") {
+                colors.add(getColor(R.color.red))
+            } else colors.add(getColor(R.color.blue))
         }
         val set = LineDataSet(entries, "")
         set.color = getColor(R.color.blueOpacity)
@@ -171,6 +176,8 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         set.valueTextSize = 12f
         set.valueTextColor = getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
+        //        set.circleColors = colors
+        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }

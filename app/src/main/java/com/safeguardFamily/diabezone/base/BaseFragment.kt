@@ -94,6 +94,10 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         (activity as BaseActivity<*, *>).loadProfileImg(url, imageView)
 
     open fun openWhatsApp(num: String) = (activity as BaseActivity<*, *>).openWhatsApp(num)
+
+    open fun openMail(mail: String, subject: String, text: String) =
+        (activity as BaseActivity<*, *>).openMail(mail, subject, text)
+
     open fun showLoading() = (activity as BaseActivity<*, *>).showLoading()
     open fun hideLoading() = (activity as BaseActivity<*, *>).hideLoading()
     open fun showNoNetwork() = (activity as BaseActivity<*, *>).showNoNetwork()

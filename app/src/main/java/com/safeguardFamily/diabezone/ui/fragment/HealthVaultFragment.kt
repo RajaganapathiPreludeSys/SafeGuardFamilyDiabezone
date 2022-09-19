@@ -52,6 +52,8 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             loadAllergies(it.allergies!!)
             loadHistory(it.histories!!)
             loadDiagnosis(it.diagnosis!!)
+            loadProcedure(it.procedures!!)
+            loadHabit(it.personalHabits!!)
 //
 //            loadLabReport(arrayListOf())
 //            loadAllergies(arrayListOf())
@@ -65,14 +67,45 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         }
     }
 
-    private fun loadDiagnosis(diagnosis: List<String>) {
+    private fun loadHabit(habits: List<String>) {
+        if (habits.isNotEmpty()) {
+            mBinding.rvHabits.visibility = View.VISIBLE
+            mBinding.tvHabits.visibility = View.GONE
+            mBinding.rvHabits.adapter = HabitsAdapter(habits)
+            mBinding.rvHabits.layoutManager =
+                GridLayoutManager(requireContext(), 5, RecyclerView.HORIZONTAL, false)
+            mBinding.rvHabits.setHasFixedSize(false)
+        } else {
+            mBinding.rvHabits.visibility = View.GONE
+            mBinding.tvHabits.visibility = View.VISIBLE
+            mBinding.tvHabits.setOnClickListener { contactHealthCoach() }
+        }
+
+    }
+
+    private fun loadProcedure(procedures: List<Procedure>) {
+        if (procedures.isNotEmpty()) {
+            mBinding.rvProcedures.visibility = View.VISIBLE
+            mBinding.tvProcedures.visibility = View.GONE
+            mBinding.rvProcedures.adapter = ProcedureAdapter(procedures)
+            mBinding.rvProcedures.layoutManager =
+                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+            mBinding.rvProcedures.setHasFixedSize(false)
+        } else {
+            mBinding.rvProcedures.visibility = View.GONE
+            mBinding.tvProcedures.visibility = View.VISIBLE
+            mBinding.tvProcedures.setOnClickListener { contactHealthCoach() }
+        }
+    }
+
+    private fun loadDiagnosis(diagnosis: List<Diagnosi>) {
         if (diagnosis.isNotEmpty()) {
             mBinding.rvDiagnosis.visibility = View.VISIBLE
             mBinding.tvDiagnosis.visibility = View.GONE
             mBinding.rvDiagnosis.adapter = DiagnosisAdapter(diagnosis)
             mBinding.rvDiagnosis.layoutManager =
-                GridLayoutManager(requireContext(), 5, RecyclerView.HORIZONTAL, false)
-            mBinding.rvDiagnosis.setHasFixedSize(true)
+                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+            mBinding.rvDiagnosis.setHasFixedSize(false)
         } else {
             mBinding.rvDiagnosis.visibility = View.GONE
             mBinding.tvDiagnosis.visibility = View.VISIBLE
@@ -87,7 +120,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.rvHistory.adapter = HistoryAdapter(histories)
             mBinding.rvHistory.layoutManager =
                 GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
-            mBinding.rvHistory.setHasFixedSize(true)
+            mBinding.rvHistory.setHasFixedSize(false)
         } else {
             mBinding.rvHistory.visibility = View.GONE
             mBinding.tvHistory.visibility = View.VISIBLE
@@ -102,7 +135,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.rvAllergies.adapter = AllergyAdapter(allergies)
             mBinding.rvAllergies.layoutManager =
                 GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
-            mBinding.rvAllergies.setHasFixedSize(true)
+            mBinding.rvAllergies.setHasFixedSize(false)
         } else {
             mBinding.rvAllergies.visibility = View.GONE
             mBinding.tvAllergies.visibility = View.VISIBLE
@@ -120,7 +153,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             }
             mBinding.rvLabReport.layoutManager =
                 GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
-            mBinding.rvLabReport.setHasFixedSize(true)
+            mBinding.rvLabReport.setHasFixedSize(false)
         } else {
             mBinding.rvLabReport.visibility = View.GONE
             mBinding.tvLabReport.visibility = View.VISIBLE
@@ -135,7 +168,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         mBinding.rvEmergencyContact.adapter = EmergencyContactAdapter(contacts)
         mBinding.rvEmergencyContact.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mBinding.rvEmergencyContact.setHasFixedSize(true)
+        mBinding.rvEmergencyContact.setHasFixedSize(false)
     }
 
     private fun loadTextAreas(
@@ -211,7 +244,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         mBinding.tvSPO.text = vitals.sPO2
         mBinding.tvTemperature.text = vitals.temperature
         mBinding.tvPulse.text = vitals.pulseRate
-        mBinding.tvVitalDate.text = displayingDateFormatTwoFromAPIDateTime(vitals.date!!)
+        mBinding.tvVitalDate.text = displayingDateFormatTwoFromAPIDateTime(vitals.lastUpdatedDate!!)
 
     }
 

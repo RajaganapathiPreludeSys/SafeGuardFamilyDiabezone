@@ -1,5 +1,7 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 data class HomeResponse(
     var graph: Graph?,
     var is_member: Boolean?,
@@ -38,7 +40,9 @@ data class ListX(
     var measure_date: String?,
     var measure_unit: String?,
     var period: String?,
+    var status: String?,
     var uid: String?
+
 )
 
 data class Summary(
@@ -46,7 +50,11 @@ data class Summary(
     var incident: Incident?,
     var max: String?,
     var min: String?,
-    var target: Int?
+    var target: Int?,
+    @SerializedName("min_target")
+    var minTarget: Int?,
+    @SerializedName("max_target")
+    var maxTarget: Int?
 )
 
 data class Incident(

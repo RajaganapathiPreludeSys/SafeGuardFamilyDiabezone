@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.model.response.Diagnosi
 
-class DiagnosisAdapter(items: List<Diagnosi>) :
-    RecyclerView.Adapter<DiagnosisAdapter.ViewHolder>() {
+class HabitsAdapter(items: List<String>) :
+    RecyclerView.Adapter<HabitsAdapter.ViewHolder>() {
 
-    private val mItems: List<Diagnosi>
+    private val mItems: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_diagnosis, parent, false
+                R.layout.item_history, parent, false
             )
         )
     }
@@ -31,18 +30,12 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
-        private val tvDuration: TextView
-        private val tvStatus: TextView
-        fun setOnBoardingData(item: Diagnosi) {
-            tvTitle.text = item.title
-            tvDuration.text = "Duration - ${item.duration}"
-            tvStatus.text = "Status - ${item.status}"
+        fun setOnBoardingData(item: String) {
+            tvTitle.text = item
         }
 
         init {
-            tvTitle = itemView.findViewById(R.id.tvTitle)
-            tvDuration = itemView.findViewById(R.id.tvDuration)
-            tvStatus = itemView.findViewById(R.id.tvStatus)
+            tvTitle = itemView.findViewById(R.id.tvText)
         }
     }
 

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle
@@ -44,7 +45,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             navigateTo(WebViewActivity::class.java, mBundle)
         }
 
-        val requestSinglePermission = registerForActivityResult(
+        val callHealthCoach = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted)
@@ -57,10 +58,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             else showToast("Permission Denied by user for making calls")
         }
 
+        val callSupport = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted)
+                startActivity(
+                    Intent(
+                        Intent.ACTION_CALL,
+                        Uri.parse("tel:+91" + viewModel.userResponse.value!!.contactInfo!!.mobile)
+                    )
+                )
+            else showToast("Permission Denied by user for making calls")
+        }
+
         mBinding.clContact.setOnClickListener {
 
             if (SharedPref.isMember()) {
-                requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+                callHealthCoach.launch(Manifest.permission.CALL_PHONE)
             } else {
                 showToast("Only members can contact their Health Coach")
                 navigateTo(SubscriptionActivity::class.java)
@@ -68,6 +82,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         }
 
         mBinding.clLogout.setOnClickListener { logout() }
+
+        mBinding.ivCall.setOnClickListener {
+            callSupport.launch(Manifest.permission.CALL_PHONE)
+        }
+
+        mBinding.ivWhatsApp.setOnClickListener {
+            openWhatsApp(viewModel.userResponse.value!!.contactInfo!!.whatsappNo!!)
+        }
+
+        mBinding.ivEmail.setOnClickListener {
+            openMail(
+                viewModel.userResponse.value!!.contactInfo!!.email!!,
+                "Request for support",
+                ""
+            )
+        }
+
+//        Glide.with(this).load(viewModel.userResponse.value!!.contactInfo!!.).placeholder(R.drawable.ic_profile_thumb)
+//            .into(mBinding.ivContactImage)
 
         mBinding.rlDiabetes.setOnClickListener {
             val mBundle = android.os.Bundle()

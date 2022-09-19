@@ -113,6 +113,15 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         } else showToast("WhatsApp not available in you mobile")
     }
 
+    open fun openMail(mail: String, subject: String, text: String) {
+        startActivity(Intent(Intent.ACTION_SENDTO).apply {
+            type = "text/plain"
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(mail))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, text)
+        })
+    }
 
     open fun showLoading() {
         dialog = Dialog(this)

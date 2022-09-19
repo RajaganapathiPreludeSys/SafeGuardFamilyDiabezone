@@ -455,15 +455,16 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical"
                             android:padding="5dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvAvg"
-                                style="@style/xxLarge.Blue.MontserratSemi"
+                                style="@style/xLarge.Blue.MontserratSemi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="120" />
@@ -477,37 +478,16 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvTaget"
-                                style="@style/xxLarge.Blue.MontserratSemi"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="120" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Target" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical"
                             android:padding="5dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvMin"
-                                style="@style/xxLarge.Blue.MontserratSemi"
+                                style="@style/xLarge.Blue.MontserratSemi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="120" />
@@ -521,15 +501,16 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical"
                             android:padding="5dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvMax"
-                                style="@style/xxLarge.Blue.MontserratSemi"
+                                style="@style/xLarge.Blue.MontserratSemi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="120" />
@@ -539,6 +520,29 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Max" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTaget"
+                                style="@style/xLarge.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="120-120" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Target" />
 
                         </LinearLayout>
 

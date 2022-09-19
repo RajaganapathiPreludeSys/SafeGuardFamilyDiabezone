@@ -327,7 +327,8 @@ class HomeFragment :
 
     private fun bindChart(chartData: GraphItems, s: String) {
         mBinding.tvAvg.text = chartData.summary!!.avg.toString()
-        mBinding.tvTaget.text = chartData.summary!!.target.toString()
+        mBinding.tvTaget.text =
+            "${chartData.summary!!.minTarget}-${chartData.summary!!.maxTarget}"
         mBinding.tvMin.text = chartData.summary!!.min.toString()
         mBinding.tvMax.text = chartData.summary!!.max.toString()
         mBinding.tvHyper.text = chartData.summary!!.incident!!.hyper.toString()
@@ -408,8 +409,12 @@ class HomeFragment :
         val d = LineData()
         val entries = ArrayList<Entry>()
 
+        val colors = ArrayList<Int>()
         chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
+            if (l.status == "hyper" || l.status == "hypo") {
+                colors.add(requireContext().getColor(R.color.red))
+            } else colors.add(requireContext().getColor(R.color.blue))
         }
         val set = LineDataSet(entries, "")
         set.color = requireContext().getColor(R.color.blueOpacity)
@@ -422,6 +427,8 @@ class HomeFragment :
         set.valueTextSize = 12f
         set.valueTextColor = requireContext().getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
+//        set.circleColors = colors
+        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }
