@@ -194,6 +194,7 @@
                     </RelativeLayout>
 
                     <LinearLayout
+                        android:id="@+id/llBeneficiary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
@@ -229,11 +230,21 @@
                             android:text="A768, Water Villa, Goa" />
                     </LinearLayout>
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBeneficiary"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvPatron"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -327,6 +338,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/llEmergencyContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
@@ -417,6 +429,7 @@
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/view1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/bgBlue" />
@@ -427,6 +440,15 @@
                         android:layout_height="wrap_content"
                         tools:itemCount="2"
                         tools:listitem="@layout/item_emergency_contact" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEmergency"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 
@@ -463,6 +485,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_allergy" />
@@ -511,9 +535,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="3"
-                        tools:listitem="@layout/item_diagnosis"/>
+                        tools:listitem="@layout/item_diagnosis" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDiagnosis"
@@ -567,163 +593,180 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Small.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical"
-                        android:text="Prepared by" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvPreparedBy"
-                        style="@style/Medium.MontserratBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvHospital"
-                        style="@style/Small.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical" />
-
                     <LinearLayout
+                        android:id="@+id/llPrescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDate"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
-                            android:drawableStart="@drawable/ic_date"
-                            android:drawablePadding="5dp"
-                            app:drawableTint="@color/grey" />
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Prepared by" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTime"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvPreparedBy"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_time"
-                            android:drawablePadding="5dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvHospital"
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
                             android:gravity="center_vertical"
-                            app:drawableTint="@color/grey" />
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDate"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                app:drawableTint="@color/grey" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTime"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_time"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/grey" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/bgGrey" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Lifestyle Advice" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLifestyleDate"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                app:drawableTint="@color/grey" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLifestyleTime"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_time"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/grey" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/bgGrey" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Recommendations" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvRecommendationDate"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                app:drawableTint="@color/grey" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvRecommendationTime"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_time"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/grey" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/bgGrey" />
-
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Medium.MontserratBold"
+                        android:id="@+id/tvPrescription"
+                        style="@style/Medium.Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical"
-                        android:text="Lifestyle Advice" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLifestyleDate"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:drawableStart="@drawable/ic_date"
-                            android:drawablePadding="5dp"
-                            app:drawableTint="@color/grey" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLifestyleTime"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_time"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_vertical"
-                            app:drawableTint="@color/grey" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/bgGrey" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Medium.MontserratBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center_vertical"
-                        android:text="Recommendations" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvRecommendationDate"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:drawableStart="@drawable/ic_date"
-                            android:drawablePadding="5dp"
-                            app:drawableTint="@color/grey" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvRecommendationTime"
-                            style="@style/Medium.Grey"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_time"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_vertical"
-                            app:drawableTint="@color/grey" />
-
-                    </LinearLayout>
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 
@@ -753,281 +796,298 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_red_border"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/llVitals"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/red"
-                        android:gravity="center_vertical|end"
-                        android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:background="@drawable/bg_red_border"
+                        android:orientation="vertical">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium.White"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="Last Updated " />
+                            android:background="@color/red"
+                            android:gravity="center_vertical|end"
+                            android:orientation="horizontal"
+                            android:padding="15dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvVitalDate"
-                            style="@style/Large.White.MontserratBold"
-                            android:layout_width="wrap_content"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium.White"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Last Updated " />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvVitalDate"
+                                style="@style/Large.White.MontserratBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/white" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_date"
-                            android:drawablePadding="5dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/bg_blue_round"
                             android:gravity="center_vertical"
-                            app:drawableTint="@color/white" />
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Pulse Rate" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPulseRate"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Fasting Blood Sugar" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvFastingBloodSugar"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/bg_blue_round"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Post-Prandial Blood Sugar" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPostParandial"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="HbA1C" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvhba"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/bg_blue_round"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Systolic Blood Pressure" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvSystolicBloodPressure"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Diastolic Blood Pressure" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDiastolicBloodPressure"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/bg_blue_round"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Total Cholesterol" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTotalCholesterol"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Triglyceride" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTriglyceride"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvVitals"
+                        style="@style/Medium.Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Weight" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvWeight"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Height" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvHeight"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="BMI" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvBMI"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="BP" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvBP"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="RBS" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvRBS"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="SPO2" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvSPO"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/bg_blue_round"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Temperature" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTemperature"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Pulse Rate" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvPulse"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical" />
-
-                    </LinearLayout>
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 
@@ -1064,6 +1124,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_procedures" />
@@ -1111,9 +1173,9 @@
                         android:id="@+id/rvHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
                         android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="5"
                         tools:listitem="@layout/item_history_vault" />
@@ -1162,6 +1224,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadeScrollbars="false"
+                        android:paddingTop="15dp"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_history" />
@@ -1221,242 +1286,259 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/llInsurance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:baselineAligned="false"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_margin="15dp"
+                            android:baselineAligned="false"
+                            android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
                                 android:gravity="center_vertical"
-                                android:text="Insurer" />
+                                android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvInsurer"
-                                style="@style/Medium.MontserratSemi"
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Insurer" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvInsurer"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="Star Health Insurance" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginTop="10dp"
                                 android:gravity="center_vertical"
-                                android:text="Star Health Insurance" />
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy Name" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyName"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="Star Health Happy Life" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy No." />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyNo"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="GH8797979GH" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy Period" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPeriod"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="23/07/2022 - 12/08/2023" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Sum Assured" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvAmount"
+                                    style="@style/Medium.Red.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="₹ 50000" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/bgBlue" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_margin="15dp"
+                            android:baselineAligned="false"
+                            android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
                                 android:gravity="center_vertical"
-                                android:text="Policy Name" />
+                                android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPolicyName"
-                                style="@style/Medium.MontserratSemi"
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="TPA" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyHolder"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="Mr Shiva Mani" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginTop="10dp"
                                 android:gravity="center_vertical"
-                                android:text="Star Health Happy Life" />
+                                android:orientation="horizontal">
 
-                        </LinearLayout>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyEmail"
+                                    style="@style/Medium.Blue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_mail"
+                                    android:drawablePadding="15dp"
+                                    android:text="mani@gmail.com" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
+                                android:layout_marginTop="10dp"
                                 android:gravity="center_vertical"
-                                android:text="Policy No." />
+                                android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPolicyNo"
-                                style="@style/Medium.MontserratSemi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="GH8797979GH" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="" />
 
-                        </LinearLayout>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyContact"
+                                    style="@style/Medium.Blue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_call"
+                                    android:drawablePadding="15dp"
+                                    android:text="+91 6876687687" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="Policy Period" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPeriod"
-                                style="@style/Medium.MontserratSemi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="23/07/2022 - 12/08/2023" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="Sum Assured" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvAmount"
-                                style="@style/Medium.Red.MontserratSemi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="₹ 50000" />
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/bgBlue" />
-
-                    <LinearLayout
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvInsurance"
+                        style="@style/Medium.Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:baselineAligned="false"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="TPA" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPolicyHolder"
-                                style="@style/Medium.MontserratSemi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Mr Shiva Mani" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPolicyEmail"
-                                style="@style/Medium.Blue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:drawableStart="@drawable/ic_mail"
-                                android:drawablePadding="15dp"
-                                android:text="mani@gmail.com" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small.Grey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPolicyContact"
-                                style="@style/Medium.Blue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:drawableStart="@drawable/ic_call"
-                                android:drawablePadding="15dp"
-                                android:text="+91 6876687687" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="@string/lab_report_placeholder" />
 
                 </LinearLayout>
 
@@ -1493,6 +1575,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_lab_report" />

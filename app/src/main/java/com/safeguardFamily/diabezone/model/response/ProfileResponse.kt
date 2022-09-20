@@ -34,6 +34,7 @@ data class ContactInfo(
     var cc: String?,
     var email: String?,
     var mobile: String?,
+    var pic: String?,
     @SerializedName("whatsapp_no")
     var whatsappNo: String?
 )

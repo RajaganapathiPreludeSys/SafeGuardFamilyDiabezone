@@ -13,397 +13,436 @@
             type="com.safeguardFamily.diabezone.model.response.User" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/xLarge.MontserratBold"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:padding="15dp"
-            android:text="Profile" />
+            android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/xLarge.MontserratBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:text="Profile" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/rlDiabetes"
-                    android:layout_marginTop="10dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rlDiabetes"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
+                    android:padding="20dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvProfileImages"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="10dp"
+                        app:cardCornerRadius="5dp">
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cvProfileImages"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivProfileImages"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_marginEnd="10dp"
-                            app:cardCornerRadius="5dp">
+                            android:background="@color/bgGrey"
+                            android:scaleType="centerCrop"
+                            app:loadImage="@{profile.pic}" />
 
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivProfileImages"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@color/bgGrey"
-                                android:scaleType="centerCrop"
-                                app:loadImage="@{profile.pic}" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_toEndOf="@id/cvProfileImages"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Small"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/welcome" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvTitle"
-                                style="@style/Large.Blue.MontserratBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{profile.name}" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDesc"
-                                style="@style/Small.Blue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:drawableStart="@drawable/ic_call"
-                                android:drawablePadding="10dp"
-                                android:gravity="center_vertical"
-                                android:text="@{profile.mobile}" />
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/clBookingDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
-
-                    <RelativeLayout
-                        android:id="@+id/rlBookingContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBookingIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_booking_details" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium.Blue.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_toStartOf="@id/ivBookingNext"
-                            android:layout_toEndOf="@id/ivBookingIcon"
-                            android:text="Member Details" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBookingNext"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_circle_right" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/clTermsService"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivTermsServiceIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_terms_service" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium.Blue.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_toStartOf="@id/ivTermsServiceNext"
-                            android:layout_toEndOf="@id/ivTermsServiceIcon"
-                            android:text="Terms &amp; Services" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivTermsServiceNext"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_circle_right" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/clAbout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivAboutIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_about" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium.Blue.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_toStartOf="@id/ivAboutNext"
-                            android:layout_toEndOf="@id/ivAboutIcon"
-                            android:text="About Diabezone" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivAboutNext"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_circle_right" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/clContact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivContactIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_healthcare_call" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvContact"
-                            style="@style/Medium.Red.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_toEndOf="@id/ivContactIcon"
-                            android:text="Health Emergency" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/xSmall.Grey"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvContact"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_toEndOf="@id/ivContactIcon"
-                            android:text="Contact Health Coach, members only" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivContactNext"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_circle_right"
-                            android:tint="@color/red" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Medium.MontserratBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Contact" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/rlHealthCoach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="25dp"
-                    app:cardCornerRadius="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivContactImage"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="15dp"
-                            android:src="@drawable/ic_profile_thumb"
-                            app:civ_border_color="@color/blue"
-                            app:civ_border_width="1dp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCoachName"
-                            style="@style/Medium.MontserratBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/ivContactImage"
-                            android:text="Diabezone Help Desk" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvCoachName"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@id/ivContactImage"
-                            android:gravity="center">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivCall"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_call" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivWhatsApp"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_whats_app" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivEmail"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_mail" />
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/clLogout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="25dp"
-                    app:cardCornerRadius="5dp">
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/blue"
-                        android:gravity="center"
-                        android:padding="10dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivLogoutIcon"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_logout" />
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@id/cvProfileImages"
+                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/Medium.White.MontserratBold"
-                            android:layout_width="wrap_content"
+                            style="@style/Small"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="Log Out" />
+                            android:text="@string/welcome" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTitle"
+                            style="@style/Large.Blue.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{profile.name}" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDesc"
+                            style="@style/Small.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:drawableStart="@drawable/ic_call"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:text="@{profile.mobile}" />
 
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        </ScrollView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clBookingDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rlBookingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBookingIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_booking_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Blue.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/ivBookingNext"
+                        android:layout_toEndOf="@id/ivBookingIcon"
+                        android:text="Member Details" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBookingNext"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_circle_right" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clPastConsult"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlPastConsult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPastConsultIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_booking_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Blue.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/ivPastConsultNext"
+                        android:layout_toEndOf="@id/ivPastConsultIcon"
+                        android:text="Past Consultations" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivPastConsultNext"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_circle_right" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clTermsService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivTermsServiceIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_terms_service" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Blue.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/ivTermsServiceNext"
+                        android:layout_toEndOf="@id/ivTermsServiceIcon"
+                        android:text="Terms &amp; Services" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivTermsServiceNext"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_circle_right" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAboutIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_about" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.Blue.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/ivAboutNext"
+                        android:layout_toEndOf="@id/ivAboutIcon"
+                        android:text="About Diabezone" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAboutNext"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_circle_right" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivContactIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_healthcare_call" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvContact"
+                        style="@style/Medium.Red.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@id/ivContactIcon"
+                        android:text="Health Emergency" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/xSmall.Grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvContact"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@id/ivContactIcon"
+                        android:text="Contact Health Coach, members only" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivContactNext"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_circle_right"
+                        android:tint="@color/red" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Medium.MontserratBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Contact" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rlHealthCoach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="25dp"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivContactImage"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="15dp"
+                        android:src="@drawable/ic_profile_thumb"
+                        app:civ_border_color="@color/blue"
+                        app:civ_border_width="1dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCoachName"
+                        style="@style/Medium.MontserratBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/ivContactImage"
+                        android:text="Diabezone Help Desk" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvCoachName"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/ivContactImage"
+                        android:gravity="center">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivCall"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_call" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivWhatsApp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_whats_app" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivEmail"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_mail" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="25dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLogoutIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_logout" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Medium.White.MontserratBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="Log Out" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>

@@ -48,8 +48,7 @@ class ScheduleAppointmentActivity :
     private lateinit var mProvider: Provider
     private lateinit var mAppointment: Appointment
     private var monthName = arrayOf(
-        "jan", "feb", "mar", "apr", "may", "jun", "jul",
-        "aug", "sep", "oct", "nov", "dec"
+        "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"
     )
 
     override fun onceCreated() {
@@ -275,7 +274,7 @@ class ScheduleAppointmentActivity :
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
                 checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
-                checkout.setImage(R.drawable.ic_app_logo)
+                checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
                 try {
                     obj.put("name", "SafeGuardFamily")

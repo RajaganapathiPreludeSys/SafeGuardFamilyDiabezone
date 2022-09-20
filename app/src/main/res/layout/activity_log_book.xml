@@ -95,8 +95,10 @@
                         <com.github.mikephil.charting.charts.CombinedChart
                             android:id="@+id/chart1"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:layout_below="@id/tvResetZoom" />
+                            android:layout_height="270dp"
+                            android:layout_below="@id/tvResetZoom"
+                            android:layout_margin="2dp"
+                            android:padding="2dp" />
 
                     </RelativeLayout>
 

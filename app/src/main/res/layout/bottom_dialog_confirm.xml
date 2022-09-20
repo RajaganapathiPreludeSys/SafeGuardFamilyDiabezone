@@ -117,7 +117,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDate"
                     style="@style/Medium"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_appointment"
@@ -128,7 +128,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTime"
                     style="@style/Medium"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_schedule"

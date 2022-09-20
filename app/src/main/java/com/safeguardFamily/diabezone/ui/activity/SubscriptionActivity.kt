@@ -67,7 +67,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
             val amount = it.programFee!!.toInt() * 100
             val checkout = Checkout()
             checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
-            checkout.setImage(R.drawable.ic_app_logo)
+            checkout.setImage(R.mipmap.ic_launcher)
             val obj = JSONObject()
             try {
                 obj.put("name", "SafeGuardFamily")

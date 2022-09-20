@@ -13,14 +13,19 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityOnBoardingBinding
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 
 class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityOnBoardingBinding
+    private lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +50,14 @@ class OnBoardingActivity : AppCompatActivity() {
             alert.setTitle("Network State")
             alert.show()
         }
+        analytics = Firebase.analytics
+        analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, "id")
+            param(FirebaseAnalytics.Param.ITEM_NAME, "name")
+            param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, this.javaClass.toString())
+        }
+
     }
 
     private fun loadApp() {

@@ -1,4 +1,5 @@
 package com.safeguardFamily.diabezone.model.response
+
 import com.google.gson.annotations.SerializedName
 
 data class HealthVaultResponse(
@@ -195,24 +196,24 @@ data class Procedure(
 )
 
 data class Vitals(
-    @SerializedName("BMI")
-    var bMI: String?,
-    @SerializedName("BP")
-    var bP: String?,
-    @SerializedName("Height")
-    var height: String?,
     @SerializedName("last_updated_date")
     var lastUpdatedDate: String?,
+    @SerializedName("Diastolic Blood Pressure")
+    var diastolicBloodPressure: String?,
+    @SerializedName("Fasting Blood Sugar")
+    var fastingBloodSugar: String?,
+    @SerializedName("HbA1C")
+    var hbA1C: String?,
+    @SerializedName("Post-Prandial Blood Sugar")
+    var postPrandialBloodSugar: String?,
     @SerializedName("Pulse Rate")
     var pulseRate: String?,
-    @SerializedName("RBS")
-    var rBS: String?,
-    @SerializedName("SPO2")
-    var sPO2: String?,
-    @SerializedName("Temperature")
-    var temperature: String?,
-    @SerializedName("Weight")
-    var weight: String?,
+    @SerializedName("Systolic Blood  Pressure ")
+    var systolicBloodPressure: String?,
+    @SerializedName("Total Cholesterol")
+    var totalCholesterol: String?,
+    @SerializedName("Triglyceride")
+    var triglyceride: String?
 )
 
 data class Tpa(

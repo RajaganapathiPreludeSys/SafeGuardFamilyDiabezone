@@ -6,6 +6,8 @@
     android:layout_toStartOf="@+id/ivDate"
     android:gravity="center"
     android:paddingStart="3dp"
+    android:ellipsize="end"
+    android:maxLines="1"
     android:paddingTop="7dp"
     android:paddingEnd="3dp"
     android:paddingBottom="7dp"

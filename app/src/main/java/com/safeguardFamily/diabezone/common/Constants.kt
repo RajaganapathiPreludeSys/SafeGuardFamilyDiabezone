@@ -36,6 +36,7 @@ object Bundle {
     const val KEY_TITLE = "KEY_TITLE"
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
     const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
+    const val KEY_PAST_CONSULTS = "KEY_PAST_CONSULTS"
 
     const val DATE_FORMAT = "dd LLL, yyyy"
     const val DAY_FORMAT = "dd LLL"

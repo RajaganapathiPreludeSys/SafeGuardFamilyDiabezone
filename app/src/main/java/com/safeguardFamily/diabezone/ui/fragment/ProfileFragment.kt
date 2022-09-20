@@ -72,7 +72,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         }
 
         mBinding.clContact.setOnClickListener {
-
             if (SharedPref.isMember()) {
                 callHealthCoach.launch(Manifest.permission.CALL_PHONE)
             } else {
@@ -80,6 +79,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
                 navigateTo(SubscriptionActivity::class.java)
             }
         }
+
+        mBinding.clPastConsult.setOnClickListener { logout() }
 
         mBinding.clLogout.setOnClickListener { logout() }
 
@@ -99,8 +100,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             )
         }
 
-//        Glide.with(this).load(viewModel.userResponse.value!!.contactInfo!!.).placeholder(R.drawable.ic_profile_thumb)
-//            .into(mBinding.ivContactImage)
+        Glide.with(this)
+            .load(viewModel.userResponse.value!!.contactInfo!!.pic!!)
+            .placeholder(R.drawable.ic_profile_thumb)
+            .into(mBinding.ivContactImage)
 
         mBinding.rlDiabetes.setOnClickListener {
             val mBundle = android.os.Bundle()

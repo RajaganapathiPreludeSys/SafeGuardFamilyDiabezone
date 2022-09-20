@@ -358,7 +358,6 @@
                                     android:text="@{provider.reg_no}" />
                             </LinearLayout>
 
-
                         </LinearLayout>
 
                     </LinearLayout>
@@ -380,13 +379,15 @@
                     android:maxLines="1"
                     android:text="About" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Small"
-                    android:layout_width="wrap_content"
+                <kr.co.prnd.readmore.ReadMoreTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:text="@{provider.about}" />
+                    android:text="@{provider.about + ` …less`}"
+                    app:readMoreColor="@color/blue"
+                    app:readMoreMaxLine="3"
+                    app:readMoreText="…more" />
 
                 <View
                     android:layout_width="match_parent"

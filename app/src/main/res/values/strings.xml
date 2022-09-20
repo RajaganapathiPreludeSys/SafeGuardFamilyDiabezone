@@ -65,7 +65,7 @@
     <string name="schedule_video_call">Schedule Video Call</string>
     <string name="date">Date</string>
     <string name="save_log">Save Log</string>
-    <string name="lab_report_placeholder">Please contact your <u>health coach</u> and update your reports</string>
+    <string name="lab_report_placeholder">Please contact your <u>health coach</u> and update your details</string>
     <string name="reset_zoom"><u>Reset Zoom</u></string>
 
 </resources>

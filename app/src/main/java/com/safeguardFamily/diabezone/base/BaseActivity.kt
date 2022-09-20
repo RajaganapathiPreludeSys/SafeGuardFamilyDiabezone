@@ -24,12 +24,15 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.ui.activity.MobileActivity
 import com.safeguardFamily.diabezone.viewModel.BaseViewModel
-
 
 abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layout: Int,
@@ -60,6 +63,10 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         mViewModel.apiLoader.observe(this) { if (it) showLoading() else hideLoading() }
         mViewModel.noInternet.observe(this) { if (it) showNoNetwork() else hideNoNetwork() }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, this.javaClass.toString())
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, mViewModel.javaClass.toString())
+        }
     }
 
     open fun navigateTo(className: Class<*>, doFinish: Boolean = false) {
