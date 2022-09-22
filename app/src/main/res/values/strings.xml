@@ -67,5 +67,7 @@
     <string name="save_log">Save Log</string>
     <string name="lab_report_placeholder">Please contact your <u>health coach</u> and update your details</string>
     <string name="reset_zoom"><u>Reset Zoom</u></string>
+    <string name="view_more"><u>...View More</u></string>
+    <string name="view_less"><u>...View Less</u></string>
 
 </resources>

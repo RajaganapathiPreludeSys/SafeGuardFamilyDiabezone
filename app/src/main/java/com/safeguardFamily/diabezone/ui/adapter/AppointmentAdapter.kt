@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.KEY_APPOINTMENT
@@ -23,19 +27,19 @@ import com.safeguardFamily.diabezone.ui.activity.ScheduleAppointmentActivity
 import java.util.*
 
 class AppointmentAdapter(items: List<Appointment>) :
-    RecyclerView.Adapter<AppointmentAdapter.NotificationViewHolder?>() {
+    RecyclerView.Adapter<AppointmentAdapter.ViewHolder?>() {
 
     private val mItems: List<Appointment>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        return NotificationViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_appointment, parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setOnBoardingData(mItems[position])
     }
 
@@ -43,7 +47,7 @@ class AppointmentAdapter(items: List<Appointment>) :
         return mItems.size
     }
 
-    inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvName: TextView
         private val tvProfession: TextView
         private val tvDate: TextView
@@ -74,6 +78,9 @@ class AppointmentAdapter(items: List<Appointment>) :
                     "You can only join at the allocated time slot",
                     Toast.LENGTH_LONG
                 ).show()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Join Appointment ${item.aid}")
+                }
             }
             btReschedule.setOnClickListener {
                 val bundle = Bundle()
@@ -84,6 +91,9 @@ class AppointmentAdapter(items: List<Appointment>) :
                         ScheduleAppointmentActivity::class.java
                     ).putExtras(bundle)
                 )
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Reschedule Appointment ${item.aid}")
+                }
             }
         }
 

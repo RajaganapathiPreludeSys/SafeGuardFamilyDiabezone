@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.text.Html
 import android.view.LayoutInflater

@@ -1,6 +1,16 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.graphics.Color
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
+import android.widget.TextView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
@@ -8,6 +18,7 @@ import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityDoctorDetailsBinding
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.DoctorDetailsViewModel
+
 
 class DoctorDetailsActivity :
     BaseActivity<ActivityDoctorDetailsBinding, DoctorDetailsViewModel>(
@@ -35,18 +46,47 @@ class DoctorDetailsActivity :
             val bundle = android.os.Bundle()
             bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(provider))
             navigateTo(ScheduleAppointmentActivity::class.java, bundle, true)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Book appointment screen from Doctor Details ")
+            }
         }
 
         mBinding.ivBack.setOnClickListener { finish() }
 
-        mBinding.btChat.setOnClickListener { openWhatsApp(provider.mobile) }
+        mBinding.btChat.setOnClickListener { openWhatsApp(provider.mobile)
+
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Open Whatsapp chat from Doctor details screen")
+            }}
 
         mBinding.btCall.setOnClickListener {
             val bundle = android.os.Bundle()
             bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(provider))
             navigateTo(ScheduleAppointmentActivity::class.java, bundle, true)
+
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Call Doctor from Doctor details screen")
+            }
         }
         loadAvailability()
+
+
+        val spanString = SpannableString(provider.about + "...less")
+
+        spanString.setSpan(
+            ForegroundColorSpan(Color.BLUE),
+            provider.about.length,
+            provider.about.length + 7,
+            0
+        )
+        spanString.setSpan(
+            ForegroundColorSpan(getColor(R.color.blue)),
+            provider.about.length,
+            provider.about.length + 7,
+            0
+        )
+        mBinding.tvReadMore.setText(spanString, TextView.BufferType.SPANNABLE)
+
     }
 
     private fun loadAvailability() {
@@ -93,5 +133,4 @@ class DoctorDetailsActivity :
             mBinding.tvSun.setTextColor(getColor(R.color.red))
         }
     }
-
 }

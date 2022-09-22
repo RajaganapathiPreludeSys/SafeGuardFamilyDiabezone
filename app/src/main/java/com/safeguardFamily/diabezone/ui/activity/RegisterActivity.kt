@@ -15,6 +15,10 @@ import android.util.Patterns
 import android.view.View
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_EDIT_PROFILE
@@ -104,10 +108,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         })
 
         mBinding.btRegister.setOnClickListener {
-            if (mBinding.tieName.text!!.isEmpty())
-                mBinding.tilName.error = getString(R.string.valid_name)
-            else if (mBinding.tieEmail.text!!.isEmpty())
-                mBinding.tilEmail.error = getString(R.string.valid_email)
+            if (!mBinding.tieName.text!!.matches(Regex("^[A-Za-z ]+$")))
+                showToast(getString(R.string.valid_name))
+            else if (mBinding.tieEmail.text!!.isEmpty()
+                || !Patterns.EMAIL_ADDRESS.matcher(mBinding.tieEmail.text!!).matches()
+            ) showToast(getString(R.string.valid_email))
             else {
                 if (isEditProfile) {
                     user.name = mBinding.tieName.text.toString()
@@ -136,11 +141,17 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     }
                 } else showToast(R.string.accept_terms)
             }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Register")
+            }
         }
 
         mBinding.ivProfileImage.setOnClickListener {
             PhotoPickerFragment.newInstance(allowCamera = false)
                 .show(supportFragmentManager, "picker")
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Pick profile image")
+            }
         }
 
     }

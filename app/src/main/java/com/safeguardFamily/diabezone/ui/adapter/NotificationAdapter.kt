@@ -1,14 +1,13 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.model.response.Notification
 
 class NotificationAdapter(
@@ -38,13 +37,24 @@ class NotificationAdapter(
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
         private val tvDesc: TextView
-        private val ivProfileImage: ImageView
-        private val rlContainer: RelativeLayout
+        private val tvDate: TextView
+        private val tvTime: TextView
+        private val rlContainer: LinearLayout
+        private val llDateTimeContainer: LinearLayout
 
         fun setOnBoardingData(item: Notification) {
             tvTitle.text = item.title
-            tvDesc.text = item.ndesc
-            Glide.with(itemView.context).load(item.pic).into(ivProfileImage)
+            if (item.ndate!!.length > 1) {
+                tvDesc.visibility = View.GONE
+                llDateTimeContainer.visibility = View.VISIBLE
+                tvDate.text = DateUtils.displayingDateFromAPI(item.ndate!!)
+                tvTime.text = DateUtils.displayingTimeFromAPI(item.ndate!!)
+            } else {
+                tvDesc.visibility = View.VISIBLE
+                llDateTimeContainer.visibility = View.GONE
+                tvDesc.text = item.ndesc
+            }
+
             rlContainer.setOnClickListener {
                 onItemClicked(item.screen!!)
             }
@@ -53,8 +63,10 @@ class NotificationAdapter(
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
             tvDesc = itemView.findViewById(R.id.tvDesc)
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImages)
+            tvDate = itemView.findViewById(R.id.tvDate)
+            tvTime = itemView.findViewById(R.id.tvTime)
             rlContainer = itemView.findViewById(R.id.rlContainer)
+            llDateTimeContainer = itemView.findViewById(R.id.llDateTimeContainer)
         }
     }
 

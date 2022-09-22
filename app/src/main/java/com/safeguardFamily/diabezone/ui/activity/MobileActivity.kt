@@ -3,6 +3,10 @@ package com.safeguardFamily.diabezone.ui.activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
@@ -25,6 +29,9 @@ class MobileActivity : BaseActivity<ActivityMobileBinding, MobileViewModel>(
         if (BuildConfig.BUILD_TYPE == "debug") mBinding.tiePhone.setText("9988776650")
 
         mBinding.btSendCode.setOnClickListener {
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "send code")
+            }
             if (mBinding.tiePhone.text.toString().matches(Regex("[0-9]{10}"))) {
                 mViewModel.getOtp(mBinding.tiePhone.text.toString()) {
                     val mBundle = android.os.Bundle()

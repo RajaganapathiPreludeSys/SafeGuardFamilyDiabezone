@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.PastAppointmentAdapter
+import com.safeguardFamily.diabezone.ui.adapter.PastAppointmentAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityPastConsultationBinding

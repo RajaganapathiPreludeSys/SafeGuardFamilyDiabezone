@@ -2,14 +2,18 @@ package com.safeguardFamily.diabezone.ui.activity
 
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.ExpandableInfoAdapter
-import com.safeguardFamily.diabezone.adapter.LinePagerIndicatorDecoration
-import com.safeguardFamily.diabezone.adapter.ProgramsAdapter
-import com.safeguardFamily.diabezone.adapter.SubscribeProgramsAdapter
+import com.safeguardFamily.diabezone.ui.adapter.ExpandableInfoAdapter
+import com.safeguardFamily.diabezone.ui.adapter.LinePagerIndicatorDecoration
+import com.safeguardFamily.diabezone.ui.adapter.ProgramsAdapter
+import com.safeguardFamily.diabezone.ui.adapter.SubscribeProgramsAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.SharedPref
@@ -63,6 +67,9 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
 
     private fun loadProgram(packages: List<Package>) {
         mBinding.rvPrograms.adapter = SubscribeProgramsAdapter(packages) {
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Subscription Payment called ${it.pid}")
+            }
             pack = it
             val amount = it.programFee!!.toInt() * 100
             val checkout = Checkout()

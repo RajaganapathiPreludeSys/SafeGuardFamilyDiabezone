@@ -1,6 +1,7 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +23,12 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.NotificationAdapter
+import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
@@ -44,6 +49,7 @@ import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
+import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,6 +63,8 @@ class HomeFragment :
     private var mProfile = SharedPref.getUser()
     private var dateString = ""
     private var timeString = ""
+    private var pdfUrl = ""
+
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
@@ -76,6 +84,9 @@ class HomeFragment :
         mBinding.tvTime.text = timeString
 
         mBinding.btAddLog.setOnClickListener {
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Add diabetes logs")
+            }
             when {
                 mBinding.etBloodSugar.text?.isNotEmpty() == false -> showToast("Enter a valid blood sugar value")
                 mBinding.spType.selectedItem == "Select type" -> showToast("Select a valid meal type")
@@ -114,25 +125,50 @@ class HomeFragment :
             }
         }
 
-        mBinding.ivProgram.setOnClickListener { navigateTo(SubscriptionActivity::class.java) }
-        mBinding.tlDateContainer.setOnClickListener { showDateDialog() }
-        mBinding.tlTimeContainer.setOnClickListener { showTimeDialog() }
-        mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
+        mBinding.ivProgram.setOnClickListener { navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
+            }}
+        mBinding.tlDateContainer.setOnClickListener { showDateDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Open date picker")
+            }}
+        mBinding.tlTimeContainer.setOnClickListener { showTimeDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Open Time picker")
+            }}
+        mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Log book screen from home")
+            }}
 
         mBinding.cvOne.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.appointment
             )
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Appointment from home")
+            }
         }
         mBinding.cvTwo.setOnClickListener {
-            (activity as DashboardActivity?)!!.setCurrentFragment(
-                (activity as DashboardActivity?)!!.healthVault
+            val mBundle = Bundle()
+            mBundle.putString(com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY, "PDF")
+            mBundle.putString(
+                com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL,
+                pdfUrl
             )
+            navigateTo(WebViewActivity::class.java, mBundle)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Consolidated Prescription from Home")
+            }
         }
         mBinding.cvThree.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.healthVault
             )
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Health vault from home")
+            }
         }
 
         loadProfileImg(mProfile.pic, mBinding.ivProfileImage)
@@ -141,7 +177,7 @@ class HomeFragment :
     }
 
     private fun loadHomeGraph() {
-        mViewModel.getHome {
+        mViewModel.getHome { it, url ->
             mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
                 when (i) {
                     mBinding.radioButton1.id -> bindChart(
@@ -160,6 +196,7 @@ class HomeFragment :
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
             bindChart(it.lifetime!!.before_meal!!, "Fasting Blood Sugar")
+            pdfUrl = url!!
         }
     }
 
@@ -180,6 +217,9 @@ class HomeFragment :
                     programs -> {
 
                     }
+                }
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Notification item clicked ${string}")
                 }
             }
             mBinding.vpNotification.adapter = mAdapter
@@ -275,6 +315,9 @@ class HomeFragment :
                 mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
                 mDialog.dismiss()
             }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Date selected")
+            }
         }
     }
 
@@ -321,6 +364,9 @@ class HomeFragment :
             else {
                 mBinding.tvTime.text = timeString
                 mDialog.dismiss()
+            }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Time selected")
             }
         }
     }
@@ -398,7 +444,10 @@ class HomeFragment :
             mBinding.chart1.xAxis.setDrawGridLines(false)
             mBinding.chart1.invalidate()
 
-            mBinding.tvResetZoom.setOnClickListener { mBinding.chart1.fitScreen() }
+            mBinding.tvResetZoom.setOnClickListener { mBinding.chart1.fitScreen()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom")
+                }}
         } else {
             mBinding.rlGraphContainer.visibility = View.GONE
             mBinding.tvChartPlaceholder.visibility = View.VISIBLE
@@ -427,8 +476,8 @@ class HomeFragment :
         set.valueTextSize = 12f
         set.valueTextColor = requireContext().getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
-        set.circleColors = colors
-        set.setValueTextColors(colors)
+//        set.circleColors = colors
+//        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }

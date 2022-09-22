@@ -14,8 +14,12 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.DiabetesAdapter
+import com.safeguardFamily.diabezone.ui.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
@@ -39,6 +43,9 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             mBundle.putString(KEY_WEB_KEY, "PDF")
             mBundle.putString(KEY_WEB_URL, mViewModel.pdfUrl.value)
             navigateTo(WebViewActivity::class.java, mBundle)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Open log book PDF")
+            }
         }
 
         mBinding.icToolbar.ivBack.setOnClickListener { finish() }
@@ -147,7 +154,12 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             mBinding.chart1.axisLeft.setDrawGridLines(false)
             mBinding.chart1.xAxis.setDrawGridLines(false)
             mBinding.chart1.invalidate()
-            mBinding.tvResetZoom.setOnClickListener { mBinding.chart1.fitScreen() }
+            mBinding.tvResetZoom.setOnClickListener {
+                mBinding.chart1.fitScreen()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom in Log book")
+                }
+            }
         } else {
             mBinding.rlGraphContainer.visibility = View.GONE
             mBinding.tvChartPlaceholder.visibility = View.VISIBLE
@@ -176,8 +188,8 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         set.valueTextSize = 12f
         set.valueTextColor = getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
-        set.circleColors = colors
-        set.setValueTextColors(colors)
+//        set.circleColors = colors
+//        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }

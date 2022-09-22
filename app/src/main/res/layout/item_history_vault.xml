@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/ivAlert"
-            android:gravity="center_vertical"
-            android:text="Prepared by" />
+            android:gravity="center_vertical" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAlert"
@@ -49,8 +48,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
-        android:gravity="center_vertical"
-        android:text="Dr Meena Garg" />
+        android:gravity="center_vertical" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHospital"
@@ -79,7 +77,6 @@
             android:layout_marginEnd="15dp"
             android:drawableStart="@drawable/ic_date"
             android:drawablePadding="5dp"
-            android:text="23/07/22"
             app:drawableTint="@color/grey" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -90,7 +87,6 @@
             android:drawableStart="@drawable/ic_time"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="8:30 PM"
             app:drawableTint="@color/grey" />
 
     </LinearLayout>

@@ -33,9 +33,10 @@ object Bundle {
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
     const val KEY_OTPs = "KEY_OTPs"
     const val KEY_DOCTOR = "KEY_DOCTOR"
+    const val KEY_CREATE_APPOINTMENT = "KEY_CREATE_APPOINTMENT"
+    const val KEY_RESCHEDULE = "KEY_RESCHEDULE"
     const val KEY_TITLE = "KEY_TITLE"
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
-    const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
     const val KEY_PAST_CONSULTS = "KEY_PAST_CONSULTS"
 
     const val DATE_FORMAT = "dd LLL, yyyy"

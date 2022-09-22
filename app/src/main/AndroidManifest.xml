@@ -71,6 +71,9 @@
         <activity
             android:name=".ui.activity.PastConsultationsActivity"
             android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ui.activity.AppointmentPaymentActivity"
+            android:screenOrientation="nosensor" />
         <activity android:name="lv.chi.photopicker.utils.CameraActivity" />
 
         <receiver
@@ -102,7 +105,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
         <service
             android:name=".common.FirebaseMessageReceiver"

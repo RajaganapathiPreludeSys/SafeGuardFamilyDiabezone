@@ -14,7 +14,7 @@ class HomeViewModel : BaseViewModel() {
 
     val notifications = MutableLiveData<List<Notification>>()
 
-    fun getHome(onSuccess: ((response: Graph) -> Unit)) {
+    fun getHome(onSuccess: ((response: Graph, pdfUrl: String?) -> Unit)) {
         RetrofitClient.apiInterface.getHome(IdRequest(uid = SharedPref.getUserId()!!))
             .enqueue(object : Callback<BaseResponse<HomeResponse>> {
                 override fun onResponse(
@@ -24,7 +24,10 @@ class HomeViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()!!.success!!) {
                             notifications.postValue(response.body()!!.data!!.notifications)
-                            onSuccess(response.body()!!.data!!.graph!!)
+                            onSuccess(
+                                response.body()!!.data!!.graph!!,
+                                response.body()!!.data!!.pdfUrl
+                            )
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                 }

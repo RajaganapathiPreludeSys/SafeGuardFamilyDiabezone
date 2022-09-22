@@ -44,15 +44,13 @@
                 android:id="@+id/tvName"
                 style="@style/Medium.MontserratBold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pramesh Thakur" />
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvRelation"
                 style="@style/Small"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Husband" />
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvContact1"
@@ -61,8 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/ic_call"
-                android:drawablePadding="5dp"
-                android:text="+91 9708989736" />
+                android:drawablePadding="5dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvContact2"
@@ -71,8 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/ic_call"
-                android:drawablePadding="5dp"
-                android:text="+91 9708989736" />
+                android:drawablePadding="5dp" />
 
         </LinearLayout>
 

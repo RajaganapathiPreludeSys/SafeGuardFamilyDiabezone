@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.model.response.LabReport
@@ -60,7 +64,16 @@ class LabReportAdapter(
                     ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_comment))
                 }
             }
-            ivNext.setOnClickListener { onItemClicked(item.pdfUrl!!) }
+            ivNext.setOnClickListener {
+                onItemClicked(item.pdfUrl!!)
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Open PDF from Health Vault Lab report ${item.title}"
+                    )
+                }
+            }
         }
 
         init {

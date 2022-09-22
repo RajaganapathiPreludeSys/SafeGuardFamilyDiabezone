@@ -171,7 +171,7 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/llPackageDetailsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,9 +180,11 @@
                     android:gravity="center_vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPackage"
                         style="@style/Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="Package valid till " />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -190,15 +192,25 @@
                         style="@style/Small.Red"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/tvPackage"
                         android:text=" 21 Aug 2022" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivRenew"
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRenew"
+                        style="@style/Small.Blue.MontserratBold"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitEnd"
-                        android:src="@drawable/ic_renew" />
-                </LinearLayout>
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_royal_blue_border_curved"
+                        android:paddingStart="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="5dp"
+                        android:text="Renew Now" />
+
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAskQues"

@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.*
+import com.safeguardFamily.diabezone.ui.adapter.*
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
 import com.safeguardFamily.diabezone.common.Bundle.KEY_TITLE
@@ -65,6 +69,9 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
 //            loadBeneficiary(arrayListOf())
 
             mBinding.tvDesc.setOnClickListener {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Open PDF in WebView Main")
+                }
                 if (mViewModel.pdfURL.length > 2) openWebView(mViewModel.pdfURL)
                 else showToast("Health Vault PDF not available for now. Please contact your health coach")
             }
@@ -89,7 +96,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.rlMemberContainer.visibility = View.GONE
             mBinding.tvBeneficiary.visibility = View.VISIBLE
             mBinding.llBeneficiary.visibility = View.GONE
-            mBinding.tvBeneficiary.setOnClickListener { contactHealthCoach() }
+            mBinding.tvBeneficiary.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Beneficiary")
+                }
+            }
         }
     }
 
@@ -104,10 +117,16 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvHabits.visibility = View.GONE
             mBinding.tvHabits.visibility = View.VISIBLE
-            mBinding.tvHabits.setOnClickListener { contactHealthCoach() }
-        }
+            mBinding.tvHabits.setOnClickListener {
+                contactHealthCoach()
 
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Habits")
+                }
+            }
+        }
     }
+
 
     private fun loadProcedure(procedures: List<Procedure>?) {
         if (procedures!!.isNotEmpty()) {
@@ -120,7 +139,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvProcedures.visibility = View.GONE
             mBinding.tvProcedures.visibility = View.VISIBLE
-            mBinding.tvProcedures.setOnClickListener { contactHealthCoach() }
+            mBinding.tvProcedures.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Procedures")
+                }
+            }
         }
     }
 
@@ -135,7 +160,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvDiagnosis.visibility = View.GONE
             mBinding.tvDiagnosis.visibility = View.VISIBLE
-            mBinding.tvDiagnosis.setOnClickListener { contactHealthCoach() }
+            mBinding.tvDiagnosis.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Diagnosis")
+                }
+            }
         }
     }
 
@@ -150,7 +181,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvHistory.visibility = View.GONE
             mBinding.tvHistory.visibility = View.VISIBLE
-            mBinding.tvHistory.setOnClickListener { contactHealthCoach() }
+            mBinding.tvHistory.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - History")
+                }
+            }
         }
     }
 
@@ -165,7 +202,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvAllergies.visibility = View.GONE
             mBinding.tvAllergies.visibility = View.VISIBLE
-            mBinding.tvAllergies.setOnClickListener { contactHealthCoach() }
+            mBinding.tvAllergies.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Allergies")
+                }
+            }
         }
     }
 
@@ -183,7 +226,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.rvLabReport.visibility = View.GONE
             mBinding.tvLabReport.visibility = View.VISIBLE
-            mBinding.tvLabReport.setOnClickListener { contactHealthCoach() }
+            mBinding.tvLabReport.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Lab Report")
+                }
+            }
         }
     }
 
@@ -202,7 +251,16 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.llEmergencyContainer.visibility = View.GONE
             mBinding.view1.visibility = View.GONE
             mBinding.tvEmergency.visibility = View.VISIBLE
-            mBinding.tvEmergency.setOnClickListener { contactHealthCoach() }
+            mBinding.tvEmergency.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Contact health Coach - Emergency Contact"
+                    )
+                }
+            }
         }
         mBinding.rvEmergencyContact.adapter = EmergencyContactAdapter(contacts!!)
         mBinding.rvEmergencyContact.layoutManager =
@@ -256,12 +314,21 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.ivInsurancePdf.setOnClickListener {
                 if (insurance.pdfUrl!!.length > 2) openWebView(insurance.pdfUrl!!)
                 else showToast("Insurance PDF not available for now. Please contact your health coach")
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Insurance - PDF in webview")
+                }
             }
         } else {
             mBinding.llInsurance.visibility = View.GONE
             mBinding.tvInsurance.visibility = View.VISIBLE
             mBinding.ivInsurancePdf.visibility = View.INVISIBLE
-            mBinding.tvInsurance.setOnClickListener { contactHealthCoach() }
+            mBinding.tvInsurance.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Insurance")
+                }
+            }
         }
 
         //      Consolidated Prescription
@@ -282,11 +349,27 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.ivConsolidatedPdf.setOnClickListener {
                 if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
                 else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Consolidated prescription - PDF in webview"
+                    )
+                }
             }
         } else {
             mBinding.llPrescription.visibility = View.GONE
             mBinding.tvPrescription.visibility = View.VISIBLE
-            mBinding.tvPrescription.setOnClickListener { contactHealthCoach() }
+            mBinding.tvPrescription.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Contact health Coach - Consolidated Prescription"
+                    )
+                }
+            }
         }
 
         //      Vitals
@@ -307,7 +390,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         } else {
             mBinding.llVitals.visibility = View.GONE
             mBinding.tvVitals.visibility = View.VISIBLE
-            mBinding.tvVitals.setOnClickListener { contactHealthCoach() }
+            mBinding.tvVitals.setOnClickListener {
+                contactHealthCoach()
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Vitals")
+                }
+            }
         }
 
     }

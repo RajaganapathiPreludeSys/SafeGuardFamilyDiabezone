@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,9 +14,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/icHeader"
-            layout="@layout/include_header" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_back_blue" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/xLarge.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toStartOf="@id/ivShare"
+                android:layout_toEndOf="@+id/ivBack"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Profile" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShare"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_toStartOf="@+id/ivDownload"
+                android:padding="5dp"
+                android:src="@drawable/ic_share"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDownload"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_download"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
         <WebView
             android:id="@+id/webView"

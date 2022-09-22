@@ -25,7 +25,6 @@ import com.google.firebase.analytics.ktx.logEvent
 class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityOnBoardingBinding
-    private lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +49,6 @@ class OnBoardingActivity : AppCompatActivity() {
             alert.setTitle("Network State")
             alert.show()
         }
-        analytics = Firebase.analytics
-        analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-            param(FirebaseAnalytics.Param.ITEM_ID, "id")
-            param(FirebaseAnalytics.Param.ITEM_NAME, "name")
-            param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
-            param(FirebaseAnalytics.Param.SCREEN_NAME, this.javaClass.toString())
-        }
-
     }
 
     private fun loadApp() {

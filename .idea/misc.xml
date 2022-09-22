@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/drawable/bg_royal_blue_border_curved.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round_disabled.xml" value="0.2315" />
+        <entry key="app/src/main/res/drawable/bg_royal_blue_toast.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_top_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_white.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_spinner.xml" value="0.2365" />
@@ -43,6 +44,7 @@
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_arrow_up.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2365" />
+        <entry key="app/src/main/res/drawable/ic_back_blue.xml" value="0.298" />
         <entry key="app/src/main/res/drawable/ic_banner_1.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_banner_2.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_beneficiary.xml" value="0.1735" />
@@ -57,6 +59,7 @@
         <entry key="app/src/main/res/drawable/ic_date.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/ic_dot.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_down_arrow_blue.xml" value="0.3335" />
+        <entry key="app/src/main/res/drawable/ic_download.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_edit_circle_blue.xml" value="0.1705" />
         <entry key="app/src/main/res/drawable/ic_edit_filled.xml" value="0.2365" />
@@ -78,6 +81,7 @@
         <entry key="app/src/main/res/drawable/ic_red_up_arrow.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.3345" />
         <entry key="app/src/main/res/drawable/ic_schedule.xml" value="0.1705" />
+        <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_star_filled.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/ic_statistics.xml" value="0.2365" />
@@ -91,11 +95,12 @@
         <entry key="app/src/main/res/drawable/scrollbar_track.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/thumb_shape.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_appointment_doctor.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_appointment_payment.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_booking_details.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_doctor_details.xml" value="0.3273495248152059" />
         <entry key="app/src/main/res/layout/activity_line_chart.xml" value="0.33125" />
-        <entry key="app/src/main/res/layout/activity_log_book.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_log_book.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_mobile.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.33125" />
@@ -103,12 +108,14 @@
         <entry key="app/src/main/res/layout/activity_otp.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_past_consultation.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/activity_schedule_appointment.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_schedule_appointment.xml" value="0.5039619651347068" />
+        <entry key="app/src/main/res/layout/activity_schedule_appointment2.xml" value="0.3261538461538461" />
         <entry key="app/src/main/res/layout/activity_subscription.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_walkthrough.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/bottom_dialog_confirm.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/bottom_dialog_time.xml" value="0.3390625" />
+        <entry key="app/src/main/res/layout/custom_toast.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/dialog_date.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/dialog_date_time.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/dialog_diabetes.xml" value="0.34010416666666665" />
@@ -116,7 +123,7 @@
         <entry key="app/src/main/res/layout/dialog_time.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/fragment_appointment.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/fragment_appointment_doctor.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/include_header.xml" value="0.34010416666666665" />

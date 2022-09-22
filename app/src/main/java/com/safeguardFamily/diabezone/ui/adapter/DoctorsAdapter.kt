@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
@@ -48,7 +52,11 @@ class DoctorsAdapter(
                         DoctorDetailsActivity::class.java
                     ).putExtras(bundle)
                 )
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Go to Doctor details screen from Appointment Screen ${model.puid}")
+                }
             }
+            binding.llDays.removeAllViews()
             addView("M ", model.timings.days!!.mon!!.length > 2)
             addView("T ", model.timings.days!!.tue!!.length > 2)
             addView("W ", model.timings.days!!.wed!!.length > 2)

@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName
 data class HomeResponse(
     var graph: Graph?,
     var is_member: Boolean?,
-    var notifications: List<Notification>?
+    var notifications: List<Notification>?,
+    @SerializedName("consolidate_pdf_url")
+    var pdfUrl: String?
 )
 
 data class Graph(
@@ -15,6 +17,7 @@ data class Graph(
 )
 
 data class Notification(
+    var ndate: String?,
     var expired_on: String?,
     var ndesc: String?,
     var nid: Int?,

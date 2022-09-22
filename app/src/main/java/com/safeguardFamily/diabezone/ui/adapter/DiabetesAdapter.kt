@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.Bundle.TAG
@@ -92,6 +96,9 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             }
 
             binding.llHyperContainer.setOnClickListener {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health coach from diabetes logs ${item.lid}")
+                }
                 if (SharedPref.isMember()) {
                     val bundle = android.os.Bundle()
                     bundle.putString(
@@ -167,10 +174,22 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             dialogBinding.tvTime.text = "${formatTo12Hrs(timeString24)}"
             dialogBinding.etBloodSugar.setText(item.logValue)
 
-            dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
-            dialogBinding.tlDateContainer.setOnClickListener { showDateDialog(itemView.context) }
-            dialogBinding.tlTimeContainer.setOnClickListener { showTimeDialog(itemView.context) }
+            dialogBinding.btCancel.setOnClickListener { mDialog.dismiss()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Dismiss edit diabetes dialog ${item.lid}")
+            } }
+            dialogBinding.tlDateContainer.setOnClickListener { showDateDialog(itemView.context)
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Diabetes log Date picker ${item.lid}")
+                } }
+            dialogBinding.tlTimeContainer.setOnClickListener { showTimeDialog(itemView.context)
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Diabetes log time picker ${item.lid}")
+                } }
             dialogBinding.btAddLog.setOnClickListener {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Diabetes log adding item ${item.lid}")
+                }
                 if (dialogBinding.etBloodSugar.text?.isNotEmpty() == false ||
                     dialogBinding.etBloodSugar.text.toString().toInt() <= 0
                 )
@@ -235,6 +254,9 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             dialogDateBinding.btPickDate.setOnClickListener {
                 dialogBinding.tvDate.text = "${displayingDateFormat(dateString)}"
                 mDialog.dismiss()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, " Diabetes log date picked")
+                }
             }
         }
 
@@ -281,6 +303,9 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             dialogTimeBinding.btPickTime.setOnClickListener {
                 dialogBinding.tvTime.text = timeString24
                 mDialog.dismiss()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Diabetes log Time picked")
+                }
             }
         }
     }

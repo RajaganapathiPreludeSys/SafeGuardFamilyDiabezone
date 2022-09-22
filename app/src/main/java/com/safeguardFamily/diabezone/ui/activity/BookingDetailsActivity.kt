@@ -6,9 +6,13 @@ import android.net.Uri
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.PastAppointmentAdapter
+import com.safeguardFamily.diabezone.ui.adapter.PastAppointmentAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
@@ -65,9 +69,15 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             )
             bundle.putString(Bundle.KEY_TITLE, "Health Coach")
             navigateTo(DoctorDetailsActivity::class.java, bundle)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Health Coach Details screen")
+            }
         }
 
-        mBinding.ivRenew.setOnClickListener { navigateTo(SubscriptionActivity::class.java) }
+        mBinding.tvRenew.setOnClickListener { navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, " Renew option ")
+            }}
 
         mBinding.llScheduleAppointment.setOnClickListener {
             val bundle = android.os.Bundle()
@@ -77,6 +87,9 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             )
             bundle.putString(Bundle.KEY_TITLE, "Health Coach")
             navigateTo(DoctorDetailsActivity::class.java, bundle)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Schedule Appointment from Booking details")
+            }
         }
 
         mBinding.llScheduleCall.setOnClickListener {
@@ -87,6 +100,9 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             )
             bundle.putString(Bundle.KEY_TITLE, "Health Coach")
             navigateTo(DoctorDetailsActivity::class.java, bundle)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Schedule Appointment from Booking details")
+            }
         }
 
         val requestSinglePermission = registerForActivityResult(
@@ -103,10 +119,16 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
 
         mBinding.tvCall.setOnClickListener {
             requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Call doctor")
+            }
         }
 
         mBinding.tvWhatsappCall.setOnClickListener {
             openWhatsApp(mViewModel.userResponse.value!!.health_coach!!.whatsapp_no)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Whats App doctor")
+            }
         }
     }
 }

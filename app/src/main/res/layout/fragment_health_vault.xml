@@ -70,8 +70,7 @@
                                 android:id="@+id/tvTitle"
                                 style="@style/Large.Blue.MontserratBold"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Sharmila Thakur" />
+                                android:layout_height="wrap_content" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDesc"
@@ -105,8 +104,7 @@
                     android:background="@color/blue"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:paddingBottom="15dp"
-                    android:text="This is member only benefit. Enrol now in the Diabezone program and get your own Health Vault. \n\nSee example Health Vault of Mrs Mani Below." />
+                    android:paddingBottom="15dp" />
 
             </RelativeLayout>
 
@@ -115,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_beneficiary"
                 android:drawablePadding="5dp"
@@ -173,15 +171,13 @@
                                 android:id="@+id/tvName"
                                 style="@style/Large.Blue.MontserratBold"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Mrs Mani" />
+                                android:layout_height="wrap_content" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvDetails"
                                 style="@style/Small.Grey"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Female, 34, Self Employed" />
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 
@@ -206,8 +202,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_mail"
-                            android:drawablePadding="15dp"
-                            android:text="mani@gmail.com" />
+                            android:drawablePadding="15dp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvMobile"
@@ -216,8 +211,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:drawableStart="@drawable/ic_call"
-                            android:drawablePadding="15dp"
-                            android:text="+91 6876687687" />
+                            android:drawablePadding="15dp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvLocation"
@@ -226,8 +220,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:drawableStart="@drawable/ic_location"
-                            android:drawablePadding="15dp"
-                            android:text="A768, Water Villa, Goa" />
+                            android:drawablePadding="15dp" />
                     </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -273,8 +266,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="28dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="Prem Kumar" />
+                        android:layout_marginBottom="5dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvPatronEmail"
@@ -283,8 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:drawableStart="@drawable/ic_mail"
-                        android:drawablePadding="15dp"
-                        android:text="mani@gmail.com" />
+                        android:drawablePadding="15dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvPatronContact"
@@ -294,8 +285,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:drawableStart="@drawable/ic_call"
-                        android:drawablePadding="15dp"
-                        android:text="+91 6876687687" />
+                        android:drawablePadding="15dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvPatronAddress"
@@ -305,8 +295,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:drawableStart="@drawable/ic_location"
-                        android:drawablePadding="15dp"
-                        android:text="A768, Water Villa, Goa" />
+                        android:drawablePadding="15dp" />
 
                 </LinearLayout>
 
@@ -317,7 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_emergency_details"
                 android:drawablePadding="5dp"
@@ -366,8 +355,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="O +ve" />
+                                android:gravity="center_vertical" />
 
                         </LinearLayout>
 
@@ -393,8 +381,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Dr Krishna Mali" />
+                                android:gravity="center_vertical" />
 
                         </LinearLayout>
 
@@ -421,8 +408,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
                                 android:drawableStart="@drawable/ic_call"
-                                android:drawablePadding="5dp"
-                                android:text="+91 9708989736" />
+                                android:drawablePadding="5dp" />
 
                         </LinearLayout>
 
@@ -459,7 +445,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_allegries"
                 android:drawablePadding="5dp"
@@ -509,7 +495,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_diagnosis"
                 android:drawablePadding="5dp"
@@ -558,7 +544,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -777,7 +763,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_vitals"
                 android:drawablePadding="5dp"
@@ -1098,7 +1084,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_procedures"
                 android:drawablePadding="5dp"
@@ -1148,7 +1134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_history"
                 android:drawablePadding="5dp"
@@ -1198,7 +1184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_personal_habits"
                 android:drawablePadding="5dp"
@@ -1248,7 +1234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -1319,8 +1305,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="Star Health Insurance" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1346,8 +1331,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="Star Health Happy Life" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1373,8 +1357,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="GH8797979GH" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1400,8 +1383,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="23/07/2022 - 12/08/2023" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1427,8 +1409,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="₹ 50000" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1467,8 +1448,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    android:text="Mr Shiva Mani" />
+                                    android:gravity="center_vertical" />
 
                             </LinearLayout>
 
@@ -1494,8 +1474,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:drawableStart="@drawable/ic_mail"
-                                    android:drawablePadding="15dp"
-                                    android:text="mani@gmail.com" />
+                                    android:drawablePadding="15dp" />
 
 
                             </LinearLayout>
@@ -1522,8 +1501,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:drawableStart="@drawable/ic_call"
-                                    android:drawablePadding="15dp"
-                                    android:text="+91 6876687687" />
+                                    android:drawablePadding="15dp" />
 
                             </LinearLayout>
 
@@ -1549,7 +1527,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_lab_report"
                 android:drawablePadding="5dp"

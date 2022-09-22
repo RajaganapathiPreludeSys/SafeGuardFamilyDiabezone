@@ -1,21 +1,21 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
 
-class HabitsAdapter(items: List<String>) :
-    RecyclerView.Adapter<HabitsAdapter.ViewHolder>() {
+class ProgramsAdapter(items: List<Int>) :
+    RecyclerView.Adapter<ProgramsAdapter.ViewHolder?>() {
 
-    private val mItems: List<String>
+    private val mItems: List<Int>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_history, parent, false
+                R.layout.item_program_banner, parent, false
             )
         )
     }
@@ -29,13 +29,14 @@ class HabitsAdapter(items: List<String>) :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvTitle: TextView
-        fun setOnBoardingData(item: String) {
-            tvTitle.text = item
+        private val ivBanner: ImageView
+        fun setOnBoardingData(item: Int) {
+            ivBanner.setImageDrawable(itemView.rootView.context.getDrawable(item))
+
         }
 
         init {
-            tvTitle = itemView.findViewById(R.id.tvText)
+            ivBanner = itemView.findViewById(R.id.ivBanner)
         }
     }
 

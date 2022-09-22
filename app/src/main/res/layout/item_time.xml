@@ -17,19 +17,21 @@
         android:id="@+id/llTimeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="10dp"
         android:background="@{selected?@drawable/bg_orange_round:@drawable/bg_white_border}"
         android:gravity="center"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Small.White"
+            style="@style/Small.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{item}" />
+            android:text="@{item}"
+            android:textColor="@{selected?@color/white:@color/grey}" />
 
     </LinearLayout>
 

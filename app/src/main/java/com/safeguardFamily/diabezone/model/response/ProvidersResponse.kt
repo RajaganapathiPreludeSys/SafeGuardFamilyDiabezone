@@ -1,5 +1,7 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 
 data class ProvidersResponse(
     val appointments: List<Appointment>,
@@ -36,6 +38,8 @@ data class Provider(
     val vchat_url: String,
     val mobile: String,
     val whatsapp_no: String,
+    @SerializedName("is_free")
+    val isFree: Boolean,
     val cc: String
 )
 

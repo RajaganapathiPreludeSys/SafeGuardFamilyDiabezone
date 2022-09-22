@@ -12,6 +12,10 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
@@ -61,7 +65,12 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
         if (extras?.containsKey(KEY_OTPs) == true)
             otp = Gson().fromJson(extras.getString(KEY_OTPs), Array<String>::class.java).toList()
 
-        mBinding.icHeader.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener {
+            finish()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go back to Mobile screen from OTP screen")
+            }
+        }
         val spanString = SpannableString(getString(R.string.accept_terms_and_privacy))
 
         val termsAndCondition: ClickableSpan = object : ClickableSpan() {
@@ -97,6 +106,9 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
 
         mBinding.tvResendCode.setOnClickListener {
             mViewModel.getOtp(mobileNumber!!) { otp = it }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Resend OTP")
+            }
         }
 
         if (BuildConfig.BUILD_TYPE == "debug") {
@@ -121,6 +133,9 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
                     finishAffinity()
                 }
             } else showToast("Invalid OTP")
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Verify OTP and proceed")
+            }
         }
 
         mBinding.pvOtp.requestPinEntryFocus()

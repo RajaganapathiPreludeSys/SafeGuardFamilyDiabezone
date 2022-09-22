@@ -1,4 +1,4 @@
-package com.safeguardFamily.diabezone.adapter
+package com.safeguardFamily.diabezone.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,18 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormatTwoFromAPIDateTime
-import com.safeguardFamily.diabezone.model.response.Procedure
+import com.safeguardFamily.diabezone.model.response.Diagnosi
 
-class ProcedureAdapter(items: List<Procedure>) :
-    RecyclerView.Adapter<ProcedureAdapter.ViewHolder>() {
+class DiagnosisAdapter(items: List<Diagnosi>) :
+    RecyclerView.Adapter<DiagnosisAdapter.ViewHolder>() {
 
-    private val mItems: List<Procedure>
+    private val mItems: List<Diagnosi>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_procedures, parent, false
+                R.layout.item_diagnosis, parent, false
             )
         )
     }
@@ -32,15 +31,18 @@ class ProcedureAdapter(items: List<Procedure>) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
-        private val tvDate: TextView
-        fun setOnBoardingData(item: Procedure) {
+        private val tvDuration: TextView
+        private val tvStatus: TextView
+        fun setOnBoardingData(item: Diagnosi) {
             tvTitle.text = item.title
-            tvDate.text = displayingDateFormatTwoFromAPIDateTime(item.procedureDate!!)
+            tvDuration.text = "Duration - ${item.duration}"
+            tvStatus.text = "Status - ${item.status}"
         }
 
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
-            tvDate = itemView.findViewById(R.id.tvDate)
+            tvDuration = itemView.findViewById(R.id.tvDuration)
+            tvStatus = itemView.findViewById(R.id.tvStatus)
         }
     }
 

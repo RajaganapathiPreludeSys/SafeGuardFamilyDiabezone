@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.AppointmentAdapter
-import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
+import com.safeguardFamily.diabezone.ui.adapter.AppointmentAdapter
+import com.safeguardFamily.diabezone.ui.adapter.DoctorsAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.databinding.FragmentAppointmentBinding
 import com.safeguardFamily.diabezone.viewModel.AppointmentViewModel
