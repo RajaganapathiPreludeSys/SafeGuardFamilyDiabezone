@@ -13,14 +13,10 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityOnBoardingBinding
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -71,20 +67,48 @@ class OnBoardingActivity : AppCompatActivity() {
         }, 2000)
     }
 
-
     private fun loadVideoView() {
+
         val url =
             "https://media.geeksforgeeks.org/wp-content/uploads/20210629133649/build-a-simple-Calculator-app-using-Android-Studio.mp4"
         val filePath = "https://safeguardfamily.com/videos/diabetes-intro.mp4"
         val uri = Uri.parse(filePath)
         mBinding.vvVideoPlayer.setVideoURI(uri)
         mBinding.vvVideoPlayer.start()
-
         mBinding.ivThumbnail.visibility = View.VISIBLE
+
         mBinding.vvVideoPlayer.setOnPreparedListener {
+            mBinding.rvProgress.visibility = View.VISIBLE
             Log.d("RRR -- ", "setOnPreparedListener: ")
             mBinding.vvVideoPlayer.visibility = View.VISIBLE
             mBinding.ivThumbnail.visibility = View.GONE
+
+            val handler = Handler(Looper.getMainLooper())
+            val progressStatus = 0
+            mBinding.pbVideo.progress = 0
+            val filesToDownload = mBinding.vvVideoPlayer.duration
+            mBinding.pbVideo.max = filesToDownload
+
+            val sec: Int = filesToDownload % 60
+            val min: Int = filesToDownload / 60 % 60
+
+            val strSec = if (sec < 10) "0$sec" else sec.toString()
+            val strMin = if (min < 10) "0$min" else min.toString()
+
+            mBinding.tvEnd.text = "$strMin:$strSec"
+            Thread {
+                while (progressStatus < filesToDownload) {
+                    try {
+                        Thread.sleep(10)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+
+                    handler.post {
+                        mBinding.pbVideo.progress = mBinding.vvVideoPlayer.currentPosition
+                    }
+                }
+            }.start()
         }
 
         mBinding.vvVideoPlayer.setOnCompletionListener {

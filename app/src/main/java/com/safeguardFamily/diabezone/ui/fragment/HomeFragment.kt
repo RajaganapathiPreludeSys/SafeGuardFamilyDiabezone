@@ -476,8 +476,8 @@ class HomeFragment :
         set.valueTextSize = 12f
         set.valueTextColor = requireContext().getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
-//        set.circleColors = colors
-//        set.setValueTextColors(colors)
+        set.circleColors = colors
+        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }

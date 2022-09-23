@@ -188,8 +188,8 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         set.valueTextSize = 12f
         set.valueTextColor = getColor(R.color.black)
         set.axisDependency = YAxis.AxisDependency.RIGHT
-//        set.circleColors = colors
-//        set.setValueTextColors(colors)
+        set.circleColors = colors
+        set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
     }
