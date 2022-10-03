@@ -41,26 +41,17 @@
     <string name="blood_sugar_value">Blood sugar value</string>
     <string name="type">Type</string>
     <string name="please_select_your_date_and_time">Please select your date and time</string>
-    <string name="contact_diabezone_health_coach"><u>Contact</u> Health Coach</string>
+    <string name="contact_diabezone_health_coach">Contact Health Coach</string>
     <string name="submit">Submit</string>
 
     <string name="statistics">Statistics</string>
-    <string name="day">Day</string>
-    <string name="month">Month</string>
-    <string name="year">Year</string>
-    <string name="january">January</string>
-    <string name="march">March</string>
-    <string name="may">May</string>
-    <string name="february">February</string>
-    <string name="april">April</string>
-    <string name="june">June</string>
+
     <string name="make_an_appointment">Make an appointment</string>
     <string name="reschedule_an_appointment">Reschedule your appointment</string>
     <string name="confirm">Confirm</string>
     <string name="join_online">Join Online</string>
     <string name="reschedule">Reschedule</string>
     <string name="no_slots_available_in_this_date">No slots available in this date</string>
-    <string name="package_valid">Package valid till %1$s - <b>Renew Now</b></string>
     <string name="chat">Chat</string>
     <string name="schedule_video_call">Schedule Video Call</string>
     <string name="date">Date</string>

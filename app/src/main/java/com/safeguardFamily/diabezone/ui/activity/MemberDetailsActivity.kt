@@ -12,17 +12,17 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.ui.adapter.PastAppointmentAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.databinding.ActivityBookingDetailsBinding
-import com.safeguardFamily.diabezone.viewModel.BookingDetailsViewModel
+import com.safeguardFamily.diabezone.databinding.ActivityMemberDetailsBinding
+import com.safeguardFamily.diabezone.ui.adapter.PastAppointmentAdapter
+import com.safeguardFamily.diabezone.viewModel.MemberDetailsViewModel
 
-class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, BookingDetailsViewModel>(
-    R.layout.activity_booking_details,
-    BookingDetailsViewModel::class.java
+class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberDetailsViewModel>(
+    R.layout.activity_member_details,
+    MemberDetailsViewModel::class.java
 ) {
 
     override fun onceCreated() {
@@ -74,10 +74,12 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
             }
         }
 
-        mBinding.tvRenew.setOnClickListener { navigateTo(SubscriptionActivity::class.java)
+        mBinding.tvRenew.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, " Renew option ")
-            }}
+            }
+        }
 
         mBinding.llScheduleAppointment.setOnClickListener {
             val bundle = android.os.Bundle()
@@ -98,8 +100,7 @@ class BookingDetailsActivity : BaseActivity<ActivityBookingDetailsBinding, Booki
                 Bundle.KEY_DOCTOR,
                 Gson().toJson(mViewModel.userResponse.value!!.health_coach)
             )
-            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
-            navigateTo(DoctorDetailsActivity::class.java, bundle)
+            navigateTo(ScheduleAppointmentActivity::class.java, bundle)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Schedule Appointment from Booking details")
             }

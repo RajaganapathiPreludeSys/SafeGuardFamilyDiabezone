@@ -62,7 +62,19 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="1dp" />
+            android:layout_margin="1dp"
+            android:visibility="visible" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/reportingChart"
+            android:layout_width="match_parent"
+            android:layout_height="430dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/white"
+            android:elevation="10dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

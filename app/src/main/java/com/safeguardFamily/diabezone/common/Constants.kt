@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.common
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.safeguardFamily.diabezone.R
 
 class Constants {
     companion object {
@@ -11,6 +12,7 @@ class Constants {
         fun loadImage(view: ImageView, image: String?) {
             Glide.with(view.context)
                 .load(image)
+                .placeholder(R.drawable.ic_profile_thumb)
                 .into(view)
         }
     }

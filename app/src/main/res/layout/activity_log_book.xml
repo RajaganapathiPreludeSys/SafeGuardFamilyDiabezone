@@ -85,6 +85,7 @@
                             android:text="mg/dL" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:visibility="invisible"
                             android:id="@+id/tvResetZoom"
                             style="@style/xSmall.MontserratBold"
                             android:layout_width="wrap_content"
@@ -129,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:buttonTint="@color/blue"
-                            android:text="Fasting Blood Sugar" />
+                            android:text="Fasting" />
 
                         <RadioButton
                             android:id="@+id/radioButton2"

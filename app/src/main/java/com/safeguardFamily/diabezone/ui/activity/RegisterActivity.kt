@@ -141,7 +141,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     }
                 } else showToast(R.string.accept_terms)
             }
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Register")
             }
         }
@@ -149,7 +149,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         mBinding.ivProfileImage.setOnClickListener {
             PhotoPickerFragment.newInstance(allowCamera = false)
                 .show(supportFragmentManager, "picker")
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Pick profile image")
             }
         }

@@ -41,10 +41,7 @@ class PastConsultationsActivity :
                     LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                 mBinding.rvPastAppointments.setHasFixedSize(true)
             }
-
         }
-
-
     }
 
 }

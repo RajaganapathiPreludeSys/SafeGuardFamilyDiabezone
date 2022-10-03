@@ -21,7 +21,7 @@ data class Membership(
 )
 
 data class PastAppointment(
-    var aid: Int?,
+    val aid: String?,
     var booking_date: String?,
     var booking_status: Int?,
     var provider: Provider?,

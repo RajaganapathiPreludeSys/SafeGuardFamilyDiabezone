@@ -2,7 +2,12 @@ package com.safeguardFamily.diabezone.ui.fragment
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.style.StyleSpan
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -33,7 +38,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         viewModel = (activity as DashboardActivity).mViewModel
 
         mBinding.rlBookingContainer.setOnClickListener {
-            navigateTo(BookingDetailsActivity::class.java)
+            navigateTo(MemberDetailsActivity::class.java)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Member details from profile")
             }
@@ -99,11 +104,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
 //        mBinding.clPastConsult.setOnClickListener { logout() }
 
-        mBinding.clLogout.setOnClickListener { logout()
+        mBinding.clLogout.setOnClickListener {
+            logout()
 
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Logout")
-            }}
+            }
+        }
 
         mBinding.ivCall.setOnClickListener {
             callSupport.launch(Manifest.permission.CALL_PHONE)
@@ -154,5 +161,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     override fun onResume() {
         super.onResume()
         mBinding.profile = SharedPref.getUser()
+
+        val spanString = SpannableString("UHID: " + SharedPref.getUser().uname)
+        spanString.setSpan(StyleSpan(Typeface.BOLD), 0, 5, 0)
+
+        mBinding.tvUhid.movementMethod = LinkMovementMethod.getInstance()
+        mBinding.tvUhid.setText(spanString, TextView.BufferType.SPANNABLE)
     }
 }

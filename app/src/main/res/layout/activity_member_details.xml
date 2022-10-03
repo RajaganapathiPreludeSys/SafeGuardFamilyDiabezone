@@ -10,7 +10,7 @@
 
         <variable
             name="mViewModel"
-            type="com.safeguardFamily.diabezone.viewModel.BookingDetailsViewModel" />
+            type="com.safeguardFamily.diabezone.viewModel.MemberDetailsViewModel" />
     </data>
 
     <LinearLayout

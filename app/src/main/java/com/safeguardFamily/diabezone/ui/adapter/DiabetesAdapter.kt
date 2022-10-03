@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -68,6 +69,8 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             binding.tvDate.text = displayingDateFormat(item.measureDate!!)
             binding.etBloodSugar.text = "${item.logValue} mg/dL"
             binding.tvTime.text = formatTo12Hrs(timeString24)
+            binding.tvContactHealchCoach.text = item.message
+
 
             Glide.with(itemView.context).load(
                 when (item.status) {
@@ -128,7 +131,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             }
 
             binding.tvType.text = when (item.period) {
-                "before_meal" -> "Fasting Blood Sugar"
+                "before_meal" -> "Fasting"
                 "after_meal" -> "After Meal"
                 "random" -> "Random"
                 else -> "Random"
@@ -158,7 +161,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             dialogBinding.item = item
 
-            val items = arrayOf("Fasting Blood Sugar", "After Meal", "Random")
+            val items = arrayOf("Fasting", "After Meal", "Random")
 
             dialogBinding.spType.adapter =
                 ArrayAdapter(mContext, android.R.layout.simple_list_item_1, items)
@@ -186,18 +189,23 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Diabetes log time picker ${item.lid}")
                 } }
+            dialogBinding.etBloodSugar.addTextChangedListener {
+                dialogBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_blue_border)
+            }
             dialogBinding.btAddLog.setOnClickListener {
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Diabetes log adding item ${item.lid}")
                 }
                 if (dialogBinding.etBloodSugar.text?.isNotEmpty() == false ||
                     dialogBinding.etBloodSugar.text.toString().toInt() <= 0
-                )
+                ) {
+                    dialogBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_red_border)
                     Toast.makeText(
                         itemView.context,
                         "Enter a valid blood sugar value",
                         Toast.LENGTH_LONG
                     ).show()
+                }
                 else {
                     android.util.Log.d(TAG, "editDiabetes: $dateString$timeString24")
                     onDone(
@@ -207,7 +215,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                             logValue = dialogBinding.etBloodSugar.text.toString().toInt(),
                             uid = SharedPref.getUserId()!!,
                             period = when (dialogBinding.spType.selectedItem) {
-                                "Fasting Blood Sugar" -> "before_meal"
+                                "Fasting" -> "before_meal"
                                 "After Meal" -> "after_meal"
                                 "Random" -> "random"
                                 else -> ""

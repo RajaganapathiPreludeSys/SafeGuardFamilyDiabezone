@@ -80,7 +80,7 @@ class AppointmentPaymentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
                             isBookingCompleted.postValue(true)
-                            successToast.postValue("Appointment Rescheduled Successfully")
+//                            successToast.postValue("Appointment Rescheduled Successfully")
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
@@ -100,6 +100,7 @@ class AppointmentPaymentViewModel : BaseViewModel() {
 
     fun confirmAppointment(
         request: CreateAppointmentRequest,
+        onSuccess: (() -> Unit)
     ) {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
             param(FirebaseAnalytics.Param.CONTENT, "Create Appointment")
@@ -115,8 +116,7 @@ class AppointmentPaymentViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
-                            isBookingCompleted.postValue(true)
-//                            successToast.postValue("Appointment Created Successfully")
+                            onSuccess()
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

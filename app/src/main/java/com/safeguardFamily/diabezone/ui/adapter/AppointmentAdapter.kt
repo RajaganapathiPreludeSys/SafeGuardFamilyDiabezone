@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.ui.adapter
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,10 @@ import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFromAPI
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
 import com.safeguardFamily.diabezone.model.response.Appointment
 import com.safeguardFamily.diabezone.ui.activity.ScheduleAppointmentActivity
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AppointmentAdapter(items: List<Appointment>) :
     RecyclerView.Adapter<AppointmentAdapter.ViewHolder?>() {
@@ -64,9 +68,34 @@ class AppointmentAdapter(items: List<Appointment>) :
             tvTime.text = formatTo12Hrs(item.slot)?.uppercase()
             Glide.with(itemView.context).load(item.provider.pic).into(ivProfileImage)
             btJoinOnline.setOnClickListener {
+
+                val parsedMillis = SimpleDateFormat(
+                    "yyyy-MM-dd HH:mm:ss",
+                    Locale.getDefault()
+                ).parse(item.booking_date)!!.time
+
                 val c = Calendar.getInstance()
-                c.timeInMillis = DateUtils.getTimeStampFromSting(item.booking_date)
-                if (c.timeInMillis > DateUtils.getTimeStampFromSting(item.booking_date))
+                c.timeInMillis = parsedMillis
+                c.add(Calendar.MINUTE, -5)
+
+                Log.d("RRR", "In the past...$parsedMillis -- ${System.currentTimeMillis()}")
+
+                Log.d("RRR", "In the past...$parsedMillis -- ${c.timeInMillis}")
+
+                val simple: DateFormat = SimpleDateFormat(
+                    "yyyy-MM-dd HH:mm:ss",
+                    Locale.getDefault()
+                )
+
+                var result = Date(c.timeInMillis)
+                Log.d("RRR", "Backend time ${simple.format(result)}")
+                result = Date(System.currentTimeMillis())
+                Log.d("RRR", "Current time ${simple.format(result)}")
+                result = Date(c.timeInMillis)
+                Log.d("RRR", "Current ---- ${Date(parsedMillis)} > ${Date(c.timeInMillis)}")
+                Log.d("RRR", "Current ---- ${Date(System.currentTimeMillis()).after(Date(c.timeInMillis))} > ${c.timeInMillis}")
+
+                if (Date(System.currentTimeMillis()).after(Date(c.timeInMillis)))
                     itemView.context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,

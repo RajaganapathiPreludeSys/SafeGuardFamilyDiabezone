@@ -29,7 +29,9 @@
             style="@style/xSmall.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cardio Diabetes" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.provider.speciality}" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -11,6 +11,7 @@
         style="@style/Medium.Grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minLines="2"
         android:text="Diabetes" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:maxLines="3" />
+        android:maxLines="3"
+        android:minLines="2" />
 
     <LinearLayout
         android:id="@+id/llDateTimeContainer"

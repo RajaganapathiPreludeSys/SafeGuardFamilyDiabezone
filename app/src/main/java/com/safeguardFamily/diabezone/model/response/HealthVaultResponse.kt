@@ -43,7 +43,7 @@ data class Vault(
     @SerializedName("user")
     var user: User?,
     @SerializedName("vitals")
-    var vitals: Vitals?
+    var vitals: Vitals
 )
 
 data class Allergy(
@@ -195,27 +195,6 @@ data class Procedure(
     var title: String?
 )
 
-data class Vitals(
-    @SerializedName("last_updated_date")
-    var lastUpdatedDate: String?,
-    @SerializedName("Diastolic Blood Pressure")
-    var diastolicBloodPressure: String?,
-    @SerializedName("Fasting Blood Sugar")
-    var fastingBloodSugar: String?,
-    @SerializedName("HbA1C")
-    var hbA1C: String?,
-    @SerializedName("Post-Prandial Blood Sugar")
-    var postPrandialBloodSugar: String?,
-    @SerializedName("Pulse Rate")
-    var pulseRate: String?,
-    @SerializedName("Systolic Blood  Pressure ")
-    var systolicBloodPressure: String?,
-    @SerializedName("Total Cholesterol")
-    var totalCholesterol: String?,
-    @SerializedName("Triglyceride")
-    var triglyceride: String?
-)
-
 data class Tpa(
     @SerializedName("email")
     var email: String?,
@@ -223,4 +202,18 @@ data class Tpa(
     var mobile: String?,
     @SerializedName("name")
     var name: String?
+)
+
+data class Vital(
+    @SerializedName("name")
+    var name: String?,
+    @SerializedName("value")
+    var value: String?
+)
+
+data class Vitals(
+    @SerializedName("list")
+    var list: List<Vital>?,
+    @SerializedName("report_date")
+    var reportDate: String?
 )

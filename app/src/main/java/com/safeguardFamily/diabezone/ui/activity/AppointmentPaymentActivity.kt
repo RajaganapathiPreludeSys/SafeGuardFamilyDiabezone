@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.ui.activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -23,7 +24,6 @@ import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.AppointmentPaymentViewModel
 import org.json.JSONException
 import org.json.JSONObject
-
 
 class AppointmentPaymentActivity :
     BaseActivity<ActivityAppointmentPaymentBinding, AppointmentPaymentViewModel>(
@@ -81,11 +81,13 @@ class AppointmentPaymentActivity :
             mBinding.tvTitle.text = "Already Paid"
         }
 
-        mBinding.ivEdit.setOnClickListener { finish()
+        mBinding.ivEdit.setOnClickListener {
+            finish()
 
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Edit appointment")
-            }}
+            }
+        }
 
         mBinding.ivEdit.bringToFront()
 
@@ -146,7 +148,20 @@ class AppointmentPaymentActivity :
                 slot = apiTime,
                 razorPayKey = p0
             )
-        )
+        ) {
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder
+                .setMessage("Payment completed successfully for the sum of ₹${mProvider.fees}")
+                .setCancelable(false)
+                .setPositiveButton("Ok") { dialog, id ->
+                    setResult(123, Intent())
+                    finish()
+                }
+
+            val alert = dialogBuilder.create()
+            alert.setTitle("Payment for Appointment")
+            alert.show()
+        }
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {

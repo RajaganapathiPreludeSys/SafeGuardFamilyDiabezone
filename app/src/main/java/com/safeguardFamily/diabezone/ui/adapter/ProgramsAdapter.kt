@@ -32,7 +32,6 @@ class ProgramsAdapter(items: List<Int>) :
         private val ivBanner: ImageView
         fun setOnBoardingData(item: Int) {
             ivBanner.setImageDrawable(itemView.rootView.context.getDrawable(item))
-
         }
 
         init {

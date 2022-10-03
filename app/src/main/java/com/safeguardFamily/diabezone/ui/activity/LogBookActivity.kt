@@ -19,13 +19,13 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.ui.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.databinding.ActivityLogBookBinding
 import com.safeguardFamily.diabezone.model.response.GraphItems
+import com.safeguardFamily.diabezone.ui.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.viewModel.LogBookViewModel
 
 class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
@@ -68,7 +68,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
                 when (i) {
                     mBinding.radioButton1.id -> bindChart(
                         it.lifetime!!.before_meal!!,
-                        "Fasting Blood Sugar"
+                        "Fasting"
                     )
                     mBinding.radioButton2.id -> bindChart(
                         it.lifetime!!.after_meal!!,
@@ -81,7 +81,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
                 }
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
-            bindChart(it.lifetime!!.before_meal!!, "Fasting Blood Sugar")
+            bindChart(it.lifetime!!.before_meal!!, "Fasting")
         }
     }
 
@@ -108,9 +108,9 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             mBinding.chart1.setDrawGridBackground(false)
             mBinding.chart1.setDrawBarShadow(false)
             mBinding.chart1.isHighlightFullBarEnabled = false
-//            mBinding.chart1.setTouchEnabled(false)
-//            mBinding.chart1.setPinchZoom(false)
-//            mBinding.chart1.isDoubleTapToZoomEnabled = false
+            mBinding.chart1.setTouchEnabled(false)
+            mBinding.chart1.setPinchZoom(false)
+            mBinding.chart1.isDoubleTapToZoomEnabled = false
 
             mBinding.chart1.drawOrder = arrayOf(DrawOrder.LINE)
             val l = mBinding.chart1.legend
@@ -130,8 +130,9 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
 
             val xAxis = mBinding.chart1.xAxis
             xAxis.position = XAxisPosition.BOTTOM
-            xAxis.labelRotationAngle = 50f
+            xAxis.labelRotationAngle = -50f
             xAxis.axisMinimum = 0f
+            xAxis.labelCount = chartData.list!!.size
             xAxis.granularity = 1f
             xAxis.textSize = 12f
 
@@ -140,13 +141,20 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
                     return months[value.toInt() % months.size]
                 }
             }
+
+//            xAxis.valueFormatter = object : IndexAxisValueFormatter() {
+//                override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+//                    val index = value.toInt()
+//                    return if (index == 0) "" else if (index < months.size) months[index] else ""
+//                }
+//            }
             val data = CombinedData()
 
             data.setData(generateLineData(chartData))
 
             xAxis.axisMaximum = data.xMax + 0.25f
 
-            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack)
 
             mBinding.chart1.data = data
             mBinding.chart1.axisRight.isEnabled = false
@@ -178,10 +186,10 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             } else colors.add(getColor(R.color.blue))
         }
         val set = LineDataSet(entries, "")
-        set.color = getColor(R.color.blueOpacity)
-        set.lineWidth = 2.5f
+        set.color = getColor(R.color.blue)
+        set.lineWidth = 3f
         set.setCircleColor(getColor(R.color.blue))
-        set.circleRadius = 3f
+        set.circleRadius = 4f
         set.fillColor = getColor(R.color.blue)
         set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
@@ -193,5 +201,4 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         d.addDataSet(set)
         return d
     }
-
 }

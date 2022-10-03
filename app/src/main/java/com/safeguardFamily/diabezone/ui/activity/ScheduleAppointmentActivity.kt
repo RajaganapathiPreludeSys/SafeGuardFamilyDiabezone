@@ -134,7 +134,7 @@ class ScheduleAppointmentActivity :
             mBinding.tvTimes.visibility = View.VISIBLE
         }
         mBinding.tvSelectedSlot.text =
-            if (tempSlot?.length!! > 1) "Selected slot ${
+            if (tempSlot?.length!! > 1) "Selected slot - ${
                 DateUtils.formatTo12Hrs(tempSlot)!!.uppercase()
             }" else ""
         mBinding.rvTimes.adapter = TimeAdapter(slots) {

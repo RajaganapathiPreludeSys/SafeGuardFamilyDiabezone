@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.CombinedChart
 import com.github.mikephil.charting.components.Legend
@@ -28,7 +31,6 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
@@ -50,9 +52,11 @@ import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
 import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
+import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -65,13 +69,12 @@ class HomeFragment :
     private var timeString = ""
     private var pdfUrl = ""
 
-
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
         loadNotification()
 
-        val items = arrayOf("Select type", "Fasting Blood Sugar", "After Meal", "Random")
+        val items = arrayOf("Select type", "Fasting", "After Meal", "Random")
         val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, items)
         mBinding.spType.adapter = adapter
 
@@ -83,17 +86,41 @@ class HomeFragment :
         timeString = SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
         mBinding.tvTime.text = timeString
 
+        mBinding.spType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                mBinding.rlTypeContainer.setBackgroundResource(R.drawable.bg_blue_border)
+            }
+        }
+
+        mBinding.etBloodSugar.addTextChangedListener {
+            mBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_blue_border)
+        }
+
         mBinding.btAddLog.setOnClickListener {
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Add diabetes logs")
             }
             when {
-                mBinding.etBloodSugar.text?.isNotEmpty() == false -> showToast("Enter a valid blood sugar value")
-                mBinding.spType.selectedItem == "Select type" -> showToast("Select a valid meal type")
+                mBinding.etBloodSugar.text?.isNotEmpty() == false -> {
+                    mBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_red_border)
+                    showToast("Enter a valid blood sugar value")
+                }
+                mBinding.spType.selectedItem == "Select type" -> {
+                    mBinding.rlTypeContainer.setBackgroundResource(R.drawable.bg_red_border)
+                    showToast("Select a valid meal type")
+                }
                 mBinding.etBloodSugar.text.toString()
                     .toInt() <= 0 -> showToast("Enter a valid blood sugar value")
                 else -> {
-
                     Log.d(TAG, "onceCreated: $dateString $timeString")
                     Log.d(TAG, "onceCreated: $dateString ${formatTo24Hrs(timeString)}")
                     val request = DiabetesLogRequest(
@@ -101,7 +128,7 @@ class HomeFragment :
                         logValue = mBinding.etBloodSugar.text.toString().toInt(),
                         uid = SharedPref.getUserId()!!,
                         period = when (mBinding.spType.selectedItem) {
-                            "Fasting Blood Sugar" -> "before_meal"
+                            "Fasting" -> "before_meal"
                             "After Meal" -> "after_meal"
                             "Random" -> "random"
                             else -> "before_meal"
@@ -125,40 +152,53 @@ class HomeFragment :
             }
         }
 
-        mBinding.ivProgram.setOnClickListener { navigateTo(SubscriptionActivity::class.java)
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+        mBinding.ivProgram.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
-            }}
-        mBinding.tlDateContainer.setOnClickListener { showDateDialog()
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            }
+        }
+        mBinding.tlDateContainer.setOnClickListener {
+            showDateDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Open date picker")
-            }}
-        mBinding.tlTimeContainer.setOnClickListener { showTimeDialog()
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            }
+        }
+        mBinding.tlTimeContainer.setOnClickListener {
+            showTimeDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Open Time picker")
-            }}
-        mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java)
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            }
+        }
+        mBinding.ivOpenLogs.setOnClickListener {
+            navigateTo(LogBookActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Log book screen from home")
-            }}
+            }
+        }
 
         mBinding.cvOne.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.appointment
             )
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Appointment from home")
             }
         }
         mBinding.cvTwo.setOnClickListener {
-            val mBundle = Bundle()
-            mBundle.putString(com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY, "PDF")
-            mBundle.putString(
-                com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL,
-                pdfUrl
-            )
-            navigateTo(WebViewActivity::class.java, mBundle)
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            if (pdfUrl.length > 1) {
+                val mBundle = Bundle()
+                mBundle.putString(com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY, "PDF")
+                mBundle.putString(
+                    com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL,
+                    pdfUrl
+                )
+                navigateTo(WebViewActivity::class.java, mBundle)
+            } else {
+                showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
+                navigateTo(SubscriptionActivity::class.java)
+            }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Consolidated Prescription from Home")
             }
         }
@@ -166,13 +206,11 @@ class HomeFragment :
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.healthVault
             )
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Health vault from home")
             }
         }
 
-        loadProfileImg(mProfile.pic, mBinding.ivProfileImage)
-        mBinding.tvName.text = mProfile.name
         loadHomeGraph()
     }
 
@@ -182,7 +220,7 @@ class HomeFragment :
                 when (i) {
                     mBinding.radioButton1.id -> bindChart(
                         it.lifetime!!.before_meal!!,
-                        "Fasting Blood Sugar"
+                        "Fasting"
                     )
                     mBinding.radioButton2.id -> bindChart(
                         it.lifetime!!.after_meal!!,
@@ -195,7 +233,7 @@ class HomeFragment :
                 }
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
-            bindChart(it.lifetime!!.before_meal!!, "Fasting Blood Sugar")
+            bindChart(it.lifetime!!.before_meal!!, "Fasting")
             pdfUrl = url!!
         }
     }
@@ -223,7 +261,7 @@ class HomeFragment :
                 }
             }
             mBinding.vpNotification.adapter = mAdapter
-
+            mBinding.llNotificationIndicator.removeAllViews()
             if (it.size > 1) {
                 val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
                 val layoutParams = LinearLayout.LayoutParams(
@@ -254,7 +292,6 @@ class HomeFragment :
                 })
             }
         }
-
     }
 
     private fun setCurrentIndicators(index: Int) {
@@ -315,7 +352,7 @@ class HomeFragment :
                 mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
                 mDialog.dismiss()
             }
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Date selected")
             }
         }
@@ -365,7 +402,7 @@ class HomeFragment :
                 mBinding.tvTime.text = timeString
                 mDialog.dismiss()
             }
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Time selected")
             }
         }
@@ -381,13 +418,16 @@ class HomeFragment :
         mBinding.tvHypo.text = chartData.summary!!.incident!!.hypo.toString()
         mBinding.tvGraphTitle.text = "Blood Sugar - $s"
 
-
         val months = ArrayList<String>()
         chartData.list!!.reversed().forEach {
             months.add(displayingDayFromAPI(it.measure_date!!)!!)
         }
 
         if (chartData.list!!.isNotEmpty()) {
+
+            if (chartData.list!![0].status == "hyper" || chartData.list!![0].status == "hypo")
+                mBinding.ivRedBanner.visibility = View.VISIBLE
+            else mBinding.ivRedBanner.visibility = View.GONE
 
             mBinding.rlGraphContainer.visibility = View.VISIBLE
             mBinding.tvChartPlaceholder.visibility = View.GONE
@@ -397,9 +437,9 @@ class HomeFragment :
             mBinding.chart1.setDrawGridBackground(false)
             mBinding.chart1.setDrawBarShadow(false)
             mBinding.chart1.isHighlightFullBarEnabled = false
-//            mBinding.chart1.setTouchEnabled(false)
-//            mBinding.chart1.setPinchZoom(false)
-//            mBinding.chart1.isDoubleTapToZoomEnabled = false
+            mBinding.chart1.setTouchEnabled(false)
+            mBinding.chart1.setPinchZoom(false)
+            mBinding.chart1.isDoubleTapToZoomEnabled = false
 
             mBinding.chart1.drawOrder = arrayOf(CombinedChart.DrawOrder.LINE)
             val l = mBinding.chart1.legend
@@ -421,6 +461,7 @@ class HomeFragment :
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.labelRotationAngle = -50f
             xAxis.axisMinimum = 0f
+            xAxis.labelCount = chartData.list!!.size
             xAxis.granularity = 1f
             xAxis.textSize = 12f
 
@@ -435,7 +476,7 @@ class HomeFragment :
 
             xAxis.axisMaximum = data.xMax + 0.25f
 
-            mBinding.chart1.animateY(2000, Easing.EaseOutBack)
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
 
             mBinding.chart1.data = data
             mBinding.chart1.axisRight.isEnabled = false
@@ -443,11 +484,12 @@ class HomeFragment :
             mBinding.chart1.axisLeft.setDrawGridLines(false)
             mBinding.chart1.xAxis.setDrawGridLines(false)
             mBinding.chart1.invalidate()
-
-            mBinding.tvResetZoom.setOnClickListener { mBinding.chart1.fitScreen()
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
-                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom")
-                }}
+            mBinding.tvResetZoom.setOnClickListener {
+                mBinding.chart1.fitScreen()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom in Log book")
+                }
+            }
         } else {
             mBinding.rlGraphContainer.visibility = View.GONE
             mBinding.tvChartPlaceholder.visibility = View.VISIBLE
@@ -466,10 +508,10 @@ class HomeFragment :
             } else colors.add(requireContext().getColor(R.color.blue))
         }
         val set = LineDataSet(entries, "")
-        set.color = requireContext().getColor(R.color.blueOpacity)
-        set.lineWidth = 2.5f
+        set.color = requireContext().getColor(R.color.blue)
+        set.lineWidth = 3f
         set.setCircleColor(requireContext().getColor(R.color.blue))
-        set.circleRadius = 3f
+        set.circleRadius = 4f
         set.fillColor = requireContext().getColor(R.color.blue)
         set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
@@ -480,5 +522,14 @@ class HomeFragment :
         set.setValueTextColors(colors)
         d.addDataSet(set)
         return d
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadHomeGraph()
+        mProfile = SharedPref.getUser()
+        Glide.with(this).load(mProfile.pic).placeholder(R.drawable.ic_profile_thumb)
+            .into(mBinding.ivProfileImage)
+        mBinding.tvName.text = mProfile.name
     }
 }

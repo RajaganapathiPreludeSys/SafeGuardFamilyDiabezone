@@ -11,6 +11,10 @@ import retrofit2.http.Part
 
 interface ApiInterface {
 
+    //    https://safeguardfamily.com/apis/init
+    @POST("init")
+    fun postInit(@Body body: InitRequest): Call<BaseResponse<InitResponse>>
+
     //    https://safeguardfamily.com/apis/send-otp
     @POST("send-otp")
     fun postOtp(@Body body: MobileNumberRequest): Call<BaseResponse<OtpResponse>>

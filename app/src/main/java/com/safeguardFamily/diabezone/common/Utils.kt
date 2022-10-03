@@ -17,7 +17,7 @@ object DateUtils {
         return SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(millis)
     }
 
-    fun getTimeStampFromSting(s: String) =
+    fun getTimeStampFromSting(s: String): Long =
         SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(s)!!.time
 
     fun displayingDateFromAPI(time: String): String? =

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "260926988787",
-    "project_id": "safeguardfamily-diabezone",
-    "storage_bucket": "safeguardfamily-diabezone.appspot.com"
+    "project_number": "608717074739",
+    "project_id": "safeguardfamily-diabezon-2aa81",
+    "storage_bucket": "safeguardfamily-diabezon-2aa81.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260926988787:android:3f630712340c20fbcbb286",
+        "mobilesdk_app_id": "1:608717074739:android:92e7e02fc7df839faa8e46",
         "android_client_info": {
           "package_name": "com.safeguardFamily.diabezone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "260926988787-7hcq0husqncb074crcd6fds7r73s4o0n.apps.googleusercontent.com",
+          "client_id": "608717074739-dd24pvtjhn5ttqcnjb2f4vchp4hsh8s4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.safeguardFamily.diabezone",
-            "certificate_hash": "f74651ba6bbf31da71b31be5d1cdb5b39ddd743b"
+            "certificate_hash": "1d01075f3b27a255459ed0a75ae0f44d2a5af066"
           }
         },
         {
-          "client_id": "260926988787-50j00d821ug4vfgdrh9v4oao6s48jpgv.apps.googleusercontent.com",
+          "client_id": "608717074739-q64lb80jhu8ur370pu701gbo61vn3go4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCxgk46oSALQso0bDNKdVwGCsjDRgm2UyA"
+          "current_key": "AIzaSyCg3HqOgvvbtx45HLG0LfdDkhyr0w75aew"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "260926988787-50j00d821ug4vfgdrh9v4oao6s48jpgv.apps.googleusercontent.com",
+              "client_id": "608717074739-q64lb80jhu8ur370pu701gbo61vn3go4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

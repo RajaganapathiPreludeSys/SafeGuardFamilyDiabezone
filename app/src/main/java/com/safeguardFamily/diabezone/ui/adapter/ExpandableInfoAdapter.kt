@@ -89,7 +89,7 @@ class ExpandableInfoAdapter(
                             }
                             it.list!!.forEach {
                                 val textView = TextView(binding.root.context)
-                                textView.text = "\u2022 ${it}"
+                                textView.text = "\u2727 ${it}"
                                 val params = LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.WRAP_CONTENT

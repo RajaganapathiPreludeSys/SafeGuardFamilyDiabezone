@@ -48,8 +48,8 @@
                                 android:id="@+id/ivProfileImage"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:background="@color/bgGrey"
-                                android:scaleType="centerCrop" />
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_profile_thumb" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -386,14 +386,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="@string/reset_zoom" />
+                        android:text="@string/reset_zoom"
+                        android:visibility="invisible" />
 
                     <com.github.mikephil.charting.charts.CombinedChart
                         android:id="@+id/chart1"
                         android:layout_width="match_parent"
                         android:layout_height="270dp"
                         android:layout_below="@id/tvResetZoom"
-                        android:layout_margin="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginBottom="2dp"
                         android:padding="2dp" />
 
                 </RelativeLayout>
@@ -425,7 +429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/blue"
-                        android:text="Fasting Blood Sugar" />
+                        android:text="Fasting" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
@@ -660,6 +664,7 @@
                                 android:orientation="horizontal">
 
                                 <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivRedBanner"
                                     android:layout_width="match_parent"
                                     android:layout_height="110dp"
                                     android:scaleType="centerInside"
@@ -680,6 +685,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
@@ -793,7 +799,7 @@
                 android:id="@+id/ivProgram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_program_banner" />
 

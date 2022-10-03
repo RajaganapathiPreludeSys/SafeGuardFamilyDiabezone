@@ -11,7 +11,6 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.ui.adapter.*
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
 import com.safeguardFamily.diabezone.common.Bundle.KEY_TITLE
@@ -27,6 +26,7 @@ import com.safeguardFamily.diabezone.model.response.*
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
 import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
+import com.safeguardFamily.diabezone.ui.adapter.*
 import com.safeguardFamily.diabezone.viewModel.HealthVaultViewModel
 
 class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVaultViewModel>(
@@ -48,7 +48,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 it.user,
                 it.insurance,
                 it.consolidatedPrescription,
-                it.vitals
             )
             loadEmergencyContact(it.emergencyContacts, it.emergencyDetails)
             loadLabReport(it.labReports)
@@ -58,6 +57,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             loadProcedure(it.procedures)
             loadHabit(it.personalHabits)
             loadBeneficiary(it.beneficiary)
+            loadVitals(it.vitals)
 
 //            loadEmergencyContact(arrayListOf(), it.emergencyDetails)
 //            loadLabReport(arrayListOf())
@@ -76,6 +76,32 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 else showToast("Health Vault PDF not available for now. Please contact your health coach")
             }
         }
+    }
+
+    private fun loadVitals(vitals: Vitals) {
+        //      Vitals
+        if (vitals.list != null) {
+            mBinding.llVitals.visibility = View.VISIBLE
+            mBinding.tvVitals.visibility = View.GONE
+
+            if (vitals.reportDate != null)
+                mBinding.tvVitalDate.text =
+                    displayingDateFormatTwoFromAPIDateTime(vitals.reportDate!!)
+            mBinding.rvVitals.adapter = VitalsAdapter(vitals.list!!)
+            mBinding.rvVitals.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            mBinding.rvVitals.setHasFixedSize(true)
+        } else {
+            mBinding.llVitals.visibility = View.GONE
+            mBinding.tvVitals.visibility = View.VISIBLE
+            mBinding.tvVitals.setOnClickListener {
+                contactHealthCoach()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Vitals")
+                }
+            }
+        }
+
     }
 
     private fun loadBeneficiary(beneficiary: List<Beneficiary>?) {
@@ -273,8 +299,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         patron: Patron?,
         user: User?,
         insurance: Insurance?,
-        prescription: ConsolidatedPrescription?,
-        vitals: Vitals?
+        prescription: ConsolidatedPrescription?
     ) {
 
         mBinding.tvHVDesc.text = message
@@ -371,34 +396,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 }
             }
         }
-
-        //      Vitals
-        if (vitals != null) {
-            mBinding.llVitals.visibility = View.VISIBLE
-            mBinding.tvVitals.visibility = View.GONE
-            mBinding.tvPulseRate.text = vitals.pulseRate
-            mBinding.tvFastingBloodSugar.text = vitals.fastingBloodSugar
-            mBinding.tvPostParandial.text = vitals.postPrandialBloodSugar
-            mBinding.tvhba.text = vitals.hbA1C
-            mBinding.tvSystolicBloodPressure.text = vitals.systolicBloodPressure
-            mBinding.tvDiastolicBloodPressure.text = vitals.diastolicBloodPressure
-            mBinding.tvTotalCholesterol.text = vitals.totalCholesterol
-            mBinding.tvTriglyceride.text = vitals.triglyceride
-            if (vitals.lastUpdatedDate != null)
-                mBinding.tvVitalDate.text =
-                    displayingDateFormatTwoFromAPIDateTime(vitals.lastUpdatedDate!!)
-        } else {
-            mBinding.llVitals.visibility = View.GONE
-            mBinding.tvVitals.visibility = View.VISIBLE
-            mBinding.tvVitals.setOnClickListener {
-                contactHealthCoach()
-
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Vitals")
-                }
-            }
-        }
-
     }
 
     private fun openWebView(url: String) {
