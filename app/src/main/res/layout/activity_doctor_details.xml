@@ -26,13 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@color/blue"
-                android:padding="15dp">
+                android:paddingTop="15dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:padding="10dp"
                     android:tint="@color/white"
                     app:srcCompat="@drawable/ic_back_blue" />
 
@@ -43,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="7dp"
+                    android:layout_marginEnd="40dp"
                     android:layout_toEndOf="@+id/ivBack"
                     android:gravity="center"
                     android:maxLines="1"
@@ -92,21 +94,21 @@
                     android:text="@{provider.speciality}" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
-                        android:layout_weight="1"
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginBottom="3dp"
+                        android:layout_weight="1"
                         app:cardCornerRadius="20dp">
 
                         <LinearLayout
@@ -135,13 +137,13 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginBottom="3dp"
+                        android:layout_weight="1"
                         app:cardCornerRadius="20dp">
 
                         <LinearLayout
@@ -152,28 +154,28 @@
                             android:padding="10dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvExpValue"
                                 style="@style/xLarge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:text="@{provider.experience}" />
+                                android:maxLines="1"/>
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvExperience"
                                 style="@style/xSmall.Blue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:text="Experience" />
+                                android:maxLines="1" />
 
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:padding="10dp"
@@ -205,14 +207,14 @@
                     android:background="@color/blueOpacity" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -384,15 +386,6 @@
                     android:maxLines="1"
                     android:text="About" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAbout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="@{provider.about}"
-                    android:visibility="gone" />
-
                 <kr.co.prnd.readmore.ReadMoreTextView
                     android:id="@+id/tvReadMore"
                     android:layout_width="match_parent"
@@ -442,220 +435,167 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
+                                android:layout_margin="3dp"
+                                android:background="@color/white"
+                                android:baselineAligned="false"
+                                android:gravity="center"
+                                android:paddingTop="15dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvMonTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="10dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="10dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="M" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvTueTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="11dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="11dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="T" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvWedTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="10dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="10dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="W" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvThuTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="11dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="11dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="T" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvFriTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="11dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="11dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="F" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvSatTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="11dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="11dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="S" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tvSunTime"
+                                        style="@style/Large.White.MontserratBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_royal_blue_circle"
+                                        android:gravity="center"
+                                        android:paddingStart="11dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="11dp"
+                                        android:paddingBottom="5dp"
+                                        android:text="S" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTimeValue"
+                                style="@style/Large"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvMon"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Mon - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvMonTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvTue"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Tue - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvTueTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvWed"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Wed - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvWedTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvThu"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Thu - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvThuTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvFri"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Fri - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvFriTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvSat"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="1"
-                                    android:text="Sat - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvSatTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvSun"
-                                    style="@style/Small.Blue.MontserratBold"
-                                    android:layout_width="50dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="15dp"
-                                    android:maxLines="1"
-                                    android:text="Sun - " />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvSunTime"
-                                    style="@style/Small"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginBottom="15dp"
-                                    android:maxLines="2"
-                                    android:text="11 AM - 1 PM  7 PM - 10 PM" />
-
-                            </LinearLayout>
+                                android:layout_marginBottom="20dp"
+                                android:drawableStart="@drawable/ic_time"
+                                android:drawablePadding="5dp"
+                                android:drawableTint="@color/blue"
+                                android:gravity="center"
+                                android:text="S" />
 
                             <LinearLayout
                                 android:id="@+id/llBookAppointment"

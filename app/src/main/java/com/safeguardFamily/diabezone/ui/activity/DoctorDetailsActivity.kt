@@ -1,10 +1,8 @@
 package com.safeguardFamily.diabezone.ui.activity
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.View
 import android.widget.TextView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -18,7 +16,8 @@ import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.databinding.ActivityDoctorDetailsBinding
 import com.safeguardFamily.diabezone.model.response.Provider
 import com.safeguardFamily.diabezone.viewModel.DoctorDetailsViewModel
-
+import java.text.DateFormatSymbols
+import java.util.*
 
 class DoctorDetailsActivity :
     BaseActivity<ActivityDoctorDetailsBinding, DoctorDetailsViewModel>(
@@ -40,24 +39,44 @@ class DoctorDetailsActivity :
         if (intent.extras?.containsKey(Bundle.KEY_TITLE) == true) {
             mBinding.tvTitle.text = intent.extras?.getString(Bundle.KEY_TITLE)
             mBinding.llMakeAppointment.visibility = View.GONE
-        } else mBinding.llContainer.visibility = View.GONE
+        } else {
+            mBinding.tvTitle.text = if (countWords(provider.category) > 1) provider.category
+            else "${provider.category}'s Details"
+            mBinding.llContainer.visibility = View.GONE
+        }
+
+        if (provider.experience.isNotEmpty()) {
+            mBinding.tvExpValue.text = provider.experience
+            mBinding.tvExperience.text = "Experience"
+        } else {
+            mBinding.tvExpValue.text = provider.num_consultations
+            mBinding.tvExperience.text = "Consultations"
+        }
 
         mBinding.llBookAppointment.setOnClickListener {
             val bundle = android.os.Bundle()
             bundle.putString(Bundle.KEY_DOCTOR, Gson().toJson(provider))
             navigateTo(ScheduleAppointmentActivity::class.java, bundle, true)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT, "Go to Book appointment screen from Doctor Details ")
+                param(
+                    FirebaseAnalytics.Param.CONTENT,
+                    "Go to Book appointment screen from Doctor Details "
+                )
             }
         }
 
         mBinding.ivBack.setOnClickListener { finish() }
 
-        mBinding.btChat.setOnClickListener { openWhatsApp(provider.mobile)
+        mBinding.btChat.setOnClickListener {
+            openWhatsApp(provider.mobile)
 
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT, "Open Whatsapp chat from Doctor details screen")
-            }}
+                param(
+                    FirebaseAnalytics.Param.CONTENT,
+                    "Open Whatsapp chat from Doctor details screen"
+                )
+            }
+        }
 
         mBinding.btCall.setOnClickListener {
             val bundle = android.os.Bundle()
@@ -71,66 +90,107 @@ class DoctorDetailsActivity :
         loadAvailability()
 
 
-        val spanString = SpannableString(provider.about + "...less")
+        val spanString = SpannableString(provider.about + "..less")
 
         spanString.setSpan(
             ForegroundColorSpan(Color.BLUE),
             provider.about.length,
-            provider.about.length + 7,
+            provider.about.length + 6,
             0
         )
         spanString.setSpan(
             ForegroundColorSpan(getColor(R.color.blue)),
             provider.about.length,
-            provider.about.length + 7,
+            provider.about.length + 6,
             0
         )
         mBinding.tvReadMore.setText(spanString, TextView.BufferType.SPANNABLE)
 
     }
 
+    private fun countWords(inputString: String): Int {
+        val strArray = inputString.split(" ".toRegex()).toTypedArray()
+        var count = 0
+        for (s in strArray) if (s != "") count++
+        return count
+    }
+
     private fun loadAvailability() {
-        if (provider.timings.days!!.mon!!.length > 1)
-            mBinding.tvMonTime.text = provider.timings.days!!.mon
-        else {
-            mBinding.tvMonTime.text = "No slots available"
-            mBinding.tvMon.setTextColor(getColor(R.color.red))
+        if (provider.timings.days!!.mon!!.length < 2)
+            mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.tue!!.length < 2)
+            mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.wed!!.length < 2)
+            mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.thu!!.length < 2)
+            mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.fri!!.length < 2)
+            mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.sat!!.length < 2)
+            mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        if (provider.timings.days!!.sun!!.length < 2)
+            mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_red_circle)
+
+        mBinding.tvMonTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.mon!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.mon
         }
-        if (provider.timings.days!!.tue!!.length > 1)
-            mBinding.tvTueTime.text = provider.timings.days!!.tue
-        else {
-            mBinding.tvTueTime.text = "No slots available"
-            mBinding.tvTue.setTextColor(getColor(R.color.red))
+
+        mBinding.tvTueTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.tue!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.tue
         }
-        if (provider.timings.days!!.wed!!.length > 1)
-            mBinding.tvWedTime.text = provider.timings.days!!.wed
-        else {
-            mBinding.tvWedTime.text = "No slots available"
-            mBinding.tvWed.setTextColor(getColor(R.color.red))
+
+        mBinding.tvWedTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.wed!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.wed
         }
-        if (provider.timings.days!!.thu!!.length > 1)
-            mBinding.tvThuTime.text = provider.timings.days!!.thu
-        else {
-            mBinding.tvThuTime.text = "No slots available"
-            mBinding.tvThu.setTextColor(getColor(R.color.red))
+
+        mBinding.tvThuTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.thu!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.thu
         }
-        if (provider.timings.days!!.fri!!.length > 1)
-            mBinding.tvFriTime.text = provider.timings.days!!.fri
-        else {
-            mBinding.tvFriTime.text = "No slots available"
-            mBinding.tvFri.setTextColor(getColor(R.color.red))
+
+        mBinding.tvFriTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.fri!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.fri
         }
-        if (provider.timings.days!!.sat!!.length > 1)
-            mBinding.tvSatTime.text = provider.timings.days!!.sat
-        else {
-            mBinding.tvSatTime.text = "No slots available"
-            mBinding.tvSat.setTextColor(getColor(R.color.red))
+
+        mBinding.tvSatTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.sat!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.sat
         }
-        if (provider.timings.days!!.sun!!.length > 1)
-            mBinding.tvSunTime.text = provider.timings.days!!.sun
-        else {
-            mBinding.tvSunTime.text = "No slots available"
-            mBinding.tvSun.setTextColor(getColor(R.color.red))
+
+        mBinding.tvSunTime.setOnClickListener {
+            mBinding.tvTimeValue.text = if (provider.timings.days!!.sun!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.sun
+        }
+
+        val date = Calendar.getInstance()
+        println("Today is " + DateFormatSymbols().weekdays[date[Calendar.DAY_OF_WEEK]])
+        println("Today is " + Gson().toJson(DateFormatSymbols().weekdays))
+
+        when (DateFormatSymbols().weekdays[date[Calendar.DAY_OF_WEEK]]) {
+            "Sunday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.sun!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.sun
+            "Monday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.mon!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.mon
+            "Tuesday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.tue!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.tue
+            "Wednesday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.wed!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.wed
+            "Thursday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.thu!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.thu
+            "Friday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.fri!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.fri
+            "Saturday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.sat!!.length < 2)
+                "No slots available for this day" else provider.timings.days!!.sat
         }
     }
 }

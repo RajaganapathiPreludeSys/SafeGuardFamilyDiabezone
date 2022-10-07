@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.model.response.History
 
 class HistoryAdapter(items: List<History>) :
@@ -23,42 +22,34 @@ class HistoryAdapter(items: List<History>) :
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.setOnBoardingData(mItems[position])
-    }
 
-    override fun getItemCount(): Int {
-        return mItems.size
-    }
+    override fun getItemCount(): Int = mItems.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
-        private val tvName: TextView
-        private val tvDate: TextView
-        private val tvTime: TextView
-        private val tvHospital: TextView
+        private val tvStatus: TextView
+        private val tvComment: TextView
         private val ivAlert: ImageView
         fun setOnBoardingData(item: History) {
             tvTitle.text = item.title
-            tvName.text = item.preparedBy
-            tvHospital.text = item.hospital
-            tvDate.text = DateUtils.displayingDateFormatTwoFromAPIDateTime(item.reportDate!!)
-            tvTime.text = DateUtils.displayingTimeFormat(item.reportDate!!)
+            tvStatus.text = "Status - ${item.status}"
+            tvComment.text =
+                if (item.comment!!.length > 1) "Comment - ${item.comment}" else "Comment - NIL"
             if (item.isAlert!!) {
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))
             } else {
-                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.blue))
+                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.black))
                 ivAlert.setImageDrawable(null)
             }
         }
 
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
-            tvName = itemView.findViewById(R.id.tvName)
-            tvDate = itemView.findViewById(R.id.tvDate)
-            tvTime = itemView.findViewById(R.id.tvTime)
-            tvHospital = itemView.findViewById(R.id.tvHospital)
+            tvStatus = itemView.findViewById(R.id.tvStatus)
+            tvComment = itemView.findViewById(R.id.tvComment)
             ivAlert = itemView.findViewById(R.id.ivAlert)
         }
     }

@@ -240,7 +240,7 @@ class OnBoardingActivity : AppCompatActivity() {
         slide4.image =
             resources.getIdentifier("slide_5", "drawable", packageName)
         val slide5 = OnBoardingItem()
-        slide5.title = "Get your own dedicated Health Coach, available to you 24x7"
+        slide5.title = "Get a dedicated Health Coach, available 24x7"
         slide5.image =
             resources.getIdentifier("slide_6", "drawable", packageName)
         onBoardingItems.add(slide1)

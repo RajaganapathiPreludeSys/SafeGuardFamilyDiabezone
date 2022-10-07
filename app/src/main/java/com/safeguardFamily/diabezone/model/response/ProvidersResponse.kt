@@ -29,6 +29,7 @@ data class Provider(
     val fees: String,
     val name: String,
     val num_patient: String,
+    val num_consultations: String,
     val pic: String,
     val puid: String,
     val rating: String,
@@ -38,6 +39,7 @@ data class Provider(
     val vchat_url: String,
     val mobile: String,
     val whatsapp_no: String,
+    val category: String,
     @SerializedName("is_free")
     val isFree: Boolean,
     val cc: String

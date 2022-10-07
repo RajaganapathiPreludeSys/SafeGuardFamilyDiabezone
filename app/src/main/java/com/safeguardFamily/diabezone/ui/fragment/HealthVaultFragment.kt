@@ -38,9 +38,18 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         mBinding.mViewModel = mViewModel
 
         mViewModel.isSample.observe(this) {
-            mBinding.rlMemberContainer.visibility = if (it) View.VISIBLE else View.GONE
-            mBinding.tvDesc.text = if (it) "Example HV PDF" else "HV PDF"
+            if (it) {
+                mBinding.tvDesc.text = "Example HV PDF"
+                mBinding.llBeneficiaryContainer.visibility = View.VISIBLE
+                mBinding.llBeneficiaryContainerBottom.visibility = View.GONE
+            } else {
+                mBinding.tvDesc.text = "HV PDF"
+                mBinding.llBeneficiaryContainer.visibility = View.GONE
+                mBinding.llBeneficiaryContainerBottom.visibility = View.VISIBLE
+            }
+
         }
+
         mViewModel.healthVault.observe(this) {
             loadTextAreas(
                 it.message,
@@ -57,7 +66,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             loadProcedure(it.procedures)
             loadHabit(it.personalHabits)
             loadBeneficiary(it.beneficiary)
-            loadVitals(it.vitals)
+            loadVitals(it.vitals!!)
 
 //            loadEmergencyContact(arrayListOf(), it.emergencyDetails)
 //            loadLabReport(arrayListOf())
@@ -107,24 +116,38 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
     private fun loadBeneficiary(beneficiary: List<Beneficiary>?) {
 
         if (beneficiary!!.isNotEmpty()) {
-            mBinding.rlMemberContainer.visibility = View.VISIBLE
+
             mBinding.tvBeneficiary.visibility = View.GONE
             mBinding.llBeneficiary.visibility = View.VISIBLE
+            mBinding.tvBeneficiaryBottom.visibility = View.GONE
+            mBinding.llBeneficiaryBottom.visibility = View.VISIBLE
             mBinding.tvName.text = beneficiary[0].name
             mBinding.tvDetails.text =
                 "${beneficiary[0].gender}, ${beneficiary[0].age}, ${beneficiary[0].occupation}"
             mBinding.tvEmail.text = beneficiary[0].email
             mBinding.tvMobile.text = beneficiary[0].mobile
             mBinding.tvLocation.text = beneficiary[0].address
-            Glide.with(this).load(beneficiary[0].pic).placeholder(R.drawable.ic_profile_thumb)
-                .into(mBinding.ivImages)
+
+            mBinding.tvEmailBottom.text = beneficiary[0].email
+            mBinding.tvMobileBottom.text = beneficiary[0].mobile
+            mBinding.tvLocationBottom.text = beneficiary[0].address
+
+            Glide.with(this).load(beneficiary[0].pic)
+                .placeholder(R.drawable.ic_profile_thumb).into(mBinding.ivImages)
         } else {
-            mBinding.rlMemberContainer.visibility = View.GONE
             mBinding.tvBeneficiary.visibility = View.VISIBLE
             mBinding.llBeneficiary.visibility = View.GONE
             mBinding.tvBeneficiary.setOnClickListener {
                 contactHealthCoach()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Beneficiary")
+                }
+            }
 
+            mBinding.tvBeneficiaryBottom.visibility = View.VISIBLE
+            mBinding.llBeneficiaryBottom.visibility = View.GONE
+            mBinding.tvBeneficiaryBottom.setOnClickListener {
+                contactHealthCoach()
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Beneficiary")
                 }
@@ -132,13 +155,13 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         }
     }
 
-    private fun loadHabit(habits: List<String>?) {
+    private fun loadHabit(habits: List<PersonalHabit>?) {
         if (habits!!.isNotEmpty()) {
             mBinding.rvHabits.visibility = View.VISIBLE
             mBinding.tvHabits.visibility = View.GONE
             mBinding.rvHabits.adapter = HabitsAdapter(habits)
             mBinding.rvHabits.layoutManager =
-                GridLayoutManager(requireContext(), 5, RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             mBinding.rvHabits.setHasFixedSize(false)
         } else {
             mBinding.rvHabits.visibility = View.GONE
@@ -152,7 +175,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             }
         }
     }
-
 
     private fun loadProcedure(procedures: List<Procedure>?) {
         if (procedures!!.isNotEmpty()) {
@@ -202,7 +224,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvHistory.visibility = View.GONE
             mBinding.rvHistory.adapter = HistoryAdapter(histories)
             mBinding.rvHistory.layoutManager =
-                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             mBinding.rvHistory.setHasFixedSize(false)
         } else {
             mBinding.rvHistory.visibility = View.GONE
@@ -315,7 +337,16 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvPatronEmail.text = patron.email
             mBinding.tvPatronContact.text = patron.mobile
             mBinding.tvPatronAddress.text = patron.address
-        } else mBinding.cvPatron.visibility = View.GONE
+
+            mBinding.cvPatronBottom.visibility = View.VISIBLE
+            mBinding.tvPatronNameBottom.text = patron.name
+            mBinding.tvPatronEmailBottom.text = patron.email
+            mBinding.tvPatronContactBottom.text = patron.mobile
+            mBinding.tvPatronAddressBottom.text = patron.address
+        } else {
+            mBinding.cvPatron.visibility = View.GONE
+            mBinding.cvPatronBottom.visibility = View.GONE
+        }
 
         //      Insurance Details
         if (insurance != null) {
@@ -382,12 +413,33 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                     )
                 }
             }
+            mBinding.ivNext.setOnClickListener {
+                if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
+                else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Consolidated prescription - PDF in webview"
+                    )
+                }
+            }
+            mBinding.ivNextTwo.setOnClickListener {
+                if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
+                else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
+
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Consolidated prescription - PDF in webview"
+                    )
+                }
+            }
         } else {
             mBinding.llPrescription.visibility = View.GONE
             mBinding.tvPrescription.visibility = View.VISIBLE
             mBinding.tvPrescription.setOnClickListener {
                 contactHealthCoach()
-
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(
                         FirebaseAnalytics.Param.CONTENT,
@@ -411,7 +463,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             bundle.putString(KEY_DOCTOR, SharedPref.read(PrefHealthCoach, ""))
             bundle.putString(KEY_TITLE, "Health Coach")
             navigateTo(DoctorDetailsActivity::class.java, bundle)
-
         } else {
             showToast("Only members can contact their Health Coach")
             navigateTo(SubscriptionActivity::class.java)

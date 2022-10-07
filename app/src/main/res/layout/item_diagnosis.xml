@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        style="@style/Medium.MontserratBold"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:maxLines="2"
-        app:drawableStartCompat="@drawable/ic_dot" />
+        android:layout_marginEnd="15dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/Medium.Red.MontserratBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/ivAlert"
+            android:gravity="center_vertical"
+            android:text="Title" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_red_drop" />
+
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDuration"
@@ -28,10 +37,8 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
-        android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:maxLines="1"
-        app:drawableStartCompat="@drawable/ic_dot" />
+        android:maxLines="1" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStatus"
@@ -41,10 +48,8 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
-        android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:maxLines="1"
-        app:drawableStartCompat="@drawable/ic_dot" />
+        android:maxLines="1" />
 
     <View
         android:layout_width="match_parent"

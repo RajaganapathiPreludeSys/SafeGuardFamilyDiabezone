@@ -22,9 +22,11 @@
         <entry key="app/src/main/res/drawable/bg_pin.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_purple_border.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_red_border.xml" value="0.2315" />
+        <entry key="app/src/main/res/drawable/bg_red_circle.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/bg_red_curved.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_border.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_border_curved.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/bg_royal_blue_circle.xml" value="0.2795" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round.xml" value="0.2365" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_round_disabled.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/bg_royal_blue_toast.xml" value="0.2085" />
@@ -101,7 +103,7 @@
         <entry key="app/src/main/res/layout/activity_appointment_payment.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_booking_details.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/activity_doctor_details.xml" value="0.3273495248152059" />
+        <entry key="app/src/main/res/layout/activity_doctor_details.xml" value="0.45821325648414984" />
         <entry key="app/src/main/res/layout/activity_line_chart.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_log_book.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.34010416666666665" />
@@ -127,7 +129,7 @@
         <entry key="app/src/main/res/layout/dialog_time.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/fragment_appointment.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/fragment_appointment_doctor.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_health_vault.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/include_header.xml" value="0.34010416666666665" />
@@ -140,6 +142,7 @@
         <entry key="app/src/main/res/layout/item_doctor.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/item_emergency_contact.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_expandable.xml" value="0.32037037037037036" />
+        <entry key="app/src/main/res/layout/item_habit.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_history.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/item_history_vault.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/item_lab_report.xml" value="0.45923460898502494" />

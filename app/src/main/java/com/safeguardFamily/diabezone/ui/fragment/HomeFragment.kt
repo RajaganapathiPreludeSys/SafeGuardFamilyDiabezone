@@ -57,7 +57,6 @@ import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(
         R.layout.fragment_home,
@@ -240,56 +239,70 @@ class HomeFragment :
 
     private fun loadNotification() {
         mViewModel.notifications.observe(this) {
-            val mAdapter = NotificationAdapter(it) { string ->
-                when (string) {
-                    appointment -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.appointment
-                    )
-                    providers -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.appointment
-                    )
-                    diabetesLog -> navigateTo(LogBookActivity::class.java)
-                    healthVault -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.healthVault
-                    )
-                    programs -> {
+            if (it.isNotEmpty()) {
+                mBinding.llHide.visibility = View.VISIBLE
+                mBinding.viewHide.visibility = View.VISIBLE
+                val mAdapter = NotificationAdapter(it) { string ->
+                    when (string) {
+                        appointment -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.appointment
+                        )
+                        providers -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.appointment
+                        )
+                        diabetesLog -> navigateTo(LogBookActivity::class.java)
+                        healthVault -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.healthVault
+                        )
+                        programs -> {
 
+                        }
+                    }
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(
+                            FirebaseAnalytics.Param.CONTENT,
+                            "Notification item clicked ${string}"
+                        )
                     }
                 }
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Notification item clicked ${string}")
+                mBinding.vpNotification.adapter = mAdapter
+                mBinding.llNotificationIndicator.removeAllViews()
+                mBinding.llNotificationIndicator.visibility = View.GONE
+                if (it.size > 1) {
+                    mBinding.llNotificationIndicator.visibility = View.VISIBLE
+                    val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
+                    val layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.setMargins(8, 0, 8, 0)
+                    for (i in indicators.indices) {
+                        indicators[i] = ImageView(context)
+                        indicators[i]!!.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.onboarding_indicator_inactive
+                            )
+                        )
+                        indicators[i]!!.layoutParams = layoutParams
+                        mBinding.llNotificationIndicator.addView(indicators[i])
+                    }
+
+                    setCurrentIndicators(0)
+
+                    mBinding.vpNotification.registerOnPageChangeCallback(object :
+                        ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            setCurrentIndicators(position)
+                        }
+                    })
                 }
             }
-            mBinding.vpNotification.adapter = mAdapter
-            mBinding.llNotificationIndicator.removeAllViews()
-            if (it.size > 1) {
-                val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                layoutParams.setMargins(8, 0, 8, 0)
-                for (i in indicators.indices) {
-                    indicators[i] = ImageView(context)
-                    indicators[i]!!.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.onboarding_indicator_inactive
-                        )
-                    )
-                    indicators[i]!!.layoutParams = layoutParams
-                    mBinding.llNotificationIndicator.addView(indicators[i])
-                }
+            else {
 
-                setCurrentIndicators(0)
-
-                mBinding.vpNotification.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        setCurrentIndicators(position)
-                    }
-                })
+                mBinding.llHide.visibility = View.GONE
+                mBinding.viewHide.visibility = View.GONE
             }
         }
     }
@@ -325,7 +338,7 @@ class HomeFragment :
 
         mDialog.apply {
             setView(dialogDateBinding.root)
-            setCancelable(false)
+            setCancelable(true)
         }.show()
 
         val mCalendar = Calendar.getInstance()
@@ -371,7 +384,7 @@ class HomeFragment :
 
         mDialog.apply {
             setView(dialogTimeBinding.root)
-            setCancelable(false)
+            setCancelable(true)
         }.show()
 
         dialogTimeBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->

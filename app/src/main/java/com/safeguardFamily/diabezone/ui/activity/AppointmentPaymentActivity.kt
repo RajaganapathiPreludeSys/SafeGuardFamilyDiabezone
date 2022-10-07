@@ -111,7 +111,7 @@ class AppointmentPaymentActivity :
             ) {
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
-                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
                 checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
                 try {
@@ -152,7 +152,7 @@ class AppointmentPaymentActivity :
             val dialogBuilder = AlertDialog.Builder(this)
             dialogBuilder
                 .setMessage("Payment completed successfully for the sum of ₹${mProvider.fees}")
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("Ok") { dialog, id ->
                     setResult(123, Intent())
                     finish()

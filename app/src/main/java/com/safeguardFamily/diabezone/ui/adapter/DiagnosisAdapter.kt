@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
@@ -33,16 +34,25 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
         private val tvTitle: TextView
         private val tvDuration: TextView
         private val tvStatus: TextView
+        private val ivAlert: ImageView
         fun setOnBoardingData(item: Diagnosi) {
             tvTitle.text = item.title
             tvDuration.text = "Duration - ${item.duration}"
             tvStatus.text = "Status - ${item.status}"
+            if (item.isAlert!!) {
+                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
+                ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))
+            } else {
+                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.black))
+                ivAlert.setImageDrawable(null)
+            }
         }
 
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
             tvDuration = itemView.findViewById(R.id.tvDuration)
             tvStatus = itemView.findViewById(R.id.tvStatus)
+            ivAlert = itemView.findViewById(R.id.ivAlert)
         }
     }
 

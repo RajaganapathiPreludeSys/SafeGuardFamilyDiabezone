@@ -156,7 +156,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             mDialog.apply {
                 setView(dialogBinding.root)
-                setCancelable(false)
+                setCancelable(true)
             }.show()
 
             dialogBinding.item = item
@@ -241,7 +241,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             mDialog.apply {
                 setView(dialogDateBinding.root)
-                setCancelable(false)
+                setCancelable(true)
             }.show()
 
             val mCalendar = Calendar.getInstance()
@@ -281,7 +281,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             mDialog.apply {
                 setView(dialogTimeBinding.root)
-                setCancelable(false)
+                setCancelable(true)
             }.show()
             timeString24 = "${formatTo12Hrs(timeString24)}"
             dialogTimeBinding.tvSelectedVal.text = timeString24

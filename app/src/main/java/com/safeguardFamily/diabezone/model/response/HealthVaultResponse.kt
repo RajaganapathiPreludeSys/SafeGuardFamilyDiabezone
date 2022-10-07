@@ -37,13 +37,13 @@ data class Vault(
     @SerializedName("patron")
     var patron: Patron?,
     @SerializedName("personal_habits")
-    var personalHabits: List<String>?,
+    var personalHabits: List<PersonalHabit>?,
     @SerializedName("procedures")
     var procedures: List<Procedure>?,
     @SerializedName("user")
     var user: User?,
     @SerializedName("vitals")
-    var vitals: Vitals
+    var vitals: Vitals?
 )
 
 data class Allergy(
@@ -104,6 +104,8 @@ data class Diagnosi(
     var duration: String?,
     @SerializedName("status")
     var status: String?,
+    @SerializedName("is_alert")
+    var isAlert: Boolean?,
     @SerializedName("title")
     var title: String?
 )
@@ -129,16 +131,12 @@ data class EmergencyDetails(
 )
 
 data class History(
-    @SerializedName("condition")
-    var condition: String?,
-    @SerializedName("hospital")
-    var hospital: String?,
+    @SerializedName("comment")
+    var comment: String?,
+    @SerializedName("status")
+    var status: String?,
     @SerializedName("is_alert")
     var isAlert: Boolean?,
-    @SerializedName("prepared_by")
-    var preparedBy: String?,
-    @SerializedName("report_date")
-    var reportDate: String?,
     @SerializedName("title")
     var title: String?
 )
@@ -188,11 +186,29 @@ data class Patron(
     var name: String?
 )
 
+data class PersonalHabit(
+    @SerializedName("comment")
+    var comment: String?,
+    @SerializedName("status")
+    var status: String?,
+    @SerializedName("title")
+    var title: String?,
+    @SerializedName("is_alert")
+    var isAlert: Boolean?
+)
+
 data class Procedure(
     @SerializedName("procedure_date")
     var procedureDate: String?,
     @SerializedName("title")
     var title: String?
+)
+
+data class Vitals(
+    @SerializedName("list")
+    var list: List<Vital>?,
+    @SerializedName("report_date")
+    var reportDate: String?
 )
 
 data class Tpa(
@@ -209,11 +225,4 @@ data class Vital(
     var name: String?,
     @SerializedName("value")
     var value: String?
-)
-
-data class Vitals(
-    @SerializedName("list")
-    var list: List<Vital>?,
-    @SerializedName("report_date")
-    var reportDate: String?
 )
