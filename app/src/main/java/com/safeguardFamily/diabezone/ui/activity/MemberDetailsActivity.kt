@@ -82,13 +82,17 @@ class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberD
         }
 
         mBinding.llScheduleAppointment.setOnClickListener {
-            val bundle = android.os.Bundle()
-            bundle.putString(
-                Bundle.KEY_DOCTOR,
-                Gson().toJson(mViewModel.userResponse.value!!.health_coach)
-            )
-            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
-            navigateTo(DoctorDetailsActivity::class.java, bundle)
+//            val bundle = android.os.Bundle()
+//            bundle.putString(
+//                Bundle.KEY_DOCTOR,
+//                Gson().toJson(mViewModel.userResponse.value!!.health_coach)
+//            )
+//            bundle.putString(Bundle.KEY_TITLE, "Health Coach")
+//            navigateTo(DoctorDetailsActivity::class.java, bundle)
+
+            setResult(123, Intent())
+            finish()
+
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Schedule Appointment from Booking details")
             }

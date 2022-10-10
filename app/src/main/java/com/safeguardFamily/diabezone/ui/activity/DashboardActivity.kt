@@ -1,6 +1,7 @@
 package com.safeguardFamily.diabezone.ui.activity
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.databinding.ActivityDashboardBinding
@@ -36,9 +37,16 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
         }
     }
 
-    fun setCurrentFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
+    fun setCurrentFragment(fragment: Fragment): FragmentTransaction {
+        when(fragment){
+            home -> mBinding.bottomNavigationView.menu.findItem(R.id.home).isChecked = true
+            healthVault -> mBinding.bottomNavigationView.menu.findItem(R.id.healthVault).isChecked = true
+            appointment -> mBinding.bottomNavigationView.menu.findItem(R.id.appointment).isChecked = true
+            profile -> mBinding.bottomNavigationView.menu.findItem(R.id.profile).isChecked = true
+        }
+        return supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, fragment)
             commit()
         }
+    }
 }

@@ -1,7 +1,12 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,12 +39,15 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
     HealthVaultViewModel::class.java
 ) {
 
+    lateinit var requestSinglePermission: ActivityResultLauncher<String>
+    private var phoneNumber = ""
+
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
         mViewModel.isSample.observe(this) {
             if (it) {
-                mBinding.tvDesc.text = "Example HV PDF"
+                mBinding.tvDesc.text = "Sample Health Vault"
                 mBinding.llBeneficiaryContainer.visibility = View.VISIBLE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.GONE
             } else {
@@ -66,7 +74,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             loadProcedure(it.procedures)
             loadHabit(it.personalHabits)
             loadBeneficiary(it.beneficiary)
-            loadVitals(it.vitals!!)
+            loadVitals(it.vitals)
 
 //            loadEmergencyContact(arrayListOf(), it.emergencyDetails)
 //            loadLabReport(arrayListOf())
@@ -85,21 +93,46 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 else showToast("Health Vault PDF not available for now. Please contact your health coach")
             }
         }
+
+        requestSinglePermission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) startActivity(
+                Intent(
+                    Intent.ACTION_CALL,
+                    Uri.parse("tel:$phoneNumber")
+                )
+            )
+            else showToast("Permission Denied by user for making calls")
+        }
     }
 
-    private fun loadVitals(vitals: Vitals) {
+    private fun loadVitals(vitals: Vitals?) {
         //      Vitals
-        if (vitals.list != null) {
+        if (vitals != null) {
             mBinding.llVitals.visibility = View.VISIBLE
             mBinding.tvVitals.visibility = View.GONE
+            if (vitals.list != null) {
+                mBinding.llVitals.visibility = View.VISIBLE
+                mBinding.tvVitals.visibility = View.GONE
 
-            if (vitals.reportDate != null)
-                mBinding.tvVitalDate.text =
-                    displayingDateFormatTwoFromAPIDateTime(vitals.reportDate!!)
-            mBinding.rvVitals.adapter = VitalsAdapter(vitals.list!!)
-            mBinding.rvVitals.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            mBinding.rvVitals.setHasFixedSize(true)
+                if (vitals.reportDate != null)
+                    mBinding.tvVitalDate.text =
+                        displayingDateFormatTwoFromAPIDateTime(vitals.reportDate!!)
+                mBinding.rvVitals.adapter = VitalsAdapter(vitals.list!!)
+                mBinding.rvVitals.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                mBinding.rvVitals.setHasFixedSize(true)
+            } else {
+                mBinding.llVitals.visibility = View.GONE
+                mBinding.tvVitals.visibility = View.VISIBLE
+                mBinding.tvVitals.setOnClickListener {
+                    contactHealthCoach()
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Vitals")
+                    }
+                }
+            }
         } else {
             mBinding.llVitals.visibility = View.GONE
             mBinding.tvVitals.visibility = View.VISIBLE
@@ -110,7 +143,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 }
             }
         }
-
     }
 
     private fun loadBeneficiary(beneficiary: List<Beneficiary>?) {
@@ -295,6 +327,14 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvBloodGroup.text = details.bloodGroup
             mBinding.tvPrimaryDoctor.text = details.primaryDoctor
             mBinding.tvEmergencyContact.text = details.mobile
+
+            mBinding.tvEmergencyContact.setOnClickListener {
+                phoneNumber = details.mobile!!
+                requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Call Emergency Contact")
+                }
+            }
         } else {
             mBinding.llEmergencyContainer.visibility = View.GONE
             mBinding.view1.visibility = View.GONE
@@ -310,7 +350,10 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 }
             }
         }
-        mBinding.rvEmergencyContact.adapter = EmergencyContactAdapter(contacts!!)
+        mBinding.rvEmergencyContact.adapter = EmergencyContactAdapter(contacts!!) {
+            phoneNumber = it
+            requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+        }
         mBinding.rvEmergencyContact.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         mBinding.rvEmergencyContact.setHasFixedSize(false)
@@ -380,7 +423,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.ivInsurancePdf.visibility = View.INVISIBLE
             mBinding.tvInsurance.setOnClickListener {
                 contactHealthCoach()
-
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Contact health Coach - Insurance")
                 }

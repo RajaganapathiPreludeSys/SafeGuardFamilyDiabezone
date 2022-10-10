@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
                             android:gravity="center"
-                            android:text="@string/lab_report_placeholder" />
+                            android:text="No data available" />
 
                     </LinearLayout>
 
@@ -441,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -491,7 +491,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -541,7 +541,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -797,7 +797,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -880,7 +880,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -930,7 +930,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -975,7 +975,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -1020,7 +1020,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -1312,7 +1312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -1362,7 +1362,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:gravity="center"
-                        android:text="@string/lab_report_placeholder" />
+                        android:text="No data available" />
 
                 </LinearLayout>
 
@@ -1440,7 +1440,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
                             android:gravity="center"
-                            android:text="@string/lab_report_placeholder" />
+                            android:text="No data available" />
 
                     </LinearLayout>
 

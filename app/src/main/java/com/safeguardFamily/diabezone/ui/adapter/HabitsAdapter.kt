@@ -34,9 +34,8 @@ class HabitsAdapter(items: List<PersonalHabit>) :
         private val ivAlert: ImageView
         fun setOnBoardingData(item: PersonalHabit) {
             tvTitle.text = item.title
-            tvStatus.text = "Status - ${item.status}"
-            tvComment.text =
-                if (item.comment!!.length > 1) "Comment - ${item.comment}" else "Comment - NIL"
+            tvStatus.text = item.status
+            tvComment.text = if (item.comment!!.length > 1) item.comment else "NIL"
             if (item.isAlert!!) {
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))

@@ -231,7 +231,7 @@
                                         android:background="@null"
                                         android:gravity="center"
                                         android:hint="0"
-                                        android:inputType="number"
+                                        android:inputType="number|textNoSuggestions"
                                         android:maxLength="3"
                                         android:paddingTop="7dp"
                                         android:paddingBottom="7dp" />
@@ -811,6 +811,7 @@
                 android:layout_margin="10dp"
                 android:contentDescription="@string/app_name"
                 android:paddingTop="10dp"
+                android:paddingBottom="15dp"
                 android:src="@drawable/ic_program_banner" />
 
         </LinearLayout>

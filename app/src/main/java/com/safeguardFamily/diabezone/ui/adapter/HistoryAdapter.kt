@@ -34,9 +34,9 @@ class HistoryAdapter(items: List<History>) :
         private val ivAlert: ImageView
         fun setOnBoardingData(item: History) {
             tvTitle.text = item.title
-            tvStatus.text = "Status - ${item.status}"
+            tvStatus.text = item.status
             tvComment.text =
-                if (item.comment!!.length > 1) "Comment - ${item.comment}" else "Comment - NIL"
+                if (item.comment!!.length > 1) item.comment else "NIL"
             if (item.isAlert!!) {
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))

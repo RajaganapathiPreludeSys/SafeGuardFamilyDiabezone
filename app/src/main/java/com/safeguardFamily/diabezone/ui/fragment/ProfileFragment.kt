@@ -8,6 +8,7 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.StyleSpan
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -31,14 +32,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     ProfileViewModel::class.java
 ) {
     private lateinit var viewModel: DashboardViewModel
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
         viewModel = (activity as DashboardActivity).mViewModel
 
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == 123 && result.data != null) {
+                    (activity as DashboardActivity?)!!.setCurrentFragment(
+                        (activity as DashboardActivity?)!!.appointment
+                    )
+                }
+            }
+
         mBinding.rlBookingContainer.setOnClickListener {
-            navigateTo(MemberDetailsActivity::class.java)
+            activityResultLauncher.launch(
+                Intent(
+                    requireContext(),
+                    MemberDetailsActivity::class.java
+                )
+            )
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Member details from profile")
             }

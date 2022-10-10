@@ -60,7 +60,7 @@
                 android:layout_centerVertical="true"
                 android:padding="5dp"
                 android:src="@drawable/ic_download"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </RelativeLayout>
 

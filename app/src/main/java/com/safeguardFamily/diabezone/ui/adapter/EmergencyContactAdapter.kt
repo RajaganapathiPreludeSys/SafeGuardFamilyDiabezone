@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.model.response.EmergencyContact
 
-class EmergencyContactAdapter(items: List<EmergencyContact>) :
+class EmergencyContactAdapter(
+    items: List<EmergencyContact>,
+    private var onItemClicked: ((mobile: String) -> Unit)
+) :
     RecyclerView.Adapter<EmergencyContactAdapter.ViewHolder>() {
 
     private val mItems: List<EmergencyContact>
@@ -41,6 +44,8 @@ class EmergencyContactAdapter(items: List<EmergencyContact>) :
             tvRelation.text = item.relation
             tvContact1.text = item.mobile1
             tvContact2.text = item.mobile2
+            tvContact1.setOnClickListener { onItemClicked(item.mobile1!!) }
+            tvContact2.setOnClickListener { onItemClicked(item.mobile2!!) }
         }
 
         init {

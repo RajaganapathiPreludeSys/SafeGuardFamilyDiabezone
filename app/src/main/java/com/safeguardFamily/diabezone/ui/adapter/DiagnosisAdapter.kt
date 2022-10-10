@@ -37,8 +37,8 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
         private val ivAlert: ImageView
         fun setOnBoardingData(item: Diagnosi) {
             tvTitle.text = item.title
-            tvDuration.text = "Duration - ${item.duration}"
-            tvStatus.text = "Status - ${item.status}"
+            tvDuration.text = item.duration
+            tvStatus.text = item.status
             if (item.isAlert!!) {
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))

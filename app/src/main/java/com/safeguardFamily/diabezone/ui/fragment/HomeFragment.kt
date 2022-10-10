@@ -151,6 +151,13 @@ class HomeFragment :
             }
         }
 
+        mBinding.ivRedBanner.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
+            }
+        }
+
         mBinding.ivProgram.setOnClickListener {
             navigateTo(SubscriptionActivity::class.java)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {

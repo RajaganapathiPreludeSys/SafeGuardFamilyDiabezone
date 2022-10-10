@@ -47,7 +47,7 @@
                     android:layout_marginEnd="40dp"
                     android:layout_toEndOf="@+id/ivBack"
                     android:gravity="center"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="Doctor’s Details" />
 
             </RelativeLayout>
@@ -158,7 +158,7 @@
                                 style="@style/xLarge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"/>
+                                android:maxLines="1" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvExperience"
@@ -285,7 +285,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:minLines="3"
-                                    android:text="SafeGuardFamily" />
+                                    android:text="Diabezone" />
                             </LinearLayout>
 
 

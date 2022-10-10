@@ -29,27 +29,53 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDuration"
-        style="@style/Small.Grey"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
-        android:gravity="center_vertical"
-        android:maxLines="1" />
+        android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvStatus"
-        style="@style/Small.Grey"
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Small.MontserratBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Duration" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDuration"
+            style="@style/Small.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
-        android:gravity="center_vertical"
-        android:maxLines="1" />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Small.MontserratBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Status" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStatus"
+            style="@style/Small.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
