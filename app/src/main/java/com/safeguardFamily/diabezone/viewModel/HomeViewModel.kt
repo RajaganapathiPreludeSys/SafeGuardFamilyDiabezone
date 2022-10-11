@@ -5,10 +5,7 @@ import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.request.IdRequest
-import com.safeguardFamily.diabezone.model.response.BaseResponse
-import com.safeguardFamily.diabezone.model.response.DiabetesLogResponse
-import com.safeguardFamily.diabezone.model.response.HomeResponse
-import com.safeguardFamily.diabezone.model.response.Notification
+import com.safeguardFamily.diabezone.model.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,11 +14,7 @@ class HomeViewModel : BaseViewModel() {
 
     val notifications = MutableLiveData<List<Notification>>()
 
-    init {
-        getHome()
-    }
-
-    private fun getHome() {
+    fun getHome(onSuccess: ((response: Graph, pdfUrl: String?) -> Unit)) {
         RetrofitClient.apiInterface.getHome(IdRequest(uid = SharedPref.getUserId()!!))
             .enqueue(object : Callback<BaseResponse<HomeResponse>> {
                 override fun onResponse(
@@ -31,6 +24,10 @@ class HomeViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()!!.success!!) {
                             notifications.postValue(response.body()!!.data!!.notifications)
+                            onSuccess(
+                                response.body()!!.data!!.graph!!,
+                                response.body()!!.data!!.pdfUrl
+                            )
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                 }

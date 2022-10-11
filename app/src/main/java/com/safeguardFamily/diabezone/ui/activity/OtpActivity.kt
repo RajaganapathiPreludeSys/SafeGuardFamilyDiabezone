@@ -12,6 +12,10 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.BuildConfig
 import com.safeguardFamily.diabezone.R
@@ -36,22 +40,43 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
         val extras = intent.extras
+        mBinding.icHeader.tvTitle.text = "Verify Account!"
 
+        var mText = ""
         if (extras?.containsKey(KEY_REGISTER_PHONE) == true) {
             mobileNumber = extras.getString(KEY_REGISTER_PHONE)
-            mBinding.tvWelcomeDesc.text = getString(R.string.otp_code_desc, mobileNumber)
+            mText = getString(R.string.otp_code_desc, mobileNumber)
         }
+
+        val mSS = SpannableString(mText)
+
+        val goBack: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                finish()
+            }
+        }
+        mSS.setSpan(goBack, 52, 59, 0)
+        mSS.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 52, 59, 0)
+        mSS.setSpan(StyleSpan(Typeface.BOLD), 52, 59, 0)
+        mBinding.tvWelcomeDesc.movementMethod = LinkMovementMethod.getInstance()
+        mBinding.tvWelcomeDesc.text = mSS
+        mBinding.tvWelcomeDesc.isSelected = true
 
         if (extras?.containsKey(KEY_OTPs) == true)
             otp = Gson().fromJson(extras.getString(KEY_OTPs), Array<String>::class.java).toList()
 
-        mBinding.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener {
+            finish()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go back to Mobile screen from OTP screen")
+            }
+        }
         val spanString = SpannableString(getString(R.string.accept_terms_and_privacy))
 
         val termsAndCondition: ClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
                 val mBundle = Bundle()
-                mBundle.putString(KEY_WEB_KEY, "Teams and Service")
+                mBundle.putString(KEY_WEB_KEY, "Terms and Service")
                 mBundle.putString(KEY_WEB_URL, URL_TERMS)
                 navigateTo(WebViewActivity::class.java, mBundle)
             }
@@ -81,6 +106,9 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
 
         mBinding.tvResendCode.setOnClickListener {
             mViewModel.getOtp(mobileNumber!!) { otp = it }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Resend OTP")
+            }
         }
 
         if (BuildConfig.BUILD_TYPE == "debug") {
@@ -105,6 +133,9 @@ class OtpActivity : BaseActivity<ActivityOtpBinding, OtpViewModel>(
                     finishAffinity()
                 }
             } else showToast("Invalid OTP")
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+                param(FirebaseAnalytics.Param.CONTENT, "Verify OTP and proceed")
+            }
         }
 
         mBinding.pvOtp.requestPinEntryFocus()

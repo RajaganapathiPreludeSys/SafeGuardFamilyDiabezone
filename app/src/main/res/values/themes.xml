@@ -11,11 +11,11 @@
         <item name="font">@font/montserrat_regular</item>
     </style>
 
-    <style name="Theme.MySplash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/bgGrey</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_logo</item>
-        <item name="postSplashScreenTheme">@style/Theme.Diabezone</item>
-    </style>
+    <!--    <style name="Theme.MySplash" parent="Theme.SplashScreen">-->
+    <!--        <item name="windowSplashScreenBackground">@drawable/bg_splash</item>-->
+    <!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>-->
+    <!--        <item name="postSplashScreenTheme">@style/Theme.Diabezone</item>-->
+    <!--    </style>-->
 
     <style name="BottomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -391,15 +391,6 @@
     </style>
 
 
-
-
-
-
-
-
-
-
-
     <!--  Font  -->
     <!--  Font Size :: Font Color :: Font(MontserratBold) -->
     <style name="xSmall.MontserratBold">
@@ -620,18 +611,6 @@
     </style>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     <!--  Font  -->
     <!--  Font Size :: Font Color :: Font(MontserratSemi) -->
     <style name="xSmall.MontserratSemi">
@@ -808,7 +787,6 @@
     <style name="xxLarge.Yellow.MontserratSemi">
         <item name="font">@font/montserrat_semi</item>
     </style>
-
 
 
 </resources>

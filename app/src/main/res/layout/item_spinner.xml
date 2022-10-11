@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Medium.Black"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toStartOf="@+id/ivDate"
+    android:gravity="center"
+    android:paddingStart="3dp"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingTop="7dp"
+    android:paddingEnd="3dp"
+    android:paddingBottom="7dp"
+    android:text="@string/select_date" />

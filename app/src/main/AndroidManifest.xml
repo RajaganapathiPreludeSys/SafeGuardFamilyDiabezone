@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.safeguardFamily.diabezone">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
@@ -30,8 +32,7 @@
         tools:targetApi="31">
         <activity
             android:name="com.safeguardFamily.diabezone.ui.activity.OnBoardingActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MySplash">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,32 +40,55 @@
         </activity>
         <activity
             android:name=".ui.activity.MobileActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.OtpActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.RegisterActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.WebViewActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.DashboardActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.LogBookActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.DoctorDetailsActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.ScheduleAppointmentActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.BookingDetailsActivity"
-            android:screenOrientation="nosensor" />
+            android:name=".ui.activity.MemberDetailsActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.SubscriptionActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.PastConsultationsActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.AppointmentPaymentActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="lv.chi.photopicker.utils.CameraActivity" />
+        <activity android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"
@@ -95,6 +119,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <service
+            android:name=".common.FirebaseMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

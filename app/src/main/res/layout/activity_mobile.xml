@@ -9,56 +9,38 @@
             type="com.safeguardFamily.diabezone.viewModel.MobileViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/llWelcomeContainer"
+        <include
+            android:id="@+id/icHeader"
+            layout="@layout/include_header" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWelcomeDesc"
+            style="@style/Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center"
-            android:orientation="vertical"
+            android:lineSpacingExtra="5dp"
             android:padding="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWelcome"
-                style="@style/xxLarge.MontserratBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mobile_number" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWelcomeDesc"
-                style="@style/Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="@string/mobile_number_desc" />
-
-        </LinearLayout>
+            android:text="@string/mobile_number_desc" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
+            style="@style/Small.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="25dp"
             android:hint="@string/enter_phone_number"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toTopOf="@id/btSendCode"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llWelcomeContainer">
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiePhone"
@@ -67,27 +49,22 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_grey_round"
                 android:inputType="phone"
-                android:maxLength="10"
-                android:text="9988776650" />
+                android:maxLength="10" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btSendCode"
-            style="@style/Large.White.MontserratBold"
+            style="@style/Medium.White.MontserratSemi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_royal_blue_round"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/bg_button_style"
             android:gravity="center"
             android:text="@string/send_code"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            android:textAllCaps="false" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

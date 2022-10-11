@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.AppointmentAdapter
-import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
+import com.safeguardFamily.diabezone.ui.adapter.AppointmentAdapter
+import com.safeguardFamily.diabezone.ui.adapter.DoctorsAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.databinding.FragmentAppointmentBinding
 import com.safeguardFamily.diabezone.viewModel.AppointmentViewModel
@@ -44,10 +44,12 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
         mViewModel.upcomingAppointment.observe(this) {
             if (it.isNotEmpty()) {
                 mBinding.tvUpcomingAppointment.visibility = View.VISIBLE
+                mBinding.tvBookAnother.visibility = View.VISIBLE
                 mBinding.cvContainer.visibility = View.VISIBLE
                 mBinding.clBanner.visibility = View.GONE
             } else {
                 mBinding.tvUpcomingAppointment.visibility = View.GONE
+                mBinding.tvBookAnother.visibility = View.GONE
                 mBinding.cvContainer.visibility = View.GONE
                 mBinding.clBanner.visibility = View.VISIBLE
             }
@@ -105,5 +107,4 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
             )
         }
     }
-
 }

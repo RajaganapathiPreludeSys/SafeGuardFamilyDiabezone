@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,29 +10,1454 @@
             type="com.safeguardFamily.diabezone.viewModel.HealthVaultViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBack"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWelcome"
-            style="@style/xxLarge.MontserratBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Health vault"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rlDiabetes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvProfileImages"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="5dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivProfileImages"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@color/bgGrey"
+                                android:scaleType="centerCrop" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toEndOf="@id/cvProfileImages"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Health Vault of" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTitle"
+                                style="@style/Large.Blue.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDesc"
+                                style="@style/Small.Red"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:drawableEnd="@drawable/ic_pdf"
+                                android:drawablePadding="10dp"
+                                android:gravity="end|center_vertical"
+                                android:text="Example HV PDF" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_above="@id/tvHVDesc"
+                    android:background="@color/blue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHVDesc"
+                    style="@style/Large.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlDiabetes"
+                    android:background="@color/blue"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="15dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/llBeneficiaryContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:drawableStart="@drawable/ic_beneficiary"
+                    android:drawablePadding="5dp"
+                    android:text="Beneficiary Details" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cvImages"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_margin="15dp"
+                                android:layout_marginEnd="10dp"
+                                app:cardCornerRadius="5dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivImages"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:background="@color/bgGrey"
+                                    android:scaleType="centerCrop" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_toEndOf="@id/cvImages"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Member" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvName"
+                                    style="@style/Large.Blue.MontserratBold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvDetails"
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@color/bgBlue" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llBeneficiary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvEmail"
+                                style="@style/Medium.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_mail"
+                                android:drawablePadding="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMobile"
+                                style="@style/Medium.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:drawableStart="@drawable/ic_call"
+                                android:drawablePadding="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLocation"
+                                style="@style/Medium.Grey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:drawableStart="@drawable/ic_location"
+                                android:drawablePadding="15dp" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvBeneficiary"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:gravity="center"
+                            android:text="No data available" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPatron"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_favorite"
+                            android:drawablePadding="15dp"
+                            android:text="Patron" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronName"
+                            style="@style/Medium.Grey.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginBottom="5dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronEmail"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_mail"
+                            android:drawablePadding="15dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronContact"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_call"
+                            android:drawablePadding="15dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronAddress"
+                            style="@style/Medium.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_location"
+                            android:drawablePadding="15dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_emergency_details"
+                android:drawablePadding="5dp"
+                android:text="Emergency Details" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llEmergencyContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:baselineAligned="false"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="Blood Group" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvBloodGroup"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="Primary Doctor" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvPrimaryDoctor"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small.Grey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvEmergencyContact"
+                                style="@style/Medium.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_call"
+                                android:drawablePadding="5dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bgBlue" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvEmergencyContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_emergency_contact" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEmergency"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_allegries"
+                android:drawablePadding="5dp"
+                android:text="Allergies" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAllergies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/item_allergy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAllergies"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_diagnosis"
+                android:drawablePadding="5dp"
+                android:text="Diagnosis" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDiagnosis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/item_diagnosis" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDiagnosis"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.Blue.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/ivConsolidatedPdf"
+                    android:drawableStart="@drawable/ic_insurance"
+                    android:drawablePadding="5dp"
+                    android:text="Consolidated Prescription" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivConsolidatedPdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
+                    android:src="@drawable/ic_pdf" />
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llPrescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Prepared by" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPreparedBy"
+                            style="@style/Medium.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvHospital"
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDate"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                app:drawableTint="@color/grey" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTime"
+                                style="@style/Medium.Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_time"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/grey" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/bgGrey" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvOne"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_toStartOf="@id/ivNext"
+                                android:gravity="center_vertical"
+                                android:text="Lifestyle Advice" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvOne"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_toStartOf="@id/ivNext"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvLifestyleDate"
+                                    style="@style/Medium.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:drawableStart="@drawable/ic_date"
+                                    android:drawablePadding="5dp"
+                                    app:drawableTint="@color/grey" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvLifestyleTime"
+                                    style="@style/Medium.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/ic_time"
+                                    android:drawablePadding="5dp"
+                                    android:gravity="center_vertical"
+                                    app:drawableTint="@color/grey" />
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivNext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_arrow_circle_right" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/bgGrey" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTwo"
+                                style="@style/Medium.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_toStartOf="@id/ivNextTwo"
+                                android:gravity="center_vertical"
+                                android:text="Recommendations" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvTwo"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_toStartOf="@id/ivNextTwo"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvRecommendationDate"
+                                    style="@style/Medium.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:drawableStart="@drawable/ic_date"
+                                    android:drawablePadding="5dp"
+                                    app:drawableTint="@color/grey" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvRecommendationTime"
+                                    style="@style/Medium.Grey"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/ic_time"
+                                    android:drawablePadding="5dp"
+                                    android:gravity="center_vertical"
+                                    app:drawableTint="@color/grey" />
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivNextTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_arrow_circle_right" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrescription"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Red.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_vitals"
+                android:drawablePadding="5dp"
+                android:text="Vitals" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llVitals"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_red_border"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/red"
+                            android:gravity="center_vertical|end"
+                            android:orientation="horizontal"
+                            android:padding="15dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium.White"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Last Updated " />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvVitalDate"
+                                style="@style/Large.White.MontserratBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_date"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                app:drawableTint="@color/white" />
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvVitals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:padding="2dp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvVitals"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_procedures"
+                android:drawablePadding="5dp"
+                android:text="Procedures" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvProcedures"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/item_procedures" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvProcedures"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_history"
+                android:drawablePadding="5dp"
+                android:text="Personal History" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_history_vault" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHistory"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_personal_habits"
+                android:drawablePadding="5dp"
+                android:text="Personal Habits" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_habit" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHabits"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.Blue.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/ivInsurancePdf"
+                    android:drawableStart="@drawable/ic_insurance"
+                    android:drawablePadding="5dp"
+                    android:text="Insurance Details" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivInsurancePdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
+                    android:src="@drawable/ic_arrow_circle_right" />
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llInsurance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:baselineAligned="false"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Insurer" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvInsurer"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy Name" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyName"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy No." />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyNo"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Policy Period" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPeriod"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Sum Assured" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvAmount"
+                                    style="@style/Medium.Red.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/bgBlue" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:baselineAligned="false"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Small.Grey"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="TPA" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPolicyHolder"
+                                    style="@style/Medium.MontserratSemi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvInsurance"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Large.Blue.MontserratBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="15dp"
+                android:drawableStart="@drawable/ic_lab_report"
+                android:drawablePadding="5dp"
+                android:text="Lab Report" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLabReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbHorizontal="@drawable/bg_button_style"
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/item_lab_report" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLabReport"
+                        style="@style/Medium.Blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text="No data available" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/llBeneficiaryContainerBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Large.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:drawableStart="@drawable/ic_beneficiary"
+                    android:drawablePadding="5dp"
+                    android:text="Beneficiary Details" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/llBeneficiaryBottom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvEmailBottom"
+                                style="@style/Medium.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_mail"
+                                android:drawablePadding="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMobileBottom"
+                                style="@style/Medium.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:drawableStart="@drawable/ic_call"
+                                android:drawablePadding="15dp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLocationBottom"
+                                style="@style/Medium.Grey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:drawableStart="@drawable/ic_location"
+                                android:drawablePadding="15dp" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvBeneficiaryBottom"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:gravity="center"
+                            android:text="No data available" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPatronBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_favorite"
+                            android:drawablePadding="15dp"
+                            android:text="Patron" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronNameBottom"
+                            style="@style/Medium.Grey.MontserratBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginBottom="5dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronEmailBottom"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_mail"
+                            android:drawablePadding="15dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronContactBottom"
+                            style="@style/Medium.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_call"
+                            android:drawablePadding="15dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPatronAddressBottom"
+                            style="@style/Medium.Grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawableStart="@drawable/ic_location"
+                            android:drawablePadding="15dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </layout>

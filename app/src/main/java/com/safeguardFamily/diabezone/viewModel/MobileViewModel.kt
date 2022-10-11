@@ -1,5 +1,6 @@
 package com.safeguardFamily.diabezone.viewModel
 
+import com.safeguardFamily.diabezone.apiService.NoConnectivityException
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.model.request.MobileNumberRequest
 import com.safeguardFamily.diabezone.model.response.BaseResponse
@@ -32,6 +33,9 @@ class MobileViewModel : BaseViewModel() {
                     call: Call<BaseResponse<OtpResponse>>,
                     t: Throwable
                 ) {
+                    if (t is NoConnectivityException) {
+
+                    }
                     apiError.postValue(t.message)
                     apiLoader.postValue(false)
                 }

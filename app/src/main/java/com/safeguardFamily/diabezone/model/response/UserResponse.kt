@@ -11,5 +11,6 @@ data class User(
     var mobile: String,
     var name: String,
     var pic: String,
+    var uname: String,
     var uid: String
 )

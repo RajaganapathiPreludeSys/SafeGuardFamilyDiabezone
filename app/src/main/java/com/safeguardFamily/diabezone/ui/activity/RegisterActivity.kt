@@ -11,11 +11,14 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_EDIT_PROFILE
@@ -27,7 +30,6 @@ import com.safeguardFamily.diabezone.databinding.ActivityRegisterBinding
 import com.safeguardFamily.diabezone.viewModel.RegisterViewModel
 import lv.chi.photopicker.PhotoPickerFragment
 import java.io.File
-
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(
     R.layout.activity_register,
@@ -43,7 +45,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
-        mBinding.ivBack.setOnClickListener { finish() }
+        mBinding.icHeader.ivBack.setOnClickListener { finish() }
 
         if (intent.extras?.containsKey(KEY_EDIT_PROFILE) == true)
             isEditProfile = intent.extras?.getBoolean(KEY_EDIT_PROFILE)!!
@@ -54,7 +56,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             val termsAndCondition: ClickableSpan = object : ClickableSpan() {
                 override fun onClick(p0: View) {
                     val mBundle = Bundle()
-                    mBundle.putString(KEY_WEB_KEY, "Teams and Service")
+                    mBundle.putString(KEY_WEB_KEY, "Terms and Service")
                     mBundle.putString(KEY_WEB_URL, URL_TERMS)
                     navigateTo(WebViewActivity::class.java, mBundle)
                 }
@@ -62,8 +64,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
             spanString.setSpan(termsAndCondition, 47, 67, 0)
             spanString.setSpan(ForegroundColorSpan(Color.BLACK), 47, 67, 0)
-            spanString.setSpan(UnderlineSpan(), 47, 67, 0)
             spanString.setSpan(StyleSpan(Typeface.BOLD), 47, 67, 0)
+            spanString.setSpan(ForegroundColorSpan(getColor(R.color.blue)), 47, 67, 0)
 
             mBinding.cbTermsAndCondition.movementMethod = LinkMovementMethod.getInstance()
             mBinding.cbTermsAndCondition.setText(spanString, TextView.BufferType.SPANNABLE)
@@ -71,12 +73,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         } else {
             mBinding.tvWelcomeDesc.visibility = View.GONE
             mBinding.cbTermsAndCondition.visibility = View.GONE
-            mBinding.ivBack.visibility = View.VISIBLE
+            mBinding.icHeader.ivBack.visibility = View.VISIBLE
             mBinding.btRegister.text = "Update User"
-            mBinding.tvWelcome.text = "Update User Profile"
+            mBinding.icHeader.tvTitle.text = "Update User Profile"
             mBinding.tieName.text = Editable.Factory.getInstance().newEditable(user.name)
             mBinding.tieEmail.text = Editable.Factory.getInstance().newEditable(user.email)
-            Glide.with(this).load(user.pic).into(mBinding.ivProfileImage)
+            Glide.with(this).load(user.pic).placeholder(R.drawable.ic_profile_thumb)
+                .into(mBinding.ivProfileImage)
         }
 
         mBinding.tieName.addTextChangedListener(object : TextWatcher {
@@ -105,10 +108,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         })
 
         mBinding.btRegister.setOnClickListener {
-            if (mBinding.tieName.text!!.isEmpty())
-                mBinding.tilName.error = getString(R.string.valid_name)
-            else if (mBinding.tieEmail.text!!.isEmpty())
-                mBinding.tilEmail.error = getString(R.string.valid_email)
+            if (!mBinding.tieName.text!!.matches(Regex("^[A-Za-z ]+$")))
+                showToast(getString(R.string.valid_name))
+            else if (mBinding.tieEmail.text!!.isEmpty()
+                || !Patterns.EMAIL_ADDRESS.matcher(mBinding.tieEmail.text!!).matches()
+            ) showToast(getString(R.string.valid_email))
             else {
                 if (isEditProfile) {
                     user.name = mBinding.tieName.text.toString()
@@ -116,8 +120,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     if (tempImageUri != null && tempImageUri!!.path!!.length > 2) {
 //                        Log.d(TAG, "getRealPath: ${RealPathUtil.getRealPath(this, tempImageUri)!!}")
 //                        val f = File(RealPathUtil.getRealPath(this, tempImageUri)!!)
-                        val f = File(tempImageUri!!.path!!)
-                        mViewModel.multiPartUser(user, f) {
+                        mViewModel.multiPartUser(user, File(tempImageUri!!.path!!)) {
                             showToast("Profile Updated Successfully")
                             tempImageUri = null
                         }
@@ -127,16 +130,28 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 } else if (mBinding.cbTermsAndCondition.isChecked) {
                     user.name = mBinding.tieName.text.toString()
                     user.email = mBinding.tieEmail.text.toString()
-                    mViewModel.updateUser(user) {
+                    if (tempImageUri != null && tempImageUri!!.path!!.length > 2) {
+                        mViewModel.multiPartUser(user, File(tempImageUri!!.path!!)) {
+                            navigateTo(DashboardActivity::class.java)
+                            finishAffinity()
+                        }
+                    } else mViewModel.updateUser(user) {
                         navigateTo(DashboardActivity::class.java)
+                        finishAffinity()
                     }
                 } else showToast(R.string.accept_terms)
+            }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Register")
             }
         }
 
         mBinding.ivProfileImage.setOnClickListener {
             PhotoPickerFragment.newInstance(allowCamera = false)
                 .show(supportFragmentManager, "picker")
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Pick profile image")
+            }
         }
 
     }

@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.common
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.safeguardFamily.diabezone.R
 
 class Constants {
     companion object {
@@ -11,6 +12,7 @@ class Constants {
         fun loadImage(view: ImageView, image: String?) {
             Glide.with(view.context)
                 .load(image)
+                .placeholder(R.drawable.ic_profile_thumb)
                 .into(view)
         }
     }
@@ -33,12 +35,16 @@ object Bundle {
     const val KEY_REGISTER_PHONE = "KEY_REGISTER_PHONE"
     const val KEY_OTPs = "KEY_OTPs"
     const val KEY_DOCTOR = "KEY_DOCTOR"
+    const val KEY_CREATE_APPOINTMENT = "KEY_CREATE_APPOINTMENT"
+    const val KEY_RESCHEDULE = "KEY_RESCHEDULE"
     const val KEY_TITLE = "KEY_TITLE"
     const val KEY_APPOINTMENT = "KEY_APPOINTMENT"
-    const val KEY_BOOKING_DETAILS = "KEY_BOOKING_DETAILS"
+    const val KEY_PAST_CONSULTS = "KEY_PAST_CONSULTS"
 
-    const val DATE_FORMAT = "LLL dd, yyyy"
-    const val DATE_TIME_FORMAT = "LLL dd, yyyy hh:mm a"
+    const val DATE_FORMAT = "dd LLL, yyyy"
+    const val DAY_FORMAT = "dd LLL"
+    const val DATE_TIME_FORMAT = "dd LLL, yyyy hh:mm a"
+    const val DATE_FORMAT_TWO = "dd/MM/yy"
     const val API_DATE_FORMAT = "yyyy-MM-dd"
     const val API_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
     const val date12Format = "hh:mm a"

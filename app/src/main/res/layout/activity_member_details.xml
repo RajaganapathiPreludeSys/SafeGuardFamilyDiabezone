@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="profile"
+            type="com.safeguardFamily.diabezone.model.response.ProfileResponse" />
+
+        <variable
+            name="mViewModel"
+            type="com.safeguardFamily.diabezone.viewModel.MemberDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/icHeader"
+            layout="@layout/include_header" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rlDiabetes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvProfileImages"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="5dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivProfileImages"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@color/bgGrey"
+                                android:scaleType="centerCrop"
+                                app:loadImage="@{profile.user.pic}" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toEndOf="@id/cvProfileImages"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Small"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/welcome" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTitle"
+                                style="@style/Large.Blue.MontserratBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{profile.user.name}" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDesc"
+                                style="@style/Small.Blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:drawableStart="@drawable/ic_call"
+                                android:drawablePadding="10dp"
+                                android:gravity="center_vertical"
+                                android:text="@{profile.user.mobile}" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMemberShip"
+                    style="@style/Large.MontserratBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Small.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center_vertical"
+                            android:text="Past Consultations" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPlaceholder"
+                            style="@style/Large.Blue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="No history available" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvPastAppointments"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llScheduleAppointment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/blue"
+                            android:gravity="center">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_appointment"
+                                android:tint="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium.White.MontserratBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:text="Schedule An Appointment" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/llPackageDetailsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPackage"
+                        style="@style/Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Package valid till " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvExpireDate"
+                        style="@style/Small.Red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/tvPackage"
+                        android:text=" 21 Aug 2022" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRenew"
+                        style="@style/Small.Blue.MontserratBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_royal_blue_border_curved"
+                        android:paddingStart="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="5dp"
+                        android:text="Renew Now" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAskQues"
+                    style="@style/Medium.MontserratBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:text=" Questions? Ask Your Health Coach" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rlHealthCoach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="25dp"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+
+                            <LinearLayout
+                                android:id="@+id/cvHealthCoach"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_marginEnd="10dp">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/ivProfileImage"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/ic_profile_thumb"
+                                    app:civ_border_color="@color/blue"
+                                    app:civ_border_width="1dp"
+                                    app:loadImage="@{profile.health_coach.pic}" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toEndOf="@id/cvHealthCoach"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvCoachName"
+                                    style="@style/Medium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{profile.health_coach.name}" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Medium.Blue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Health Coach" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvCall"
+                                style="@style/Small.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="45dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_royal_blue_border"
+                                android:drawableStart="@drawable/ic_call"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                android:padding="10dp"
+                                android:text="@{profile.health_coach.mobile}" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvWhatsappCall"
+                                style="@style/Small.Blue.MontserratSemi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="45dp"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_royal_blue_border"
+                                android:drawableStart="@drawable/ic_whats_app"
+                                android:drawablePadding="10dp"
+                                android:gravity="center_vertical"
+                                android:padding="10dp"
+                                android:text="@{profile.health_coach.whatsapp_no}" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llScheduleCall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/blue"
+                            android:gravity="center">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_video"
+                                android:tint="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/Medium.White.MontserratBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:text="Schedule A Video Call" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

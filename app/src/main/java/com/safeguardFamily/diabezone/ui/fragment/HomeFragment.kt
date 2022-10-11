@@ -1,5 +1,7 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
+import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,31 +12,52 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.highsoft.highcharts.common.HIColor
-import com.highsoft.highcharts.common.hichartsclasses.*
+import com.bumptech.glide.Glide
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.CombinedData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.adapter.DoctorsAdapter
-import com.safeguardFamily.diabezone.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.TAG
+import com.safeguardFamily.diabezone.common.Bundle.date12Format
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
-import com.safeguardFamily.diabezone.common.DateUtils.displayingDateTimeFormatToAPIFormat
+import com.safeguardFamily.diabezone.common.DateUtils.displayingDayFromAPI
+import com.safeguardFamily.diabezone.common.DateUtils.formatTo24Hrs
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.appointment
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.diabetesLog
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.healthVault
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.programs
 import com.safeguardFamily.diabezone.common.NotificationNavigationFlat.providers
 import com.safeguardFamily.diabezone.common.SharedPref
-import com.safeguardFamily.diabezone.databinding.DialogDateTimeBinding
+import com.safeguardFamily.diabezone.databinding.DialogDateBinding
+import com.safeguardFamily.diabezone.databinding.DialogTimeBinding
 import com.safeguardFamily.diabezone.databinding.FragmentHomeBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
+import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
+import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
+import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
+import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
+
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -42,39 +65,86 @@ class HomeFragment :
         HomeViewModel::class.java
     ) {
 
-    private var formattedDate = ""
+    private var mProfile = SharedPref.getUser()
+    private var dateString = ""
+    private var timeString = ""
+    private var pdfUrl = ""
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
         loadNotification()
 
-        val items = arrayOf(" Select meal type", "Before Meal", "After Meal", "Random")
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
+        val items = arrayOf("Select type", "Fasting", "After Meal", "Random")
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, items)
         mBinding.spType.adapter = adapter
 
-        mBinding.btAddToLog.setOnClickListener {
+        var mCalendar = Calendar.getInstance()
+        dateString = "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        }"
+        mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+        timeString = SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
+        mBinding.tvTime.text = timeString
+
+        mBinding.spType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                mBinding.rlTypeContainer.setBackgroundResource(R.drawable.bg_blue_border)
+            }
+        }
+
+        mBinding.etBloodSugar.addTextChangedListener {
+            mBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_blue_border)
+        }
+
+        mBinding.btAddLog.setOnClickListener {
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Add diabetes logs")
+            }
             when {
-                mBinding.tvTimeValue.text == "Select Time" -> showToast("Select a valid date and time")
-                mBinding.etBloodSugar.text?.isNotEmpty() == false -> showToast("Enter a valid blood sugar value")
-                mBinding.spType.selectedItem == " Select meal type" -> showToast("Select a valid meal type")
+                mBinding.etBloodSugar.text?.isNotEmpty() == false -> {
+                    mBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_red_border)
+                    showToast("Enter a valid blood sugar value")
+                }
+                mBinding.spType.selectedItem == "Select type" -> {
+                    mBinding.rlTypeContainer.setBackgroundResource(R.drawable.bg_red_border)
+                    showToast("Select a valid meal type")
+                }
                 mBinding.etBloodSugar.text.toString()
                     .toInt() <= 0 -> showToast("Enter a valid blood sugar value")
                 else -> {
+                    Log.d(TAG, "onceCreated: $dateString $timeString")
+                    Log.d(TAG, "onceCreated: $dateString ${formatTo24Hrs(timeString)}")
                     val request = DiabetesLogRequest(
-                        measureDate = formattedDate,
+                        measureDate = "$dateString ${formatTo24Hrs(timeString)}",
                         logValue = mBinding.etBloodSugar.text.toString().toInt(),
                         uid = SharedPref.getUserId()!!,
                         period = when (mBinding.spType.selectedItem) {
-                            "Before Meal" -> "before_meal"
+                            "Fasting" -> "before_meal"
                             "After Meal" -> "after_meal"
                             "Random" -> "random"
-                            else -> ""
+                            else -> "before_meal"
                         }
                     )
                     mViewModel.addDiabetesLog(request) {
-                        mBinding.tvTimeValue.text = getString(R.string.select_time)
+                        loadHomeGraph()
+                        mCalendar = Calendar.getInstance()
+                        dateString =
+                            "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
+                                mCalendar.get(Calendar.DAY_OF_MONTH)
+                            }"
+                        mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                        mBinding.tvTime.text =
+                            SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
                         mBinding.etBloodSugar.text = null
                         mBinding.spType.adapter = adapter
                         showToast("Diabetes Log Saved")
@@ -83,101 +153,166 @@ class HomeFragment :
             }
         }
 
-        mBinding.tlTimeContainer.setOnClickListener { showDateTimeDialog() }
-
-        mBinding.ivOpenLogs.setOnClickListener { navigateTo(LogBookActivity::class.java) }
-
-        val date = arrayOf("Last week's data", "Last month's data", "All data")
-        mBinding.spDate.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, date)
-
-        mBinding.spDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d(TAG, "onItemSelected() called with:  p2 = $p2, p3 = $p3")
-                val chartCount = when (p2) {
-                    0 -> 7
-                    1 -> 30
-                    2 -> 50
-                    else -> 7
-                }
-                Log.d(TAG, "onItemSelected() called with:  chartCount = $chartCount")
-                loadChart(chartCount)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+        mBinding.ivRedBanner.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
             }
         }
 
-        mBinding.ivOne.setOnClickListener {
+        mBinding.ivProgram.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
+            }
+        }
+        mBinding.tlDateContainer.setOnClickListener {
+            showDateDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Open date picker")
+            }
+        }
+        mBinding.tlTimeContainer.setOnClickListener {
+            showTimeDialog()
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Open Time picker")
+            }
+        }
+        mBinding.ivOpenLogs.setOnClickListener {
+            navigateTo(LogBookActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Log book screen from home")
+            }
+        }
+
+        mBinding.cvOne.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.appointment
             )
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Appointment from home")
+            }
         }
-        mBinding.ivTwo.setOnClickListener {
+        mBinding.cvTwo.setOnClickListener {
+            if (pdfUrl.length > 1) {
+                val mBundle = Bundle()
+                mBundle.putString(com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY, "PDF")
+                mBundle.putString(
+                    com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL,
+                    pdfUrl
+                )
+                navigateTo(WebViewActivity::class.java, mBundle)
+            } else {
+                showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
+                navigateTo(SubscriptionActivity::class.java)
+            }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Consolidated Prescription from Home")
+            }
+        }
+        mBinding.cvThree.setOnClickListener {
             (activity as DashboardActivity?)!!.setCurrentFragment(
                 (activity as DashboardActivity?)!!.healthVault
             )
-        }
-        mBinding.ivThree.setOnClickListener {
-            (activity as DashboardActivity?)!!.setCurrentFragment(
-                (activity as DashboardActivity?)!!.healthVault
-            )
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Health vault from home")
+            }
         }
 
+        loadHomeGraph()
+    }
+
+    private fun loadHomeGraph() {
+        mViewModel.getHome { it, url ->
+            mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
+                when (i) {
+                    mBinding.radioButton1.id -> bindChart(
+                        it.lifetime!!.before_meal!!,
+                        "Fasting"
+                    )
+                    mBinding.radioButton2.id -> bindChart(
+                        it.lifetime!!.after_meal!!,
+                        "After Meal"
+                    )
+                    mBinding.radioButton3.id -> bindChart(
+                        it.lifetime!!.random!!,
+                        "Random"
+                    )
+                }
+            }
+            mBinding.radioGroup1.check(mBinding.radioButton1.id)
+            bindChart(it.lifetime!!.before_meal!!, "Fasting")
+            pdfUrl = url!!
+        }
     }
 
     private fun loadNotification() {
         mViewModel.notifications.observe(this) {
-            val mAdapter = NotificationAdapter(it) { string ->
-                when (string) {
-                    appointment -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.appointment
-                    )
-                    providers -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.appointment
-                    )
-                    diabetesLog -> navigateTo(LogBookActivity::class.java)
-                    healthVault -> (activity as DashboardActivity?)!!.setCurrentFragment(
-                        (activity as DashboardActivity?)!!.healthVault
-                    )
-                    programs -> {
-
-                    }
-                }
-            }
-            mBinding.vpNotification.adapter = mAdapter
-
-            if (it.size > 1) {
-                val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                layoutParams.setMargins(8, 0, 8, 0)
-                for (i in indicators.indices) {
-                    indicators[i] = ImageView(context)
-                    indicators[i]!!.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.onboarding_indicator_inactive
+            if (it.isNotEmpty()) {
+                mBinding.llHide.visibility = View.VISIBLE
+                mBinding.viewHide.visibility = View.VISIBLE
+                val mAdapter = NotificationAdapter(it) { string ->
+                    when (string) {
+                        appointment -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.appointment
                         )
-                    )
-                    indicators[i]!!.layoutParams = layoutParams
-                    mBinding.llNotificationIndicator.addView(indicators[i])
-                }
+                        providers -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.appointment
+                        )
+                        diabetesLog -> navigateTo(LogBookActivity::class.java)
+                        healthVault -> (activity as DashboardActivity?)!!.setCurrentFragment(
+                            (activity as DashboardActivity?)!!.healthVault
+                        )
+                        programs -> {
 
-                setCurrentIndicators(0)
-
-                mBinding.vpNotification.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        setCurrentIndicators(position)
+                        }
                     }
-                })
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(
+                            FirebaseAnalytics.Param.CONTENT,
+                            "Notification item clicked ${string}"
+                        )
+                    }
+                }
+                mBinding.vpNotification.adapter = mAdapter
+                mBinding.llNotificationIndicator.removeAllViews()
+                mBinding.llNotificationIndicator.visibility = View.GONE
+                if (it.size > 1) {
+                    mBinding.llNotificationIndicator.visibility = View.VISIBLE
+                    val indicators = arrayOfNulls<ImageView>(mAdapter.itemCount)
+                    val layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.setMargins(8, 0, 8, 0)
+                    for (i in indicators.indices) {
+                        indicators[i] = ImageView(context)
+                        indicators[i]!!.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.onboarding_indicator_inactive
+                            )
+                        )
+                        indicators[i]!!.layoutParams = layoutParams
+                        mBinding.llNotificationIndicator.addView(indicators[i])
+                    }
+
+                    setCurrentIndicators(0)
+
+                    mBinding.vpNotification.registerOnPageChangeCallback(object :
+                        ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            setCurrentIndicators(position)
+                        }
+                    })
+                }
+            } else {
+
+                mBinding.llHide.visibility = View.GONE
+                mBinding.viewHide.visibility = View.GONE
             }
         }
-
     }
 
     private fun setCurrentIndicators(index: Int) {
@@ -198,14 +333,11 @@ class HomeFragment :
         }
     }
 
-    private fun showDateTimeDialog() {
-        var dateString = ""
-        var timeString = ""
-        val timeValidator = Calendar.getInstance()
-        val dialogBinding: DialogDateTimeBinding =
+    private fun showDateDialog() {
+        val dialogDateBinding: DialogDateBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(requireContext()),
-                R.layout.dialog_date_time,
+                R.layout.dialog_date,
                 null,
                 false
             )
@@ -213,24 +345,57 @@ class HomeFragment :
         val mDialog = AlertDialog.Builder(requireContext(), 0).create()
 
         mDialog.apply {
-            setView(dialogBinding.root)
-            setCancelable(false)
+            setView(dialogDateBinding.root)
+            setCancelable(true)
         }.show()
 
         val mCalendar = Calendar.getInstance()
-        dialogBinding.datePicker.maxDate = mCalendar.timeInMillis
-        dialogBinding.datePicker.init(
+        dialogDateBinding.datePicker.maxDate = mCalendar.timeInMillis
+
+        dateString = "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH)}-${
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        }"
+        dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
+        dialogDateBinding.datePicker.init(
             mCalendar.get(Calendar.YEAR),
             mCalendar.get(Calendar.MONTH),
             mCalendar.get(Calendar.DAY_OF_MONTH)
         ) { _, year, month, day ->
             val m = month + 1
             dateString = "$year-$m-$day"
-            dialogBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}$timeString"
-            timeValidator.set(year, m, day)
+            dialogDateBinding.tvSelectedVal.text = "${displayingDateFormat(dateString)}"
         }
 
-        dialogBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
+        dialogDateBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+        dialogDateBinding.btPickDate.setOnClickListener {
+            if (dateString.isEmpty()) showToast("Select a valid date")
+            else {
+                mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                mDialog.dismiss()
+            }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Date selected")
+            }
+        }
+    }
+
+    private fun showTimeDialog() {
+        val dialogTimeBinding: DialogTimeBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(requireContext()),
+                R.layout.dialog_time,
+                null,
+                false
+            )
+
+        val mDialog = AlertDialog.Builder(requireContext(), 0).create()
+
+        mDialog.apply {
+            setView(dialogTimeBinding.root)
+            setCancelable(true)
+        }.show()
+
+        dialogTimeBinding.timePicker.setOnTimeChangedListener { _, _hour, minute ->
             var hour = _hour
             val amPm: String
             when {
@@ -248,187 +413,151 @@ class HomeFragment :
             val hourString = if (hour < 10) "0$hour" else hour
             val min = if (minute < 10) "0$minute" else minute
             timeString = " $hourString:$min $amPm"
-            dialogBinding.tvSelectedVal.text =
-                if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
-                else timeString
-
+            dialogTimeBinding.tvSelectedVal.text = timeString
         }
 
-        dialogBinding.btCancel.setOnClickListener { mDialog.dismiss() }
-        dialogBinding.btPickDate.setOnClickListener {
-            if (dateString.isEmpty()) showToast("Select a valid date")
-            else if (timeString.isEmpty()) showToast("Select a valid time")
+        dialogTimeBinding.btCancel.setOnClickListener { mDialog.dismiss() }
+        dialogTimeBinding.btPickTime.setOnClickListener {
+            if (timeString.isEmpty()) showToast("Select a valid time")
             else {
-                mBinding.tvTimeValue.text =
-                    if (dateString.length > 1) "${displayingDateFormat(dateString)}$timeString"
-                    else timeString
-                formattedDate =
-                    displayingDateTimeFormatToAPIFormat("${displayingDateFormat(dateString)}$timeString")!!
-                Log.d(TAG, "showDateTimeDialog formattedDate: $formattedDate")
+                mBinding.tvTime.text = timeString
                 mDialog.dismiss()
             }
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Time selected")
+            }
         }
     }
 
-    private fun loadChart(chartCount: Int) {
-        val options = HIOptions()
-        mBinding.hc.options = options
-        val chart = HIChart()
-        chart.zoomType = "x"
-        options.chart = chart
+    private fun bindChart(chartData: GraphItems, s: String) {
+        mBinding.tvAvg.text = chartData.summary!!.avg.toString()
+        mBinding.tvTaget.text =
+            "${chartData.summary!!.minTarget}-${chartData.summary!!.maxTarget}"
+        mBinding.tvMin.text = chartData.summary!!.min.toString()
+        mBinding.tvMax.text = chartData.summary!!.max.toString()
+        mBinding.tvHyper.text = chartData.summary!!.incident!!.hyper.toString()
+        mBinding.tvHypo.text = chartData.summary!!.incident!!.hypo.toString()
+        mBinding.tvGraphTitle.text = "Blood Sugar - $s"
 
-        val title = HITitle()
-        title.text = "Blood Sugar mg/dl"
-        options.title = title
-
-        val xAxis = HIXAxis()
-        xAxis.title = HITitle()
-        xAxis.title.text = "Date"
-        val charArray = ArrayList<String>()
-        for (i in chartCount..1) charArray.add(i.toString())
-        xAxis.categories = charArray
-        options.xAxis = object : ArrayList<HIXAxis?>() {
-            init {
-                add(xAxis)
-            }
+        val months = ArrayList<String>()
+        chartData.list!!.reversed().forEach {
+            months.add(displayingDayFromAPI(it.measure_date!!)!!)
         }
 
-        val yAxis = HIYAxis()
-        yAxis.title = HITitle()
-        yAxis.title.text = "mg/dl"
-        options.yAxis = object : ArrayList<HIYAxis?>() {
-            init {
-                add(yAxis)
+        mBinding.ivRedBanner.visibility = View.GONE
+
+        if (chartData.list!!.isNotEmpty()) {
+
+            if (chartData.list!![0].status == "hyper" || chartData.list!![0].status == "hypo")
+                mBinding.ivRedBanner.visibility = View.VISIBLE
+            else mBinding.ivRedBanner.visibility = View.GONE
+
+            mBinding.rlGraphContainer.visibility = View.VISIBLE
+            mBinding.tvChartPlaceholder.visibility = View.GONE
+
+            mBinding.chart1.description.isEnabled = false
+            mBinding.chart1.setBackgroundColor(Color.WHITE)
+            mBinding.chart1.setDrawGridBackground(false)
+            mBinding.chart1.setDrawBarShadow(false)
+            mBinding.chart1.isHighlightFullBarEnabled = false
+            mBinding.chart1.setTouchEnabled(false)
+            mBinding.chart1.setPinchZoom(false)
+            mBinding.chart1.isDoubleTapToZoomEnabled = false
+
+            mBinding.chart1.drawOrder = arrayOf(CombinedChart.DrawOrder.LINE)
+            val l = mBinding.chart1.legend
+            l.isWordWrapEnabled = true
+            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            l.orientation = Legend.LegendOrientation.HORIZONTAL
+            l.setDrawInside(false)
+
+            val rightAxis = mBinding.chart1.axisRight
+            rightAxis.textSize = 12f
+            rightAxis.setDrawGridLines(false)
+
+            val leftAxis = mBinding.chart1.axisLeft
+            leftAxis.textSize = 12f
+            leftAxis.setDrawGridLines(false)
+
+            val xAxis = mBinding.chart1.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.labelRotationAngle = -50f
+            xAxis.axisMinimum = 0f
+            xAxis.labelCount = chartData.list!!.size
+            xAxis.granularity = 1f
+            xAxis.textSize = 12f
+
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return months[value.toInt() % months.size]
+                }
             }
+            val data = CombinedData()
+
+            data.setData(generateLineData(chartData))
+
+            xAxis.axisMaximum = data.xMax + 0.25f
+
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
+
+            mBinding.chart1.data = data
+            mBinding.chart1.axisRight.isEnabled = false
+            mBinding.chart1.legend.isEnabled = false
+            mBinding.chart1.axisLeft.setDrawGridLines(false)
+            mBinding.chart1.xAxis.setDrawGridLines(false)
+            mBinding.chart1.invalidate()
+            mBinding.tvResetZoom.setOnClickListener {
+                mBinding.chart1.fitScreen()
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom in Log book")
+                }
+            }
+        } else {
+            mBinding.rlGraphContainer.visibility = View.GONE
+            mBinding.tvChartPlaceholder.visibility = View.VISIBLE
         }
-
-        val plotOptions = HIPlotOptions()
-        plotOptions.line = HILine()
-        plotOptions.line.dataLabels = arrayListOf<HIDataLabels>()
-        plotOptions.line.enableMouseTracking = false
-        options.plotOptions = plotOptions
-
-        val series1 = HILine()
-        series1.name = "Before meal"
-        series1.color = HIColor.initWithName("red")
-        val s1 = ArrayList<Int>()
-        for (i in 1..chartCount) s1.add((110..160).random())
-        val series1Data =
-            arrayOf<Number>(
-                7.0,
-                6.9,
-                9.5,
-                14.5,
-                18.4,
-                21.5,
-                25.2,
-                26.5,
-                23.3,
-                18.3,
-                13.9,
-                9.6,
-                7.0,
-                6.9,
-                9.5,
-                14.5,
-                18.4,
-                21.5,
-                25.2,
-                26.5,
-                23.3,
-                18.3,
-                13.9,
-                9.6,
-                40
-            )
-        series1.data = s1
-//        series1.data = ArrayList(listOf(*series1Data))
-
-        val series2 = HILine()
-        series2.name = "After meal"
-        series2.color = HIColor.initWithName("blue")
-        val s2 = ArrayList<Int>()
-        for (i in 1..chartCount) s2.add((100..150).random())
-        val series2Data =
-            arrayOf<Number?>(
-                3.9,
-                4.2,
-                0,
-                0,
-                0,
-                5.7,
-                15.2,
-                11.9,
-                15.2,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0,
-                0,
-                null,
-                15.2,
-                null,
-                null,
-                null,
-                15.2,
-                null,
-                17.0,
-                16.6,
-                14.2,
-                10.3,
-                6.6,
-                4.8,
-                40
-            )
-//        series2.data = s2
-        series2.data = ArrayList(listOf(*series2Data))
-
-        val series3 = HILine()
-        series3.name = "Random"
-        series3.color = HIColor.initWithName("green")
-        val s3 = ArrayList<Int>()
-        for (i in 1..chartCount) s3.add((120..170).random())
-        val series3Data =
-            arrayOf<Number?>(
-                3.9,
-                4.2,
-                0,
-                0,
-                0,
-                5.7,
-                15.2,
-                11.9,
-                15.2,
-                null,
-                null,
-                null,
-                0,
-                0,
-                0,
-                0,
-                0,
-                null,
-                15.2,
-                null,
-                null,
-                null,
-                15.2,
-                null,
-                17.0,
-                16.6,
-                14.2,
-                10.3,
-                6.6,
-                4.8,
-                25
-            )
-        series3.data = s3
-
-        options.series = ArrayList(listOf(series1, series2, series3))
-        mBinding.hc.options = options
     }
 
+    private fun generateLineData(chartData: GraphItems): LineData {
+        val d = LineData()
+        val entries = ArrayList<Entry>()
+
+        val colors = ArrayList<Int>()
+        chartData.list!!.reversed().forEachIndexed { i, l ->
+            entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
+            if (l.status == "hyper" || l.status == "hypo") {
+                colors.add(requireContext().getColor(R.color.red))
+            } else colors.add(requireContext().getColor(R.color.blue))
+        }
+        val set = LineDataSet(entries, "")
+        set.color = requireContext().getColor(R.color.blue)
+        set.lineWidth = 3f
+        set.setCircleColor(requireContext().getColor(R.color.blue))
+        set.circleRadius = 4f
+        set.fillColor = requireContext().getColor(R.color.blue)
+        set.mode = LineDataSet.Mode.LINEAR
+        set.setDrawValues(true)
+        set.valueTextSize = 12f
+        set.valueTextColor = requireContext().getColor(R.color.black)
+        set.axisDependency = YAxis.AxisDependency.RIGHT
+        set.circleColors = colors
+        set.setValueTextColors(colors)
+        d.addDataSet(set)
+        d.setValueFormatter(object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.roundToInt().toString()
+            }
+        })
+        return d
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadHomeGraph()
+        mProfile = SharedPref.getUser()
+        Glide.with(this).load(mProfile.pic).placeholder(R.drawable.ic_profile_thumb)
+            .into(mBinding.ivProfileImage)
+        mBinding.tvName.text = mProfile.name
+    }
 }

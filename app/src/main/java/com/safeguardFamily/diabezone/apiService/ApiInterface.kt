@@ -11,6 +11,10 @@ import retrofit2.http.Part
 
 interface ApiInterface {
 
+    //    https://safeguardfamily.com/apis/init
+    @POST("init")
+    fun postInit(@Body body: InitRequest): Call<BaseResponse<InitResponse>>
+
     //    https://safeguardfamily.com/apis/send-otp
     @POST("send-otp")
     fun postOtp(@Body body: MobileNumberRequest): Call<BaseResponse<OtpResponse>>
@@ -42,6 +46,22 @@ interface ApiInterface {
     @POST("diabetes-logs")
     fun getLogs(@Body body: IdRequest): Call<BaseResponse<DiabetesResponse>>
 
+    //  https://safeguardfamily.com/apis/diabezone-program
+    @POST("diabezone-program")
+    fun getPrograms(@Body body: IdRequest): Call<BaseResponse<ProgramsResponse>>
+
+    //  https://safeguardfamily.com/apis/subscribe-program
+    @POST("subscribe-program")
+    fun subscribe(@Body body: SubscriptionRequest): Call<BaseResponse<SubscribeResponse>>
+
+    //  https://safeguardfamily.com/apis/pay-failure
+    @POST("pay-failure")
+    fun payFailed(@Body body: PaymentFailRequest): Call<BaseResponse<SubscribeResponse>>
+
+    //  https://safeguardfamily.com/apis/health-vault
+    @POST("health-vault")
+    fun getHealthVault(@Body body: IdRequest): Call<BaseResponse<HealthVaultResponse>>
+
     @POST("providers")
     fun getAppointmentDate(@Body body: IdRequest): Call<BaseResponse<ProvidersResponse>>
 
@@ -50,6 +70,10 @@ interface ApiInterface {
 
     @POST("reshedule-appointment")
     fun reScheduleAppointment(@Body body: CreateAppointmentRequest): Call<BaseResponse<AppointmentResponse>>
+
+    //  https://safeguardfamily.com/apis/confirm-appointment
+    @POST("confirm-appointment")
+    fun confirmAppointment(@Body body: CreateAppointmentRequest): Call<BaseResponse<AppointmentResponse>>
 
     @POST("provider-slots")
     fun getSlots(@Body body: GetSlotsRequest): Call<BaseResponse<SlotsResponse>>

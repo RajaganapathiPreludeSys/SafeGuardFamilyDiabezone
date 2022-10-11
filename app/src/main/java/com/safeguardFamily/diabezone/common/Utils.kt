@@ -3,7 +3,9 @@ package com.safeguardFamily.diabezone.common
 import com.safeguardFamily.diabezone.common.Bundle.API_DATE_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.API_DATE_TIME_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.DATE_FORMAT
+import com.safeguardFamily.diabezone.common.Bundle.DATE_FORMAT_TWO
 import com.safeguardFamily.diabezone.common.Bundle.DATE_TIME_FORMAT
+import com.safeguardFamily.diabezone.common.Bundle.DAY_FORMAT
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
 import com.safeguardFamily.diabezone.common.Bundle.date24Format
 import java.text.SimpleDateFormat
@@ -15,40 +17,61 @@ object DateUtils {
         return SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(millis)
     }
 
-    fun getTimeStampFromSting(s: String) =
+    fun getTimeStampFromSting(s: String): Long =
         SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(s)!!.time
 
-    fun displayingDateFromAPI(time: String): String? {
-        return SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+    fun displayingDateFromAPI(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(it) }
-    }
 
-    fun displayingDateFormat(time: String): String? {
-        return SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
-            ?.let { SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(it) }
-    }
-
-    fun displayingDateTimeFormat(time: String): String? {
-        return SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
-            ?.let { SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it) }
-    }
-
-    fun displayingDateTimeFormatToAPIFormat(time: String): String? {
-        return SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
-            ?.let { SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).format(it) }
-    }
-
-    fun apiDateFormat(millis: Long): String {
-        return SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).format(millis)
-    }
-
-    fun formatTo12Hrs(time: String): String? {
-        return SimpleDateFormat(date24Format, Locale.getDefault()).parse(time)
+    fun displayingTimeFromAPI(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(date12Format, Locale.getDefault()).format(it) }
-    }
 
-    fun formatTo24Hrs(time: String): String? {
-        return SimpleDateFormat(date12Format, Locale.getDefault()).parse(time)
+    fun displayingDayFromAPI(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DAY_FORMAT, Locale.getDefault()).format(it) }
+
+    fun displayingDateFormat(time: String): String? =
+        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(it) }
+
+    fun displayingDateFormatTwo(time: String): String? =
+        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_FORMAT_TWO, Locale.getDefault()).format(it) }
+
+    fun displayingDateFormatTwoFromAPIDateTime(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_FORMAT_TWO, Locale.getDefault()).format(it) }
+
+    fun displayingDateTimeFormat(time: String): String? =
+        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it) }
+
+    fun displayingTimeFormat(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(date12Format, Locale.getDefault()).format(it) }
+
+    fun displayingDateTimeFormatToAPIFormat(time: String): String? =
+        SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).format(it) }
+
+    fun apiDateFormat(millis: Long): String =
+        SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).format(millis)
+
+    fun splitDate(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(API_DATE_FORMAT, Locale.getDefault()).format(it) }
+
+    fun splitTime(time: String): String? =
+        SimpleDateFormat(API_DATE_TIME_FORMAT, Locale.getDefault()).parse(time)
             ?.let { SimpleDateFormat(date24Format, Locale.getDefault()).format(it) }
-    }
+
+    fun formatTo12Hrs(time: String): String? =
+        SimpleDateFormat(date24Format, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(date12Format, Locale.getDefault()).format(it) }
+
+    fun formatTo24Hrs(time: String): String? =
+        SimpleDateFormat(date12Format, Locale.getDefault()).parse(time)
+            ?.let { SimpleDateFormat(date24Format, Locale.getDefault()).format(it) }
 }

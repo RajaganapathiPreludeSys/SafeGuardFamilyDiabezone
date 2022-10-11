@@ -1,5 +1,3 @@
 package com.safeguardFamily.diabezone.model.response
 
-data class AppointmentResponse(
-    val appointment: Appointment
-)
+data class AppointmentResponse(val appointment: Appointment)
