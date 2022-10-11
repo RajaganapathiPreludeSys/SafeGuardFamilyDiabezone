@@ -87,6 +87,8 @@
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="lv.chi.photopicker.utils.CameraActivity" />
+        <activity android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"

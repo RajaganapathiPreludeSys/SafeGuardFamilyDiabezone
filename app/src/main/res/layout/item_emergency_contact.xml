@@ -63,6 +63,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvContact2"
+                android:visibility="invisible"
                 style="@style/Medium.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

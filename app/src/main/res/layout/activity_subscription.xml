@@ -120,7 +120,7 @@
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="15dp"
                             android:lineSpacingExtra="15dp"
-                            android:text="\·  Personalized Digital Health Vault, see example Health Vault of Mr Mani" />
+                            android:text="\u2022  Personalized Digital Health Vault, see example Health Vault of Mr Mani" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/Medium"
@@ -128,14 +128,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="15dp"
-                            android:text="\u2727  Dedicated Health Coach" />
+                            android:text="\u2022  Dedicated Health Coach" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/Medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
-                            android:text="\u2727  Emergency Medical Assistance  " />
+                            android:text="\u2022  Emergency Medical Assistance  " />
 
                     </LinearLayout>
 

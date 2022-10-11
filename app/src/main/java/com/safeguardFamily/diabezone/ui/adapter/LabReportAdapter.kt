@@ -1,5 +1,6 @@
 package com.safeguardFamily.diabezone.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.model.response.LabReport
 
@@ -56,6 +58,8 @@ class LabReportAdapter(
             if (item.comment!!.length > 2) {
                 llAlert.visibility = View.VISIBLE
                 tvAlert.text = item.comment
+                print("RRR == ${item.isAlert} == ${adapterPosition}")
+                Log.d(TAG, "RRR == ${item.isAlert} == $adapterPosition")
                 if (item.isAlert!!) {
                     tvAlert.setTextColor(itemView.rootView.context.getColor(R.color.red))
                     ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))

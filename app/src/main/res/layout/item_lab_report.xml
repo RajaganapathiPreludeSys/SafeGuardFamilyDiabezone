@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingStart="15dp"
-    android:paddingEnd="15dp"
     android:paddingTop="10dp"
-    android:orientation="vertical">
+    android:paddingEnd="15dp">
 
     <LinearLayout
         android:id="@+id/llCon"
@@ -96,14 +96,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivAlert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_red_drop" />
+                    android:layout_centerVertical="true" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAlert"
@@ -111,8 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:gravity="center_vertical"
-                    android:text="V High HDL" />
+                    android:gravity="center_vertical" />
 
             </RelativeLayout>
 

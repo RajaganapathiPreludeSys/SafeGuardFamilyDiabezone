@@ -4,25 +4,15 @@ import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.DashPathEffect
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.webkit.WebViewClient
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.components.*
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.Utils
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -56,21 +46,58 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, WebViewViewModel>(
             mBinding.tvTitle.text = intent.extras?.getString(Bundle.KEY_WEB_KEY)
         }
 
-        var path = intent.extras?.getString(Bundle.KEY_WEB_URL).toString()
-        if (intent.extras?.getString(Bundle.KEY_WEB_KEY) == "PDF") {
-            mBinding.ivShare.visibility = View.VISIBLE
-            mBinding.ivDownload.visibility = View.VISIBLE
-            path =
-                "https://docs.google.com/gview?embedded=true&url=${intent.extras?.getString(Bundle.KEY_WEB_URL)}"
+        if (isInternetAvailable(this)) {
+            var path = intent.extras?.getString(Bundle.KEY_WEB_URL).toString()
+            if (intent.extras?.getString(Bundle.KEY_WEB_KEY) == "PDF") {
+                mBinding.ivShare.visibility = View.VISIBLE
+                mBinding.ivDownload.visibility = View.VISIBLE
+                path =
+                    "https://docs.google.com/gview?embedded=true&url=${
+                        intent.extras?.getString(
+                            Bundle.KEY_WEB_URL
+                        )
+                    }"
+            }
+
+            Log.d(TAG, "onceCreated: Path $path")
+
+            mBinding.webView.webViewClient = WebViewClient()
+            mBinding.webView.settings.javaScriptEnabled = true
+            mBinding.webView.settings.setSupportZoom(true)
+            mBinding.webView.settings.builtInZoomControls = true
+            mBinding.webView.loadUrl(path)
+        } else {
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder
+                .setMessage("No data/WIFI connection available. Please connect and retry")
+                .setCancelable(false)
+                .setPositiveButton("Retry") { dialog, id ->
+                    var path = intent.extras?.getString(Bundle.KEY_WEB_URL).toString()
+                    if (intent.extras?.getString(Bundle.KEY_WEB_KEY) == "PDF") {
+                        mBinding.ivShare.visibility = View.VISIBLE
+                        mBinding.ivDownload.visibility = View.VISIBLE
+                        path =
+                            "https://docs.google.com/gview?embedded=true&url=${
+                                intent.extras?.getString(
+                                    Bundle.KEY_WEB_URL
+                                )
+                            }"
+                    }
+                    Log.d(TAG, "onceCreated: Path $path")
+
+                    mBinding.webView.webViewClient = WebViewClient()
+                    mBinding.webView.settings.javaScriptEnabled = true
+                    mBinding.webView.settings.setSupportZoom(true)
+                    mBinding.webView.settings.builtInZoomControls = true
+                    mBinding.webView.loadUrl(path)
+                }
+                .setNegativeButton("Cancel") { dialog, id ->
+                    finish()
+                }
+            val alert = dialogBuilder.create()
+            alert.setTitle("Network State")
+            alert.show()
         }
-
-        Log.d(TAG, "onceCreated: Path $path")
-
-        mBinding.webView.webViewClient = WebViewClient()
-        mBinding.webView.settings.javaScriptEnabled = true
-        mBinding.webView.settings.setSupportZoom(true)
-        mBinding.webView.settings.builtInZoomControls = true
-        mBinding.webView.loadUrl(path)
 
         mBinding.ivShare.setOnClickListener {
             if (fileName.length > 1) {
@@ -98,9 +125,6 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, WebViewViewModel>(
                 param(FirebaseAnalytics.Param.CONTENT, "Download PDF")
             }
         }
-//
-//        setUpLineChart()
-//        setDataToLineChart()
     }
 
     private fun uriFromFile(context: Context, file: File): Uri {
@@ -202,5 +226,21 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding, WebViewViewModel>(
         if (mBinding.webView.canGoBack())
             mBinding.webView.goBack()
         else super.onBackPressed()
+    }
+
+    private fun isInternetAvailable(context: Context): Boolean {
+        val result: Boolean
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        result = when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+        return result
     }
 }

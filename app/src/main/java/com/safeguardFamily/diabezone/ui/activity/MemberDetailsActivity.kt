@@ -57,7 +57,7 @@ class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberD
                 mBinding.llPackageDetailsContainer.visibility = View.GONE
                 mBinding.rlHealthCoach.visibility = View.GONE
                 mBinding.tvAskQues.visibility = View.GONE
-                mBinding.tvMemberShip.text = "Please subscribe to become a memeber"
+                mBinding.tvMemberShip.text = "Please subscribe to become a member"
             }
         }
 

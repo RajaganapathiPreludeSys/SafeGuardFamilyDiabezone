@@ -43,6 +43,9 @@ class EmergencyContactAdapter(
             tvName.text = item.name
             tvRelation.text = item.relation
             tvContact1.text = item.mobile1
+
+            if (item.mobile2!!.length > 1)
+                tvContact2.visibility = View.VISIBLE
             tvContact2.text = item.mobile2
             tvContact1.setOnClickListener { onItemClicked(item.mobile1!!) }
             tvContact2.setOnClickListener { onItemClicked(item.mobile2!!) }

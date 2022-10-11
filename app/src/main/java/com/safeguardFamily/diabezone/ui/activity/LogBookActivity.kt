@@ -27,6 +27,7 @@ import com.safeguardFamily.diabezone.databinding.ActivityLogBookBinding
 import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.viewModel.LogBookViewModel
+import kotlin.math.roundToInt
 
 class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
     R.layout.activity_log_book,
@@ -39,13 +40,17 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         mBinding.icToolbar.ivRight.setImageDrawable(getDrawable(R.drawable.ic_pdf))
 
         mBinding.icToolbar.ivRight.setOnClickListener {
-            val mBundle = Bundle()
-            mBundle.putString(KEY_WEB_KEY, "PDF")
-            mBundle.putString(KEY_WEB_URL, mViewModel.pdfUrl.value)
-            navigateTo(WebViewActivity::class.java, mBundle)
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT, "Open log book PDF")
-            }
+
+            if (mViewModel.pdfUrl.value!!.length > 2)  {
+                val mBundle = Bundle()
+                mBundle.putString(KEY_WEB_KEY, "PDF")
+                mBundle.putString(KEY_WEB_URL, mViewModel.pdfUrl.value)
+                navigateTo(WebViewActivity::class.java, mBundle)
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.CONTENT, "Open log book PDF")
+                }
+            } else showToast("No log values available for now.")
+
         }
 
         mBinding.icToolbar.ivBack.setOnClickListener { finish() }
@@ -199,6 +204,11 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
         set.circleColors = colors
         set.setValueTextColors(colors)
         d.addDataSet(set)
+        d.setValueFormatter(object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.roundToInt().toString()
+            }
+        })
         return d
     }
 }

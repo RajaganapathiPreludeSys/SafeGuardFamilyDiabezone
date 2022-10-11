@@ -2,9 +2,18 @@ package com.safeguardFamily.diabezone.ui.fragment
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
@@ -55,7 +64,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 mBinding.llBeneficiaryContainer.visibility = View.GONE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.VISIBLE
             }
-
         }
 
         mViewModel.healthVault.observe(this) {
@@ -214,7 +222,12 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvProcedures.visibility = View.GONE
             mBinding.rvProcedures.adapter = ProcedureAdapter(procedures)
             mBinding.rvProcedures.layoutManager =
-                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+                GridLayoutManager(
+                    requireContext(),
+                    if (procedures.size > 2) 3 else procedures.size,
+                    RecyclerView.HORIZONTAL,
+                    false
+                )
             mBinding.rvProcedures.setHasFixedSize(false)
         } else {
             mBinding.rvProcedures.visibility = View.GONE
@@ -235,7 +248,12 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvDiagnosis.visibility = View.GONE
             mBinding.rvDiagnosis.adapter = DiagnosisAdapter(diagnosis)
             mBinding.rvDiagnosis.layoutManager =
-                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+                GridLayoutManager(
+                    requireContext(),
+                    if (diagnosis.size > 2) 3 else diagnosis.size,
+                    RecyclerView.HORIZONTAL,
+                    false
+                )
             mBinding.rvDiagnosis.setHasFixedSize(true)
         } else {
             mBinding.rvDiagnosis.visibility = View.GONE
@@ -277,7 +295,12 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvAllergies.visibility = View.GONE
             mBinding.rvAllergies.adapter = AllergyAdapter(allergies)
             mBinding.rvAllergies.layoutManager =
-                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+                GridLayoutManager(
+                    requireContext(),
+                    if (allergies.size > 2) 3 else allergies.size,
+                    RecyclerView.HORIZONTAL,
+                    false
+                )
             mBinding.rvAllergies.setHasFixedSize(false)
         } else {
             mBinding.rvAllergies.visibility = View.GONE
@@ -301,7 +324,12 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 else showToast("Lab Report PDF not available for now. Please contact your health coach")
             }
             mBinding.rvLabReport.layoutManager =
-                GridLayoutManager(requireContext(), 3, RecyclerView.HORIZONTAL, false)
+                GridLayoutManager(
+                    requireContext(),
+                    if (reports.size > 2) 3 else reports.size,
+                    RecyclerView.HORIZONTAL,
+                    false
+                )
             mBinding.rvLabReport.setHasFixedSize(false)
         } else {
             mBinding.rvLabReport.visibility = View.GONE
@@ -367,7 +395,47 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         prescription: ConsolidatedPrescription?
     ) {
 
-        mBinding.tvHVDesc.text = message
+        mViewModel.isSample.observe(this) {
+            if (it) {
+                val spanString = SpannableString(message)
+
+                val termsAndCondition: ClickableSpan = object : ClickableSpan() {
+                    override fun onClick(p0: View) {
+                        navigateTo(SubscriptionActivity::class.java)
+                    }
+                }
+
+                spanString.setSpan(
+                    termsAndCondition,
+                    message!!.indexOf("Enroll"),
+                    message.indexOf("Enroll") + 10,
+                    0
+                )
+                spanString.setSpan(
+                    ForegroundColorSpan(Color.WHITE),
+                    message.indexOf("Enroll"),
+                    message.indexOf("Enroll") + 10,
+                    0
+                )
+                spanString.setSpan(
+                    UnderlineSpan(),
+                    message.indexOf("Enroll"),
+                    message.indexOf("Enroll") + 10,
+                    0
+                )
+                spanString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    message.indexOf("Enroll"),
+                    message.indexOf("Enroll") + 10,
+                    0
+                )
+
+                mBinding.tvHVDesc.movementMethod = LinkMovementMethod.getInstance()
+                mBinding.tvHVDesc.setText(spanString, TextView.BufferType.SPANNABLE)
+                mBinding.tvHVDesc.isSelected = true
+            } else mBinding.tvHVDesc.text = message
+        }
+
         mBinding.tvTitle.text = user!!.name
 
         Glide.with(this).load(user.pic).placeholder(R.drawable.ic_profile_thumb)
@@ -407,8 +475,6 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 }"
             mBinding.tvAmount.text = "₹ ${insurance.sumAssured}"
             mBinding.tvPolicyHolder.text = insurance.tpa!!.name
-            mBinding.tvPolicyEmail.text = insurance.tpa!!.email
-            mBinding.tvPolicyContact.text = insurance.tpa!!.mobile
 
             mBinding.ivInsurancePdf.setOnClickListener {
                 if (insurance.pdfUrl!!.length > 2) openWebView(insurance.pdfUrl!!)

@@ -56,6 +56,8 @@ import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
+
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -305,8 +307,7 @@ class HomeFragment :
                         }
                     })
                 }
-            }
-            else {
+            } else {
 
                 mBinding.llHide.visibility = View.GONE
                 mBinding.viewHide.visibility = View.GONE
@@ -443,6 +444,8 @@ class HomeFragment :
             months.add(displayingDayFromAPI(it.measure_date!!)!!)
         }
 
+        mBinding.ivRedBanner.visibility = View.GONE
+
         if (chartData.list!!.isNotEmpty()) {
 
             if (chartData.list!![0].status == "hyper" || chartData.list!![0].status == "hypo")
@@ -541,6 +544,11 @@ class HomeFragment :
         set.circleColors = colors
         set.setValueTextColors(colors)
         d.addDataSet(set)
+        d.setValueFormatter(object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.roundToInt().toString()
+            }
+        })
         return d
     }
 

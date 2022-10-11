@@ -431,7 +431,6 @@
                         android:id="@+id/rvEmergencyContact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:itemCount="2"
                         tools:listitem="@layout/item_emergency_contact" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -481,7 +480,6 @@
                         android:scrollbarSize="5dp"
                         android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
-                        tools:itemCount="3"
                         tools:listitem="@layout/item_allergy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -531,7 +529,6 @@
                         android:scrollbarSize="5dp"
                         android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
-                        tools:itemCount="3"
                         tools:listitem="@layout/item_diagnosis" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -920,7 +917,6 @@
                         android:scrollbarSize="5dp"
                         android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
-                        tools:itemCount="3"
                         tools:listitem="@layout/item_procedures" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -1248,59 +1244,6 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Small.Grey"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:gravity="center_vertical"
-                                    android:text="" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvPolicyEmail"
-                                    style="@style/Medium.Blue"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:drawableStart="@drawable/ic_mail"
-                                    android:drawablePadding="15dp" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Small.Grey"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:gravity="center_vertical"
-                                    android:text="" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvPolicyContact"
-                                    style="@style/Medium.Blue"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:drawableStart="@drawable/ic_call"
-                                    android:drawablePadding="15dp" />
-
-                            </LinearLayout>
-
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1352,7 +1295,6 @@
                         android:scrollbarSize="5dp"
                         android:scrollbarThumbHorizontal="@drawable/bg_button_style"
                         android:scrollbars="horizontal"
-                        tools:itemCount="3"
                         tools:listitem="@layout/item_lab_report" />
 
                     <androidx.appcompat.widget.AppCompatTextView
