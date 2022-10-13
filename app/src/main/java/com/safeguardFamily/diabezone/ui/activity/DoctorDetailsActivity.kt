@@ -116,81 +116,124 @@ class DoctorDetailsActivity :
     }
 
     private fun loadAvailability() {
-        if (provider.timings.days!!.mon!!.length < 2)
-            mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.tue!!.length < 2)
-            mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.wed!!.length < 2)
-            mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.thu!!.length < 2)
-            mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.fri!!.length < 2)
-            mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.sat!!.length < 2)
-            mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_red_circle)
-
-        if (provider.timings.days!!.sun!!.length < 2)
-            mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_red_circle)
+        resetBg()
 
         mBinding.tvMonTime.setOnClickListener {
+            resetBg()
+            mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.mon!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.mon
         }
 
         mBinding.tvTueTime.setOnClickListener {
+            resetBg()
+            mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.tue!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.tue
         }
 
         mBinding.tvWedTime.setOnClickListener {
+            resetBg()
+            mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.wed!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.wed
         }
 
         mBinding.tvThuTime.setOnClickListener {
+            resetBg()
+            mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.thu!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.thu
         }
 
         mBinding.tvFriTime.setOnClickListener {
+            resetBg()
+            mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.fri!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.fri
         }
 
         mBinding.tvSatTime.setOnClickListener {
+            resetBg()
+            mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.sat!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.sat
         }
 
         mBinding.tvSunTime.setOnClickListener {
+            resetBg()
+            mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_green_circle)
             mBinding.tvTimeValue.text = if (provider.timings.days!!.sun!!.length < 2)
                 "No slots available for this day" else provider.timings.days!!.sun
         }
 
         val date = Calendar.getInstance()
-        println("Today is " + DateFormatSymbols().weekdays[date[Calendar.DAY_OF_WEEK]])
-        println("Today is " + Gson().toJson(DateFormatSymbols().weekdays))
-
         when (DateFormatSymbols().weekdays[date[Calendar.DAY_OF_WEEK]]) {
-            "Sunday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.sun!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.sun
-            "Monday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.mon!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.mon
-            "Tuesday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.tue!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.tue
-            "Wednesday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.wed!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.wed
-            "Thursday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.thu!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.thu
-            "Friday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.fri!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.fri
-            "Saturday" -> mBinding.tvTimeValue.text = if (provider.timings.days!!.sat!!.length < 2)
-                "No slots available for this day" else provider.timings.days!!.sat
+            "Sunday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.sun!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.sun
+                mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Monday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.mon!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.mon
+                mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Tuesday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.tue!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.tue
+                mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Wednesday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.wed!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.wed
+                mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Thursday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.thu!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.thu
+                mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Friday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.fri!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.fri
+                mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
+            "Saturday" -> {
+                mBinding.tvTimeValue.text = if (provider.timings.days!!.sat!!.length < 2)
+                    "No slots available for this day" else provider.timings.days!!.sat
+                mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_green_circle)
+            }
         }
+    }
+
+    private fun resetBg() {
+        if (provider.timings.days!!.mon!!.length < 2)
+            mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvMonTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.tue!!.length < 2)
+            mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvTueTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.wed!!.length < 2)
+            mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvWedTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.thu!!.length < 2)
+            mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvThuTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.fri!!.length < 2)
+            mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvFriTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.sat!!.length < 2)
+            mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvSatTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
+
+        if (provider.timings.days!!.sun!!.length < 2)
+            mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_red_circle)
+        else mBinding.tvSunTime.setBackgroundResource(R.drawable.bg_royal_blue_circle)
     }
 }

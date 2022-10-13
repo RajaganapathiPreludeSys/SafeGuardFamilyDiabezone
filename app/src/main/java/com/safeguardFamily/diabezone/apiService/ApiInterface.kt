@@ -58,6 +58,10 @@ interface ApiInterface {
     @POST("pay-failure")
     fun payFailed(@Body body: PaymentFailRequest): Call<BaseResponse<SubscribeResponse>>
 
+    //  https://safeguardfamily.com/apis/pay-failure
+    @POST("pay-order")
+    fun getOrderID(@Body body: OrderIdRequest): Call<BaseResponse<OrderIdResponse>>
+
     //  https://safeguardfamily.com/apis/health-vault
     @POST("health-vault")
     fun getHealthVault(@Body body: IdRequest): Call<BaseResponse<HealthVaultResponse>>

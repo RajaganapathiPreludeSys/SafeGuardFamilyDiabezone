@@ -37,7 +37,7 @@ data class Vault(
     @SerializedName("patron")
     var patron: Patron?,
     @SerializedName("personal_habits")
-    var personalHabits: List<PersonalHabit>?,
+    var personalHabits: List<History>?,
     @SerializedName("procedures")
     var procedures: List<Procedure>?,
     @SerializedName("user")
@@ -133,10 +133,16 @@ data class EmergencyDetails(
 data class History(
     @SerializedName("comment")
     var comment: String?,
-    @SerializedName("status")
-    var status: String?,
+    @SerializedName("hospital")
+    var hospital: String?,
     @SerializedName("is_alert")
     var isAlert: Boolean?,
+    @SerializedName("prepared_by")
+    var preparedBy: String?,
+    @SerializedName("report_date")
+    var reportDate: String?,
+    @SerializedName("status")
+    var status: String?,
     @SerializedName("title")
     var title: String?
 )
@@ -184,17 +190,6 @@ data class Patron(
     var mobile: String?,
     @SerializedName("name")
     var name: String?
-)
-
-data class PersonalHabit(
-    @SerializedName("comment")
-    var comment: String?,
-    @SerializedName("status")
-    var status: String?,
-    @SerializedName("title")
-    var title: String?,
-    @SerializedName("is_alert")
-    var isAlert: Boolean?
 )
 
 data class Procedure(

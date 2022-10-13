@@ -86,9 +86,15 @@
             android:name=".ui.activity.AppointmentPaymentActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="lv.chi.photopicker.utils.CameraActivity" />
-        <activity android:name="com.canhub.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name=".ui.activity.PDFActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:replace="android:screenOrientation" />
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"

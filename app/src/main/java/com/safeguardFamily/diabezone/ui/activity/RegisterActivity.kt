@@ -1,5 +1,6 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -14,7 +15,10 @@ import android.text.style.StyleSpan
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.github.drjacky.imagepicker.ImagePicker
+import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -28,13 +32,12 @@ import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityRegisterBinding
 import com.safeguardFamily.diabezone.viewModel.RegisterViewModel
-import lv.chi.photopicker.PhotoPickerFragment
 import java.io.File
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(
     R.layout.activity_register,
     RegisterViewModel::class.java
-), PhotoPickerFragment.Callback {
+) {
 
     private val user = SharedPref.getUser()
 
@@ -147,18 +150,23 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         }
 
         mBinding.ivProfileImage.setOnClickListener {
-            PhotoPickerFragment.newInstance(allowCamera = false)
-                .show(supportFragmentManager, "picker")
+            ImagePicker.with(this)
+                .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+                .crop(16f, 16f)
+                .createIntentFromDialog { launcher.launch(it) }
+
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Pick profile image")
             }
         }
-
     }
 
-    override fun onImagesPicked(photos: ArrayList<Uri>) {
-        mBinding.ivProfileImage.setImageURI(photos[0])
-        tempImageUri = photos[0]
-    }
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                tempImageUri = it.data?.data!!
+                mBinding.ivProfileImage.setImageURI(tempImageUri)
+            }
+        }
 
 }

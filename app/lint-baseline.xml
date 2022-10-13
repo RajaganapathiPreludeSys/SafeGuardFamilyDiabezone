@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.2.1" type="baseline" client="gradle" dependencies="false" name="AGP (7.2.1)" variant="fatal" version="7.2.1">
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/AppointmentPaymentViewModel.kt"
+            line="40"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/AppointmentPaymentViewModel.kt"
+            line="81"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/AppointmentPaymentViewModel.kt"
+            line="118"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/DashboardViewModel.kt"
+            line="31"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            healthVault.postValue(response.body()?.data!!.vault)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HealthVaultViewModel.kt"
+            line="33"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            isSample.postValue(response.body()?.data!!.isSample)"
+        errorLine2="                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HealthVaultViewModel.kt"
+            line="34"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HealthVaultViewModel.kt"
+            line="36"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            notifications.postValue(response.body()!!.data!!.notifications)"
+        errorLine2="                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HomeViewModel.kt"
+            line="26"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HomeViewModel.kt"
+            line="31"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/HomeViewModel.kt"
+            line="55"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            pdfUrl.postValue(response.body()!!.data!!.pdfUrl)"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/LogBookViewModel.kt"
+            line="34"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            graphData.postValue(response.body()!!.data!!.graph)"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/LogBookViewModel.kt"
+            line="35"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/LogBookViewModel.kt"
+            line="36"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/LogBookViewModel.kt"
+            line="61"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/MemberDetailsViewModel.kt"
+            line="32"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/MobileViewModel.kt"
+            line="27"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/OtpViewModel.kt"
+            line="28"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/OtpViewModel.kt"
+            line="58"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/RegisterViewModel.kt"
+            line="30"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                    } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/RegisterViewModel.kt"
+            line="68"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="29"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="58"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="64"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="94"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="97"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                            appointment.postValue(response.body()!!.data)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="127"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="130"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/ScheduleAppointmentViewModel.kt"
+            line="158"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/SubscriptionViewModel.kt"
+            line="36"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/SubscriptionViewModel.kt"
+            line="59"
+            column="51"/>
+    </issue>
+
+    <issue
+        id="NullSafeMutableLiveData"
+        message="Expected non-nullable value"
+        errorLine1="                        } else apiError.postValue(response.body()!!.error)"
+        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/safeguardFamily/diabezone/viewModel/SubscriptionViewModel.kt"
+            line="85"
+            column="51"/>
+    </issue>
+
+</issues>

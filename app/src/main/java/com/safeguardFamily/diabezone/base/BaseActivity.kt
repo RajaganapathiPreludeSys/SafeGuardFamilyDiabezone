@@ -57,7 +57,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
         onceCreated()
         mViewModel.apiError.observe(this) {
             Log.d(TAG, "onCreate: $it")
-            showToast(it)
+            showToast(it!!)
         }
         mViewModel.successToast.observe(this) { showToast(it) }
         mViewModel.apiLoader.observe(this) { if (it) showLoading() else hideLoading() }

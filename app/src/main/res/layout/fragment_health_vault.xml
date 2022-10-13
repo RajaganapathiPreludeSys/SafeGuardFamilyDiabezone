@@ -962,7 +962,7 @@
                         android:id="@+id/rvHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_history_vault" />
+                        tools:listitem="@layout/item_history" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvHistory"

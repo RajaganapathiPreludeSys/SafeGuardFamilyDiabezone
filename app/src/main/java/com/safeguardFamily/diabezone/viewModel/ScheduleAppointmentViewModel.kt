@@ -12,7 +12,7 @@ import retrofit2.Response
 
 class ScheduleAppointmentViewModel : BaseViewModel() {
 
-    val appointment = MutableLiveData<AppointmentResponse>()
+    val appointment = MutableLiveData<AppointmentResponse?>()
     val isBookingCompleted = MutableLiveData<Boolean>()
 
     fun getSlots(request: GetSlotsRequest, onSuccess: ((slots: List<AvailableSlot>?) -> Unit)) {
@@ -57,9 +57,9 @@ class ScheduleAppointmentViewModel : BaseViewModel() {
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
                             isBookingCompleted.postValue(true)
-                            if (response.body()!!.data!!.appointment.booking_status == 4)
+                            if (response.body()!!.data.appointment.booking_status == 4)
                                 onSuccess()
-                            else if (response.body()!!.data!!.appointment.booking_status == 1)
+                            else if (response.body()!!.data.appointment.booking_status == 1)
                                 successToast.postValue("Appointment Created Successfully")
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())

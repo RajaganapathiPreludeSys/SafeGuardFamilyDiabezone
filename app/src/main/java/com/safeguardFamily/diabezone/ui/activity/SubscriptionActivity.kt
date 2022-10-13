@@ -10,20 +10,17 @@ import com.google.gson.Gson
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.ui.adapter.ExpandableInfoAdapter
-import com.safeguardFamily.diabezone.ui.adapter.LinePagerIndicatorDecoration
-import com.safeguardFamily.diabezone.ui.adapter.ProgramsAdapter
-import com.safeguardFamily.diabezone.ui.adapter.SubscribeProgramsAdapter
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivitySubscriptionBinding
-import com.safeguardFamily.diabezone.model.request.Error
-import com.safeguardFamily.diabezone.model.request.PaymentFailRequest
-import com.safeguardFamily.diabezone.model.request.PaymentResponse
-import com.safeguardFamily.diabezone.model.request.SubscriptionRequest
+import com.safeguardFamily.diabezone.model.request.*
 import com.safeguardFamily.diabezone.model.response.Info
 import com.safeguardFamily.diabezone.model.response.Package
+import com.safeguardFamily.diabezone.ui.adapter.ExpandableInfoAdapter
+import com.safeguardFamily.diabezone.ui.adapter.LinePagerIndicatorDecoration
+import com.safeguardFamily.diabezone.ui.adapter.ProgramsAdapter
+import com.safeguardFamily.diabezone.ui.adapter.SubscribeProgramsAdapter
 import com.safeguardFamily.diabezone.viewModel.SubscriptionViewModel
 import org.json.JSONException
 import org.json.JSONObject
@@ -66,27 +63,39 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
     }
 
     private fun loadProgram(packages: List<Package>) {
-        mBinding.rvPrograms.adapter = SubscribeProgramsAdapter(packages) {
+        mBinding.rvPrograms.adapter = SubscribeProgramsAdapter(packages) { it ->
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Subscription Payment called ${it.pid}")
             }
             pack = it
-            val amount = it.programFee!!.toInt() * 100
-            val checkout = Checkout()
-            checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
-            checkout.setImage(R.mipmap.ic_launcher)
-            val obj = JSONObject()
-            try {
-                obj.put("name", "SafeGuardFamily")
-                obj.put("description", "Payment for Subscription")
-                obj.put("theme.color", "")
-                obj.put("currency", "INR")
-                obj.put("amount", amount)
-                obj.put("prefill.contact", SharedPref.getUser().mobile)
-                obj.put("prefill.email", SharedPref.getUser().email)
-                checkout.open(this, obj)
-            } catch (e: JSONException) {
-                e.printStackTrace()
+            mViewModel.getOrderID(
+                OrderIdRequest(
+                    amount = (pack.programFee!!.toInt() * 100).toString(),
+                    pid = pack.pid!!,
+                    type = "package",
+                    uid = SharedPref.getUserId()!!
+                )
+            ) { orderId ->
+                val amount = pack.programFee!!.toInt() * 100
+                val checkout = Checkout()
+//            checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+
+                checkout.setImage(R.mipmap.ic_launcher)
+                val obj = JSONObject()
+                try {
+                    obj.put("name", "SafeGuardFamily")
+                    obj.put("description", "Payment for Subscription")
+                    obj.put("theme.color", "")
+                    obj.put("currency", "INR")
+                    obj.put("orderId", orderId)
+                    obj.put("amount", amount)
+                    obj.put("prefill.contact", SharedPref.getUser().mobile)
+                    obj.put("prefill.email", SharedPref.getUser().email)
+                    checkout.open(this, obj)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
             }
         }
         mBinding.rvPrograms.layoutManager =

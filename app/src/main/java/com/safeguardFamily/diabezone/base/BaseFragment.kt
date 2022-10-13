@@ -50,7 +50,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it) }
+        mViewModel.apiError.observe(viewLifecycleOwner) { showToast(it!!) }
         mViewModel.successToast.observe(viewLifecycleOwner) { showToast(it) }
         mViewModel.apiLoader.observe(viewLifecycleOwner) { if (it) showLoading() else hideLoading() }
         mViewModel.noInternet.observe(viewLifecycleOwner) { if (it) showNoNetwork() else hideNoNetwork() }

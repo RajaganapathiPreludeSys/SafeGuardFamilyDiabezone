@@ -12,8 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HealthVaultViewModel : BaseViewModel() {
-    var healthVault = MutableLiveData<Vault>()
-    var isSample = MutableLiveData<Boolean>()
+    var healthVault = MutableLiveData<Vault?>()
+    var isSample = MutableLiveData<Boolean?>()
     var pdfURL = ""
 
     init {
@@ -30,9 +30,9 @@ class HealthVaultViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            healthVault.postValue(response.body()?.data!!.vault)
-                            isSample.postValue(response.body()?.data!!.isSample)
-                            pdfURL = response.body()?.data!!.pdfUrl!!
+                            healthVault.postValue(response.body()!!.data.vault)
+                            isSample.postValue(response.body()!!.data.isSample)
+                            pdfURL = response.body()!!.data.pdfUrl!!
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

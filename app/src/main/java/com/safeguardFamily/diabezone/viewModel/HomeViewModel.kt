@@ -12,7 +12,7 @@ import retrofit2.Response
 
 class HomeViewModel : BaseViewModel() {
 
-    val notifications = MutableLiveData<List<Notification>>()
+    val notifications = MutableLiveData<List<Notification>?>()
 
     fun getHome(onSuccess: ((response: Graph, pdfUrl: String?) -> Unit)) {
         RetrofitClient.apiInterface.getHome(IdRequest(uid = SharedPref.getUserId()!!))
@@ -23,10 +23,10 @@ class HomeViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()!!.success!!) {
-                            notifications.postValue(response.body()!!.data!!.notifications)
+                            notifications.postValue(response.body()!!.data.notifications)
                             onSuccess(
-                                response.body()!!.data!!.graph!!,
-                                response.body()!!.data!!.pdfUrl
+                                response.body()!!.data.graph!!,
+                                response.body()!!.data.pdfUrl
                             )
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())

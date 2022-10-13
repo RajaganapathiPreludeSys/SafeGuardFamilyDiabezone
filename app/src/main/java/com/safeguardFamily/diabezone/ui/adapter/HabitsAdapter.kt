@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
-import com.safeguardFamily.diabezone.model.response.PersonalHabit
+import com.safeguardFamily.diabezone.model.response.History
 
-class HabitsAdapter(items: List<PersonalHabit>) :
+class HabitsAdapter(items: List<History>) :
     RecyclerView.Adapter<HabitsAdapter.ViewHolder>() {
 
-    private val mItems: List<PersonalHabit>
+    private val mItems: List<History>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,7 +32,7 @@ class HabitsAdapter(items: List<PersonalHabit>) :
         private val tvStatus: TextView
         private val tvComment: TextView
         private val ivAlert: ImageView
-        fun setOnBoardingData(item: PersonalHabit) {
+        fun setOnBoardingData(item: History) {
             tvTitle.text = item.title
             tvStatus.text = item.status
             tvComment.text = if (item.comment!!.length > 1) item.comment else "NIL"

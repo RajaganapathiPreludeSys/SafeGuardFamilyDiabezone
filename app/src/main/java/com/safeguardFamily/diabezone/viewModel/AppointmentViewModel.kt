@@ -27,8 +27,8 @@ class AppointmentViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            providers.postValue(response.body()!!.data!!.providers)
-                            upcomingAppointment.postValue(response.body()!!.data!!.appointments)
+                            providers.postValue(response.body()!!.data.providers)
+                            upcomingAppointment.postValue(response.body()!!.data.appointments)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

@@ -38,6 +38,7 @@ import com.safeguardFamily.diabezone.common.SharedPref.Pref.PrefHealthCoach
 import com.safeguardFamily.diabezone.databinding.FragmentHealthVaultBinding
 import com.safeguardFamily.diabezone.model.response.*
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
+import com.safeguardFamily.diabezone.ui.activity.PDFActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
 import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.ui.adapter.*
@@ -55,7 +56,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         mBinding.mViewModel = mViewModel
 
         mViewModel.isSample.observe(this) {
-            if (it) {
+            if (it!!) {
                 mBinding.tvDesc.text = "Sample Health Vault"
                 mBinding.llBeneficiaryContainer.visibility = View.VISIBLE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.GONE
@@ -68,7 +69,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
 
         mViewModel.healthVault.observe(this) {
             loadTextAreas(
-                it.message,
+                it!!.message,
                 it.patron,
                 it.user,
                 it.insurance,
@@ -195,11 +196,11 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         }
     }
 
-    private fun loadHabit(habits: List<PersonalHabit>?) {
+    private fun loadHabit(habits: List<History>?) {
         if (habits!!.isNotEmpty()) {
             mBinding.rvHabits.visibility = View.VISIBLE
             mBinding.tvHabits.visibility = View.GONE
-            mBinding.rvHabits.adapter = HabitsAdapter(habits)
+            mBinding.rvHabits.adapter = HistoryAdapter(habits)
             mBinding.rvHabits.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             mBinding.rvHabits.setHasFixedSize(false)
@@ -396,7 +397,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
     ) {
 
         mViewModel.isSample.observe(this) {
-            if (it) {
+            if (it!!) {
                 val spanString = SpannableString(message)
 
                 val termsAndCondition: ClickableSpan = object : ClickableSpan() {
@@ -562,7 +563,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         val mBundle = Bundle()
         mBundle.putString(KEY_WEB_KEY, "PDF")
         mBundle.putString(KEY_WEB_URL, url)
-        navigateTo(WebViewActivity::class.java, mBundle)
+        navigateTo(PDFActivity::class.java, mBundle)
     }
 
     private fun contactHealthCoach() {

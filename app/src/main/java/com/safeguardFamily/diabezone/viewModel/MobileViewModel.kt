@@ -23,7 +23,7 @@ class MobileViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            onSuccess(response.body()?.data!!.otps!!)
+                            onSuccess(response.body()!!.data.otps!!)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

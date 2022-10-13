@@ -12,12 +12,10 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
-import com.safeguardFamily.diabezone.common.GlideImageLoader
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.model.request.InitRequest
 import com.safeguardFamily.diabezone.model.response.BaseResponse
 import com.safeguardFamily.diabezone.model.response.InitResponse
-import lv.chi.photopicker.ChiliPhotoPicker
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,10 +34,6 @@ class AppApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         SharedPref.init(applicationContext)
-        ChiliPhotoPicker.init(
-            loader = GlideImageLoader(),
-            authority = "com.safeguardFamily.diabezone"
-        )
         applicationContext()
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -70,7 +64,7 @@ class AppApplication : Application() {
                     response: Response<BaseResponse<InitResponse>>
                 ) {
                     if (response.isSuccessful)
-                        if (response.body()?.success!! && response.body()?.data!!.forceUpdate == true) {
+                        if (response.body()?.success!! && response.body()!!.data.forceUpdate == true) {
                             updateApp()
                         }
                 }

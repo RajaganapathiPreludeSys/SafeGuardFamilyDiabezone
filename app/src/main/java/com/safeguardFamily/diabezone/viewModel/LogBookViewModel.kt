@@ -13,8 +13,8 @@ import retrofit2.Response
 class LogBookViewModel : BaseViewModel() {
 
     var logs = MutableLiveData<List<Log>>()
-    var pdfUrl = MutableLiveData<String>()
-    var graphData = MutableLiveData<Graph>()
+    var pdfUrl = MutableLiveData<String?>()
+    var graphData = MutableLiveData<Graph?>()
 
     init {
         getLogBook()
@@ -30,9 +30,9 @@ class LogBookViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()!!.success!!) {
-                            logs.postValue(response.body()!!.data!!.logs!!)
-                            pdfUrl.postValue(response.body()!!.data!!.pdfUrl)
-                            graphData.postValue(response.body()!!.data!!.graph)
+                            logs.postValue(response.body()!!.data.logs!!)
+                            pdfUrl.postValue(response.body()!!.data.pdfUrl)
+                            graphData.postValue(response.body()!!.data.graph)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

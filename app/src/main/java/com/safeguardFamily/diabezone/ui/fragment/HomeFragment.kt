@@ -1,6 +1,7 @@
 package com.safeguardFamily.diabezone.ui.fragment
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,6 +33,8 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
+import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY
+import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.date12Format
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
@@ -50,14 +53,13 @@ import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.response.GraphItems
 import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
 import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
+import com.safeguardFamily.diabezone.ui.activity.PDFActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
-import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
-
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -159,7 +161,14 @@ class HomeFragment :
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
             }
         }
-
+        mBinding.rlContainer.setOnClickListener {
+            (activity as DashboardActivity?)!!.setCurrentFragment(
+                (activity as DashboardActivity?)!!.profile
+            )
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Profile Page from home")
+            }
+        }
         mBinding.ivProgram.setOnClickListener {
             navigateTo(SubscriptionActivity::class.java)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
@@ -196,15 +205,18 @@ class HomeFragment :
         mBinding.cvTwo.setOnClickListener {
             if (pdfUrl.length > 1) {
                 val mBundle = Bundle()
-                mBundle.putString(com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY, "PDF")
+                mBundle.putString(KEY_WEB_KEY, "PDF")
                 mBundle.putString(
-                    com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL,
+                    KEY_WEB_URL,
                     pdfUrl
                 )
-                navigateTo(WebViewActivity::class.java, mBundle)
+                navigateTo(PDFActivity::class.java, mBundle)
             } else {
-                showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
-                navigateTo(SubscriptionActivity::class.java)
+                if (SharedPref.isMember()) showToast("Consolidated Prescription is not available for now. Please contact your health coach.")
+                else {
+                    showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
+                    navigateTo(SubscriptionActivity::class.java)
+                }
             }
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Consolidated Prescription from Home")
@@ -248,7 +260,7 @@ class HomeFragment :
 
     private fun loadNotification() {
         mViewModel.notifications.observe(this) {
-            if (it.isNotEmpty()) {
+            if (it!!.isNotEmpty()) {
                 mBinding.llHide.visibility = View.VISIBLE
                 mBinding.viewHide.visibility = View.VISIBLE
                 val mAdapter = NotificationAdapter(it) { string ->
@@ -444,14 +456,11 @@ class HomeFragment :
             months.add(displayingDayFromAPI(it.measure_date!!)!!)
         }
 
-        mBinding.ivRedBanner.visibility = View.GONE
+        if (chartData.summary!!.incident!!.hyper!! > 0 || chartData.summary!!.incident!!.hypo!! > 0)
+            mBinding.ivRedBanner.visibility = View.VISIBLE
+        else mBinding.ivRedBanner.visibility = View.GONE
 
         if (chartData.list!!.isNotEmpty()) {
-
-            if (chartData.list!![0].status == "hyper" || chartData.list!![0].status == "hypo")
-                mBinding.ivRedBanner.visibility = View.VISIBLE
-            else mBinding.ivRedBanner.visibility = View.GONE
-
             mBinding.rlGraphContainer.visibility = View.VISIBLE
             mBinding.tvChartPlaceholder.visibility = View.GONE
 
@@ -497,9 +506,11 @@ class HomeFragment :
 
             data.setData(generateLineData(chartData))
 
-            xAxis.axisMaximum = data.xMax + 0.25f
+//            xAxis.axisMaximum = data.xMax + 0.25f
 
-            mBinding.chart1.animateY(2000, Easing.EaseOutBack);
+            if (chartData.list!!.size > 1) xAxis.axisMinimum = -0.3f
+
+            mBinding.chart1.animateY(2000, Easing.EaseOutBack)
 
             mBinding.chart1.data = data
             mBinding.chart1.axisRight.isEnabled = false
@@ -524,22 +535,24 @@ class HomeFragment :
         val entries = ArrayList<Entry>()
 
         val colors = ArrayList<Int>()
+
         chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
             if (l.status == "hyper" || l.status == "hypo") {
                 colors.add(requireContext().getColor(R.color.red))
             } else colors.add(requireContext().getColor(R.color.blue))
         }
+
         val set = LineDataSet(entries, "")
-        set.color = requireContext().getColor(R.color.blue)
-        set.lineWidth = 3f
+        set.color = requireContext().getColor(R.color.blueOpacity)
+        set.lineWidth = 4f
         set.setCircleColor(requireContext().getColor(R.color.blue))
-        set.circleRadius = 4f
+        set.circleRadius = 5f
         set.fillColor = requireContext().getColor(R.color.blue)
         set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
-        set.valueTextSize = 12f
-        set.valueTextColor = requireContext().getColor(R.color.black)
+        set.valueTextSize = 13f
+        set.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
         set.axisDependency = YAxis.AxisDependency.RIGHT
         set.circleColors = colors
         set.setValueTextColors(colors)

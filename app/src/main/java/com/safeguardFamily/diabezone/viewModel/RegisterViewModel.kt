@@ -25,7 +25,7 @@ class RegisterViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            SharedPref.putUser(response.body()!!.data!!.user)
+                            SharedPref.putUser(response.body()!!.data.user)
                             onSuccess(response.body()?.data!!)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
@@ -63,7 +63,7 @@ class RegisterViewModel : BaseViewModel() {
             ) {
                 if (response.isSuccessful)
                     if (response.body()?.success!!) {
-                        SharedPref.putUser(response.body()!!.data!!.user)
+                        SharedPref.putUser(response.body()!!.data.user)
                         onSuccess(response.body()?.data!!)
                     } else apiError.postValue(response.body()!!.error)
                 else apiError.postValue(response.message())

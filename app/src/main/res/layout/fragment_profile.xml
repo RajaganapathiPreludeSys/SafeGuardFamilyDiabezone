@@ -339,6 +339,16 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProgram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/app_name"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:src="@drawable/ic_program_banner" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Medium.MontserratBold"
                 android:layout_width="wrap_content"

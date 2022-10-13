@@ -80,6 +80,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             }
         }
 
+        mBinding.ivProgram.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
+            }
+        }
+
         val callHealthCoach = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->

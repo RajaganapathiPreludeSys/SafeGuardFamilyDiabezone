@@ -111,7 +111,8 @@ class AppointmentPaymentActivity :
             ) {
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
-                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+//                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
                 checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
                 try {
@@ -119,6 +120,7 @@ class AppointmentPaymentActivity :
                     obj.put("description", "Payment for appointment")
                     obj.put("theme.color", "")
                     obj.put("currency", "INR")
+                    obj.put("orderId", it)
                     obj.put("amount", amount)
                     obj.put("prefill.contact", SharedPref.getUser().mobile)
                     obj.put("prefill.email", SharedPref.getUser().email)

@@ -17,12 +17,12 @@ import retrofit2.Response
 
 class AppointmentPaymentViewModel : BaseViewModel() {
 
-    val appointment = MutableLiveData<AppointmentResponse>()
+    val appointment = MutableLiveData<AppointmentResponse?>()
     val isBookingCompleted = MutableLiveData<Boolean>()
 
     fun createAppointment(
         request: CreateAppointmentRequest,
-        onSuccess: (() -> Unit)
+        onSuccess: ((orderId: String) -> Unit)
     ) {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
             param(FirebaseAnalytics.Param.CONTENT, "Create Appointment")
@@ -38,9 +38,9 @@ class AppointmentPaymentViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
-                            if (response.body()!!.data!!.appointment.booking_status == 4)
-                                onSuccess()
-                            else if (response.body()!!.data!!.appointment.booking_status == 1) {
+                            if (response.body()!!.data.appointment.booking_status == 4)
+                                onSuccess(response.body()!!.data.orderId!!)
+                            else if (response.body()!!.data.appointment.booking_status == 1) {
 //                                successToast.postValue("Appointment Created Successfully")
                                 isBookingCompleted.postValue(true)
                             }

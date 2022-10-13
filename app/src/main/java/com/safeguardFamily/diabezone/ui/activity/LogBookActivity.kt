@@ -1,6 +1,7 @@
 package com.safeguardFamily.diabezone.ui.activity
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +46,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
                 val mBundle = Bundle()
                 mBundle.putString(KEY_WEB_KEY, "PDF")
                 mBundle.putString(KEY_WEB_URL, mViewModel.pdfUrl.value)
-                navigateTo(WebViewActivity::class.java, mBundle)
+                navigateTo(PDFActivity::class.java, mBundle)
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Open log book PDF")
                 }
@@ -72,21 +73,21 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             mBinding.radioGroup1.setOnCheckedChangeListener { group, i ->
                 when (i) {
                     mBinding.radioButton1.id -> bindChart(
-                        it.lifetime!!.before_meal!!,
+                        it!!.lifetime!!.before_meal!!,
                         "Fasting"
                     )
                     mBinding.radioButton2.id -> bindChart(
-                        it.lifetime!!.after_meal!!,
+                        it!!.lifetime!!.after_meal!!,
                         "After Meal"
                     )
                     mBinding.radioButton3.id -> bindChart(
-                        it.lifetime!!.random!!,
+                        it!!.lifetime!!.random!!,
                         "Random"
                     )
                 }
             }
             mBinding.radioGroup1.check(mBinding.radioButton1.id)
-            bindChart(it.lifetime!!.before_meal!!, "Fasting")
+            bindChart(it!!.lifetime!!.before_meal!!, "Fasting")
         }
     }
 
@@ -147,17 +148,11 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
                 }
             }
 
-//            xAxis.valueFormatter = object : IndexAxisValueFormatter() {
-//                override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-//                    val index = value.toInt()
-//                    return if (index == 0) "" else if (index < months.size) months[index] else ""
-//                }
-//            }
             val data = CombinedData()
 
             data.setData(generateLineData(chartData))
 
-            xAxis.axisMaximum = data.xMax + 0.25f
+            if (chartData.list!!.size > 1) xAxis.axisMinimum = -0.3f
 
             mBinding.chart1.animateY(2000, Easing.EaseOutBack)
 
@@ -191,15 +186,15 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
             } else colors.add(getColor(R.color.blue))
         }
         val set = LineDataSet(entries, "")
-        set.color = getColor(R.color.blue)
-        set.lineWidth = 3f
+        set.color = getColor(R.color.blueOpacity)
+        set.lineWidth = 4f
         set.setCircleColor(getColor(R.color.blue))
-        set.circleRadius = 4f
+        set.circleRadius = 5f
         set.fillColor = getColor(R.color.blue)
         set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
-        set.valueTextSize = 12f
-        set.valueTextColor = getColor(R.color.black)
+        set.valueTextSize = 13f
+        set.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
         set.axisDependency = YAxis.AxisDependency.RIGHT
         set.circleColors = colors
         set.setValueTextColors(colors)

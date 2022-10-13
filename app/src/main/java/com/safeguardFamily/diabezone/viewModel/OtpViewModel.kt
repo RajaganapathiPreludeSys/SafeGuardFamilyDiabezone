@@ -24,7 +24,7 @@ class OtpViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            onSuccess(response.body()?.data!!.otps!!)
+                            onSuccess(response.body()!!.data.otps!!)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
@@ -53,8 +53,8 @@ class OtpViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            SharedPref.putUser(response.body()!!.data!!.user)
-                            onSuccess(response.body()?.data!!.is_new)
+                            SharedPref.putUser(response.body()!!.data.user)
+                            onSuccess(response.body()!!.data.is_new)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)
