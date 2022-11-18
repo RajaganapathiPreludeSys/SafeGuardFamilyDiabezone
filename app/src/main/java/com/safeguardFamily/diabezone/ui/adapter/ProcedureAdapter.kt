@@ -3,6 +3,7 @@ package com.safeguardFamily.diabezone.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
@@ -33,14 +34,21 @@ class ProcedureAdapter(items: List<Procedure>) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvTitle: TextView
         private val tvDate: TextView
+        private val tvComment: TextView
+        private val llComment: LinearLayout
+
         fun setOnBoardingData(item: Procedure) {
             tvTitle.text = item.title
+            tvComment.text = item.comment
+            llComment.visibility = if (item.comment!=null && item.comment!!.isNotEmpty()) View.VISIBLE else View.INVISIBLE
             tvDate.text = displayingDateFormatTwoFromAPIDateTime(item.procedureDate!!)
         }
 
         init {
             tvTitle = itemView.findViewById(R.id.tvTitle)
             tvDate = itemView.findViewById(R.id.tvDate)
+            tvComment = itemView.findViewById(R.id.tvComment)
+            llComment = itemView.findViewById(R.id.llComment)
         }
     }
 

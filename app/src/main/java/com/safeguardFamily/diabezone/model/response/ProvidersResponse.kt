@@ -2,71 +2,69 @@ package com.safeguardFamily.diabezone.model.response
 
 import com.google.gson.annotations.SerializedName
 
-
 data class ProvidersResponse(
-    val appointments: List<Appointment>,
-    val is_member: Boolean,
-    val providers: List<Provider>
+    @SerializedName("appointments") var appointments: List<Appointment>,
+    @SerializedName("is_member") var is_member: Boolean,
+    @SerializedName("providers") var providers: List<Provider>
 )
 
 data class Appointment(
-    val aid: String,
-    val booking_date: String,
-    val booking_status: Int,
-    val provider: Provider,
-    val puid: String,
-    val slot: String,
-    val uid: String
+    @SerializedName("aid") var aid: String,
+    @SerializedName("booking_date") var booking_date: String,
+    @SerializedName("booking_status") var booking_status: Int,
+    @SerializedName("provider") var provider: Provider,
+    @SerializedName("puid") var puid: String,
+    @SerializedName("slot") var slot: String,
+    @SerializedName("uid") var uid: String
 )
 
 data class Provider(
-    val about: String,
-    var available_slots: List<AvailableSlot>?,
-    val experience: String,
-    val education: String,
-    val languages: String,
-    val reg_no: String,
-    val fees: String,
-    val name: String,
-    val num_patient: String,
-    val num_consultations: String,
-    val pic: String,
-    val puid: String,
-    val rating: String,
-    val speciality: String,
-    val timings: Timings,
-    val type: String,
-    val vchat_url: String,
-    val mobile: String,
-    val whatsapp_no: String,
-    val category: String,
-    @SerializedName("is_free")
-    val isFree: Boolean,
-    val cc: String
+    @SerializedName("about") var about: String,
+    @SerializedName("available_slots") var available_slots: List<AvailableSlot>?,
+    @SerializedName("experience") var experience: String,
+    @SerializedName("education") var education: String,
+    @SerializedName("languages") var languages: String,
+    @SerializedName("reg_no") var reg_no: String,
+    @SerializedName("fees") var fees: String,
+    @SerializedName("name") var name: String,
+    @SerializedName("num_patient") var num_patient: String,
+    @SerializedName("num_consultations") var num_consultations: String,
+    @SerializedName("pic") var pic: String,
+    @SerializedName("puid") var puid: String,
+    @SerializedName("rating") var rating: String,
+    @SerializedName("speciality") var speciality: String,
+    @SerializedName("timings") var timings: Timings,
+    @SerializedName("type") var type: String,
+    @SerializedName("vchat_url") var vchat_url: String,
+    @SerializedName("mobile") var mobile: String,
+    @SerializedName("whatsapp_no") var whatsapp_no: String,
+    @SerializedName("category") var category: String,
+    @SerializedName("is_free") var isFree: Boolean,
+    @SerializedName("cc") var cc: String
 )
 
 data class Timings(
-    var days: Days?,
-    var time: String?
+    @SerializedName("days") var days: Days?,
+    @SerializedName("time") var time: String?
 )
 
 data class Days(
-    var fri: String?,
-    var mon: String?,
-    var sat: String?,
-    var sun: String?,
-    var thu: String?,
-    var tue: String?,
-    var wed: String?
+    @SerializedName("fri") var fri: String?,
+    @SerializedName("mon") var mon: String?,
+    @SerializedName("sat") var sat: String?,
+    @SerializedName("sun") var sun: String?,
+    @SerializedName("thu") var thu: String?,
+    @SerializedName("tue") var tue: String?,
+    @SerializedName("wed") var wed: String?
 )
 
 data class AvailableSlot(
-    val days: List<Day>,
-    val month: String
+    @SerializedName("days") var days: List<Day>,
+    @SerializedName("month") var month: String
 )
 
 data class Day(
-    val date: Int,
-    val day: String,
-    val slots: List<String>
+    @SerializedName("date") var date: Int,
+    @SerializedName("day") var day: String,
+    @SerializedName("slots") var slots: List<String>
 )

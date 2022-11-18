@@ -137,7 +137,33 @@ class HomeFragment :
                             else -> "before_meal"
                         }
                     )
-                    mViewModel.addDiabetesLog(request) {
+                    if (mBinding.etBloodSugar.text.toString().toInt() <= 60) {
+                        val dialogBuilder = AlertDialog.Builder(requireContext())
+                        dialogBuilder
+                            .setMessage("${mProfile.name} your blood sugar value is very low.")
+                            .setCancelable(true)
+                            .setPositiveButton("ok") { dialog, id ->
+                                mViewModel.addDiabetesLog(request) {
+                                    loadHomeGraph()
+                                    mCalendar = Calendar.getInstance()
+                                    dateString =
+                                        "${mCalendar.get(Calendar.YEAR)}-${mCalendar.get(Calendar.MONTH) + 1}-${
+                                            mCalendar.get(Calendar.DAY_OF_MONTH)
+                                        }"
+                                    mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
+                                    mBinding.tvTime.text =
+                                        SimpleDateFormat(date12Format, Locale.getDefault()).format(
+                                            Date()
+                                        )
+                                    mBinding.etBloodSugar.text = null
+                                    mBinding.spType.adapter = adapter
+                                    showToast("Diabetes Log Saved")
+                                }
+                            }
+                        val alert = dialogBuilder.create()
+                        alert.setTitle("Alert - Blood Sugar very low")
+                        alert.show()
+                    } else mViewModel.addDiabetesLog(request) {
                         loadHomeGraph()
                         mCalendar = Calendar.getInstance()
                         dateString =
@@ -146,7 +172,9 @@ class HomeFragment :
                             }"
                         mBinding.tvDate.text = "${displayingDateFormat(dateString)}"
                         mBinding.tvTime.text =
-                            SimpleDateFormat(date12Format, Locale.getDefault()).format(Date())
+                            SimpleDateFormat(date12Format, Locale.getDefault()).format(
+                                Date()
+                            )
                         mBinding.etBloodSugar.text = null
                         mBinding.spType.adapter = adapter
                         showToast("Diabetes Log Saved")
@@ -203,21 +231,17 @@ class HomeFragment :
             }
         }
         mBinding.cvTwo.setOnClickListener {
-            if (pdfUrl.length > 1) {
+            if (!SharedPref.isMember()) {
+                showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
+                navigateTo(SubscriptionActivity::class.java)
+            } else if (pdfUrl.length > 1) {
                 val mBundle = Bundle()
                 mBundle.putString(KEY_WEB_KEY, "PDF")
-                mBundle.putString(
-                    KEY_WEB_URL,
-                    pdfUrl
-                )
+                mBundle.putString(KEY_WEB_URL, pdfUrl)
                 navigateTo(PDFActivity::class.java, mBundle)
-            } else {
-                if (SharedPref.isMember()) showToast("Consolidated Prescription is not available for now. Please contact your health coach.")
-                else {
-                    showToast("Only members can access the Consolidated Prescription. Please subscribe to become a member")
-                    navigateTo(SubscriptionActivity::class.java)
-                }
-            }
+            } else
+                showToast("Consolidated Prescription is not available for now. Please contact your health coach.")
+
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Consolidated Prescription from Home")
             }
@@ -230,8 +254,6 @@ class HomeFragment :
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Health vault from home")
             }
         }
-
-        loadHomeGraph()
     }
 
     private fun loadHomeGraph() {
@@ -502,27 +524,25 @@ class HomeFragment :
                     return months[value.toInt() % months.size]
                 }
             }
-            val data = CombinedData()
+            try {
+                val data = CombinedData()
 
-            data.setData(generateLineData(chartData))
+                data.setData(generateLineData(chartData))
 
 //            xAxis.axisMaximum = data.xMax + 0.25f
 
-            if (chartData.list!!.size > 1) xAxis.axisMinimum = -0.3f
+                if (chartData.list!!.size > 1) xAxis.axisMinimum = -0.3f
 
-            mBinding.chart1.animateY(2000, Easing.EaseOutBack)
+                mBinding.chart1.animateY(2000, Easing.EaseOutBack)
 
-            mBinding.chart1.data = data
-            mBinding.chart1.axisRight.isEnabled = false
-            mBinding.chart1.legend.isEnabled = false
-            mBinding.chart1.axisLeft.setDrawGridLines(false)
-            mBinding.chart1.xAxis.setDrawGridLines(false)
-            mBinding.chart1.invalidate()
-            mBinding.tvResetZoom.setOnClickListener {
-                mBinding.chart1.fitScreen()
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Reset Zoom in Log book")
-                }
+                mBinding.chart1.data = data
+                mBinding.chart1.axisRight.isEnabled = false
+                mBinding.chart1.legend.isEnabled = false
+                mBinding.chart1.axisLeft.setDrawGridLines(false)
+                mBinding.chart1.xAxis.setDrawGridLines(false)
+                mBinding.chart1.invalidate()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         } else {
             mBinding.rlGraphContainer.visibility = View.GONE
@@ -539,16 +559,16 @@ class HomeFragment :
         chartData.list!!.reversed().forEachIndexed { i, l ->
             entries.add(Entry(i + 0.0f, l.log_value!! + 0f))
             if (l.status == "hyper" || l.status == "hypo") {
-                colors.add(requireContext().getColor(R.color.red))
-            } else colors.add(requireContext().getColor(R.color.blue))
+                colors.add(context!!.getColor(R.color.red))
+            } else colors.add(context!!.getColor(R.color.blue))
         }
 
         val set = LineDataSet(entries, "")
-        set.color = requireContext().getColor(R.color.blueOpacity)
+        set.color = context!!.getColor(R.color.blueOpacity)
         set.lineWidth = 4f
-        set.setCircleColor(requireContext().getColor(R.color.blue))
+        set.setCircleColor(context!!.getColor(R.color.blue))
         set.circleRadius = 5f
-        set.fillColor = requireContext().getColor(R.color.blue)
+        set.fillColor = context!!.getColor(R.color.blue)
         set.mode = LineDataSet.Mode.LINEAR
         set.setDrawValues(true)
         set.valueTextSize = 13f
@@ -572,5 +592,9 @@ class HomeFragment :
         Glide.with(this).load(mProfile.pic).placeholder(R.drawable.ic_profile_thumb)
             .into(mBinding.ivProfileImage)
         mBinding.tvName.text = mProfile.name
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

@@ -1,7 +1,10 @@
 package com.safeguardFamily.diabezone.ui.activity
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -32,6 +35,11 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
 
     private lateinit var pack: Package
 
+    private var currentPosition = 0
+
+    var runnable: Runnable? = null
+    val handler = Handler(Looper.getMainLooper())
+
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
 
@@ -51,15 +59,53 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
         mBinding.rvBanner.setHasFixedSize(true)
         mBinding.rvBanner.addItemDecoration(LinePagerIndicatorDecoration(this))
 
+
+        handler.postDelayed(Runnable {
+            handler.postDelayed(runnable!!, 5000)
+            Log.d("RRR -- ", "onceCreated: $currentPosition")
+//            mBinding.rvBanner.layoutManager!!.scrollToPosition(currentPosition)
+            mBinding.rvBanner.betterSmoothScrollToPosition(currentPosition)
+            if (currentPosition == 5) currentPosition = 0
+            else currentPosition++
+        }.also { runnable = it }, 5000)
+
+
         mViewModel.getPrograms {
             loadProgram(it.packages!!)
             loadInfo(it.info!!)
         }
     }
 
+    fun RecyclerView.betterSmoothScrollToPosition(targetItem: Int) {
+        layoutManager?.apply {
+            val maxScroll = 6
+            when (this) {
+                is LinearLayoutManager -> {
+                    val topItem = findFirstVisibleItemPosition()
+                    val distance = topItem - targetItem
+                    val anchorItem = when {
+                        distance > maxScroll -> targetItem + maxScroll
+                        distance < -maxScroll -> targetItem - maxScroll
+                        else -> topItem
+                    }
+                    if (anchorItem != topItem) scrollToPosition(anchorItem)
+                    post {
+                        smoothScrollToPosition(targetItem)
+                    }
+                }
+                else -> smoothScrollToPosition(targetItem)
+            }
+        }
+    }
+
     private fun loadInfo(info: List<Info>) {
         mBinding.rvInfo.layoutManager = LinearLayoutManager(this)
         mBinding.rvInfo.adapter = ExpandableInfoAdapter(info)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable!!)
     }
 
     private fun loadProgram(packages: List<Package>) {
@@ -76,10 +122,14 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
                     uid = SharedPref.getUserId()!!
                 )
             ) { orderId ->
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.PAYMENT_TYPE, "Payment For Subscription with orderId:$orderId")
+                }
+                Log.d(Bundle.TAG, "onceCreated - ORder ID: $orderId")
                 val amount = pack.programFee!!.toInt() * 100
                 val checkout = Checkout()
-//            checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
-                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+//                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
 
                 checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
@@ -88,10 +138,11 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding, Subscript
                     obj.put("description", "Payment for Subscription")
                     obj.put("theme.color", "")
                     obj.put("currency", "INR")
-                    obj.put("orderId", orderId)
+                    obj.put("order_id", orderId)
                     obj.put("amount", amount)
                     obj.put("prefill.contact", SharedPref.getUser().mobile)
                     obj.put("prefill.email", SharedPref.getUser().email)
+                    Log.d(Bundle.TAG, "onceCreated - ORder ID: ${Gson().toJson(obj)}")
                     checkout.open(this, obj)
                 } catch (e: JSONException) {
                     e.printStackTrace()

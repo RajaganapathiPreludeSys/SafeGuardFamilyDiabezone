@@ -3,21 +3,20 @@ package com.safeguardFamily.diabezone.model.request
 import com.google.gson.annotations.SerializedName
 
 data class PaymentFailRequest(
-    var amount: String?,
-    var error: Error?,
-    var pid: String?,
-    var puid: String?,
-    @SerializedName("sel_date")
-    var selDate: String?,
-    var slot: String?,
-    var type: String?,
-    var uid: String?
+    @SerializedName("amount") var amount: String?,
+    @SerializedName("error") var error: Error?,
+    @SerializedName("pid") var pid: String?,
+    @SerializedName("puid") var puid: String?,
+    @SerializedName("sel_date") var selDate: String?,
+    @SerializedName("slot") var slot: String?,
+    @SerializedName("type") var type: String?,
+    @SerializedName("uid") var uid: String?
 )
 
 data class Error(
-    var code: String?,
-    var description: String?,
-    var reason: String?,
-    var source: String?,
-    var step: String?
+    @SerializedName("code") var code: String?,
+    @SerializedName("description") var description: String?,
+    @SerializedName("reason") var reason: String?,
+    @SerializedName("source") var source: String?,
+    @SerializedName("step") var step: String?
 )

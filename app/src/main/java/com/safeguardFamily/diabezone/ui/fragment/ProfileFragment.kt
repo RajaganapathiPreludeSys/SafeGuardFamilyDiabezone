@@ -125,11 +125,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             }
         }
 
-//        mBinding.clPastConsult.setOnClickListener { logout() }
-
         mBinding.clLogout.setOnClickListener {
             logout()
-
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Logout")
             }
@@ -137,7 +134,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
         mBinding.ivCall.setOnClickListener {
             callSupport.launch(Manifest.permission.CALL_PHONE)
-
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Calling customer support")
             }

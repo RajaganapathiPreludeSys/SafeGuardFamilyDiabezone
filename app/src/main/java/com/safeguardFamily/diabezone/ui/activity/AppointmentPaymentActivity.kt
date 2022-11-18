@@ -14,6 +14,7 @@ import com.razorpay.PaymentResultListener
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
+import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityAppointmentPaymentBinding
@@ -109,10 +110,17 @@ class AppointmentPaymentActivity :
                     slot = apiTime
                 )
             ) {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.PAYMENT_TYPE,
+                        "Payment For Subscription with orderId:$it"
+                    )
+                }
+                Log.d(TAG, "onceCreated - ORder ID: $it")
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
-//                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
-                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+//                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
                 checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
                 try {
@@ -120,10 +128,11 @@ class AppointmentPaymentActivity :
                     obj.put("description", "Payment for appointment")
                     obj.put("theme.color", "")
                     obj.put("currency", "INR")
-                    obj.put("orderId", it)
+                    obj.put("order_id", it)
                     obj.put("amount", amount)
                     obj.put("prefill.contact", SharedPref.getUser().mobile)
                     obj.put("prefill.email", SharedPref.getUser().email)
+                    Log.d(TAG, "onceCreated - ORder ID: ${Gson().toJson(obj)}")
                     checkout.open(this, obj)
                 } catch (e: JSONException) {
                     e.printStackTrace()

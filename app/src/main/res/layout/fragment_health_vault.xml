@@ -657,11 +657,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/bgGrey" />
+                            android:background="@color/bgGrey"
+                            android:visibility="gone" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvOne"
@@ -723,11 +725,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/bgGrey" />
+                            android:background="@color/bgGrey"
+                            android:visibility="gone" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvTwo"

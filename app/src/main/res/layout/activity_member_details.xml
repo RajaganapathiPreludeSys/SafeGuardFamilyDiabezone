@@ -107,6 +107,57 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="15dp" />
 
+                <RelativeLayout
+                    android:id="@+id/llPackageDetailsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPackage"
+                        style="@style/Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Package valid till " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvExpireDate"
+                        style="@style/Small.Red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/tvPackage"
+                        android:text="" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRenew"
+                        style="@style/Small.Blue.MontserratBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_royal_blue_border_curved"
+                        android:paddingStart="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="5dp"
+                        android:text="Renew Now" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivProgram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/app_name"
+                    android:paddingTop="10dp"
+                    android:src="@drawable/ic_program_banner" />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,47 +221,6 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
-                <RelativeLayout
-                    android:id="@+id/llPackageDetailsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:gravity="center_vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvPackage"
-                        style="@style/Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Package valid till " />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvExpireDate"
-                        style="@style/Small.Red"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/tvPackage"
-                        android:text=" 21 Aug 2022" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvRenew"
-                        style="@style/Small.Blue.MontserratBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_royal_blue_border_curved"
-                        android:paddingStart="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="5dp"
-                        android:text="Renew Now" />
-
-                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAskQues"

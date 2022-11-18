@@ -3,64 +3,61 @@ package com.safeguardFamily.diabezone.model.response
 import com.google.gson.annotations.SerializedName
 
 data class HomeResponse(
-    var graph: Graph?,
-    var is_member: Boolean?,
-    var notifications: List<Notification>?,
-    @SerializedName("consolidate_pdf_url")
-    var pdfUrl: String?
+    @SerializedName("graph") var graph: Graph?,
+    @SerializedName("is_member") var is_member: Boolean?,
+    @SerializedName("notifications") var notifications: List<Notification>?,
+    @SerializedName("consolidate_pdf_url") var pdfUrl: String?
 )
 
 data class Graph(
-    var last_30_days: GraphList?,
-    var last_7_days: GraphList?,
-    var lifetime: GraphList?
+    @SerializedName("last_30_days") var last_30_days: GraphList?,
+    @SerializedName("last_7_days") var last_7_days: GraphList?,
+    @SerializedName("lifetime") var lifetime: GraphList?
 )
 
 data class Notification(
-    var ndate: String?,
-    var expired_on: String?,
-    var ndesc: String?,
-    var nid: Int?,
-    var pic: String?,
-    var screen: String?,
-    var title: String?
+    @SerializedName("ndate") var ndate: String?,
+    @SerializedName("expired_on") var expired_on: String?,
+    @SerializedName("ndesc") var ndesc: String?,
+    @SerializedName("nid") var nid: Int?,
+    @SerializedName("pic") var pic: String?,
+    @SerializedName("screen") var screen: String?,
+    @SerializedName("title") var title: String?
 )
 
 data class GraphList(
-    var after_meal: GraphItems?,
-    var before_meal: GraphItems?,
-    var random: GraphItems?
+    @SerializedName("after_meal") var after_meal: GraphItems?,
+    @SerializedName("before_meal") var before_meal: GraphItems?,
+    @SerializedName("random") var random: GraphItems?
 )
 
 data class GraphItems(
-    var list: List<ListX>?,
-    var summary: Summary?
+    @SerializedName("list") var list: List<ListX>?,
+    @SerializedName("summary") var summary: Summary?
 )
 
 data class ListX(
-    var lid: String?,
-    var log_value: Int?,
-    var measure_date: String?,
-    var measure_unit: String?,
-    var period: String?,
-    var status: String?,
-    var uid: String?
+    @SerializedName("lid") var lid: String?,
+    @SerializedName("log_value") var log_value: Int?,
+    @SerializedName("measure_date") var measure_date: String?,
+    @SerializedName("measure_unit") var measure_unit: String?,
+    @SerializedName("period") var period: String?,
+    @SerializedName("status") var status: String?,
+    @SerializedName("uid") var uid: String?
 
 )
 
 data class Summary(
-    var avg: Int?,
-    var incident: Incident?,
-    var max: String?,
-    var min: String?,
-    var target: Int?,
-    @SerializedName("min_target")
-    var minTarget: Int?,
-    @SerializedName("max_target")
-    var maxTarget: Int?
+    @SerializedName("avg") var avg: Int?,
+    @SerializedName("incident") var incident: Incident?,
+    @SerializedName("max") var max: String?,
+    @SerializedName("min") var min: String?,
+    @SerializedName("target") var target: Int?,
+    @SerializedName("min_target") var minTarget: Int?,
+    @SerializedName("max_target") var maxTarget: Int?
 )
 
 data class Incident(
-    var hyper: Int?,
-    var hypo: Int?
+    @SerializedName("hyper") var hyper: Int?,
+    @SerializedName("hypo") var hypo: Int?
 )

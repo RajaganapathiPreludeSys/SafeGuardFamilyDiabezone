@@ -43,7 +43,7 @@ class SubscriptionViewModel : BaseViewModel() {
             })
     }
 
-    fun getOrderID(request: OrderIdRequest, onSuccess: ((response: OrderIdResponse) -> Unit)) {
+    fun getOrderID(request: OrderIdRequest, onSuccess: ((orderId: String) -> Unit)) {
         apiLoader.postValue(true)
         RetrofitClient.apiInterface.getOrderID(request)
             .enqueue(object : Callback<BaseResponse<OrderIdResponse>> {
@@ -62,7 +62,7 @@ class SubscriptionViewModel : BaseViewModel() {
                 ) {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
-                            onSuccess(response.body()!!.data)
+                            onSuccess(response.body()!!.data.order_ID)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

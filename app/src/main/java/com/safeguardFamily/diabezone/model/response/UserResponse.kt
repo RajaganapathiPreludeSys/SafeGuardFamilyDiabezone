@@ -1,16 +1,18 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 data class UserResponse(
-    var is_new: Boolean,
-    var user: User
+    @SerializedName("is_new") var is_new: Boolean,
+    @SerializedName("user") var user: User
 )
 
 data class User(
-    var cc: String,
-    var email: String,
-    var mobile: String,
-    var name: String,
-    var pic: String,
-    var uname: String,
-    var uid: String
+    @SerializedName("cc") var cc: String,
+    @SerializedName("email") var email: String,
+    @SerializedName("mobile") var mobile: String,
+    @SerializedName("name") var name: String,
+    @SerializedName("pic") var pic: String,
+    @SerializedName("uname") var uname: String,
+    @SerializedName("uid") var uid: String
 )

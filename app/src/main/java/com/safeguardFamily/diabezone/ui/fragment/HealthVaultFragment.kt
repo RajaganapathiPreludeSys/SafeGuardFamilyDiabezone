@@ -12,6 +12,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -40,7 +41,6 @@ import com.safeguardFamily.diabezone.model.response.*
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 import com.safeguardFamily.diabezone.ui.activity.PDFActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
-import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.ui.adapter.*
 import com.safeguardFamily.diabezone.viewModel.HealthVaultViewModel
 
@@ -61,7 +61,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 mBinding.llBeneficiaryContainer.visibility = View.VISIBLE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.GONE
             } else {
-                mBinding.tvDesc.text = "HV PDF"
+                mBinding.tvDesc.text = "Health Vault"
                 mBinding.llBeneficiaryContainer.visibility = View.GONE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.VISIBLE
             }
@@ -408,26 +408,26 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
 
                 spanString.setSpan(
                     termsAndCondition,
-                    message!!.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message!!.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     ForegroundColorSpan(Color.WHITE),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     UnderlineSpan(),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
 
@@ -496,6 +496,18 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             }
         }
 
+        mBinding.ivConsolidatedPdf.setOnClickListener {
+            if (prescription != null && prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
+            else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
+
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(
+                    FirebaseAnalytics.Param.CONTENT,
+                    "Consolidated prescription - PDF in webview"
+                )
+            }
+        }
+
         //      Consolidated Prescription
         if (prescription != null) {
             mBinding.llPrescription.visibility = View.VISIBLE
@@ -511,17 +523,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 displayingDateFormatTwoFromAPIDateTime(prescription.recommendations!!)
             mBinding.tvRecommendationTime.text =
                 displayingTimeFormat(prescription.recommendations!!)
-            mBinding.ivConsolidatedPdf.setOnClickListener {
-                if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
-                else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
 
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(
-                        FirebaseAnalytics.Param.CONTENT,
-                        "Consolidated prescription - PDF in webview"
-                    )
-                }
-            }
             mBinding.ivNext.setOnClickListener {
                 if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
                 else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
@@ -560,6 +562,8 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
     }
 
     private fun openWebView(url: String) {
+
+        Log.d("RRR -- ", "openWebView() called with: url = $url")
         val mBundle = Bundle()
         mBundle.putString(KEY_WEB_KEY, "PDF")
         mBundle.putString(KEY_WEB_URL, url)

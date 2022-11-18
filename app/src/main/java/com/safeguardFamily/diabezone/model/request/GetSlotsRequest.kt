@@ -1,6 +1,8 @@
 package com.safeguardFamily.diabezone.model.request
 
+import com.google.gson.annotations.SerializedName
+
 data class GetSlotsRequest(
-    val uid: String,
-    val puid: String,
+    @SerializedName("uid") val uid: String,
+    @SerializedName("puid") val puid: String,
 )

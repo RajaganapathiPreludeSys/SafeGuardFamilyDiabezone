@@ -1,7 +1,9 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 data class BaseResponse<T>(
-    val success: Boolean?,
-    val error: String?,
-    val data: T
+    @SerializedName("success") val success: Boolean?,
+    @SerializedName("error") val error: String?,
+    @SerializedName("data") val data: T
 )
