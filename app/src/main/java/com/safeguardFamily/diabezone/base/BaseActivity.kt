@@ -106,10 +106,12 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     open fun openWhatsApp(num: String) {
+        val packageManager = packageManager
         val appInstalled = try {
             packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
             true
         } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
             false
         }
         if (appInstalled) {

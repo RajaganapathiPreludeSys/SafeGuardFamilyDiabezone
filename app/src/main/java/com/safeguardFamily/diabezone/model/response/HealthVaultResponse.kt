@@ -6,7 +6,9 @@ data class HealthVaultResponse(
     @SerializedName("is_member") var isMember: Boolean?,
     @SerializedName("is_sample") var isSample: Boolean?,
     @SerializedName("pdf_url") var pdfUrl: String?,
+    @SerializedName("health_coach") var healthCoach: Provider?,
     @SerializedName("vault") var vault: Vault?
+
 )
 
 data class Vault(

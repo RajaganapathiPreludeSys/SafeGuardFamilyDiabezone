@@ -6,12 +6,14 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
 import com.safeguardFamily.diabezone.apiService.RetrofitClient
+import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.model.request.InitRequest
 import com.safeguardFamily.diabezone.model.response.BaseResponse
@@ -38,12 +40,12 @@ class AppApplication : Application() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                android.util.Log.d("Token", "Failed:")
+                Log.d("Token", "Failed:")
                 return@OnCompleteListener
             }
 
             val token = task.result
-            android.util.Log.d("Token", "AAA : $token")
+            Log.d("Token", "AAA : $token")
             initAppAPI(token)
         })
 
@@ -64,9 +66,11 @@ class AppApplication : Application() {
                     response: Response<BaseResponse<InitResponse>>
                 ) {
                     if (response.isSuccessful)
-                        if (response.body()?.success!! && response.body()!!.data.forceUpdate == true) {
-                            updateApp()
-                        }
+                        Log.i(TAG, "initAppAPI onResponse: ${response.body()!!.data.forceUpdate}")
+                    if (response.body()?.success!! && response.body()!!.data.forceUpdate == true) {
+                        updateApp()
+//                        if (BuildConfig.BUILD_TYPE == "debug") debugForceUpdate()
+                    }
                 }
 
                 override fun onFailure(
@@ -76,6 +80,20 @@ class AppApplication : Application() {
 
                 }
             })
+    }
+
+    fun debugForceUpdate(){
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder
+            .setMessage("This dialog is for development mode. Force update will work if the app is in live")
+            .setCancelable(false)
+            .setPositiveButton("Ok") { dialog, id ->
+            }
+            .setNegativeButton("Cancel") { dialog, id ->
+            }
+        val alert = dialogBuilder.create()
+        alert.setTitle("Force Update")
+        alert.show()
     }
 
     fun updateApp() {
@@ -108,7 +126,6 @@ class AppApplication : Application() {
                         }
                     }
                 val alert = dialogBuilder.create()
-                alert.setTitle("Payment for Appointment")
                 alert.show()
             }
         }

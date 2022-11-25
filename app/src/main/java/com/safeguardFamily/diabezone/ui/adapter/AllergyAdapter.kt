@@ -49,8 +49,12 @@ class AllergyAdapter(items: List<Allergy>) :
             tvHospital.text = item.hospital
             tvSeverity.text = item.severity
             tvReaction.text = item.reaction
-            tvDate.text = DateUtils.displayingDateFormatTwoFromAPIDateTime(item.reportDate!!)
-            tvTime.text = DateUtils.displayingTimeFormat(item.reportDate!!)
+            try{
+                tvDate.text = DateUtils.displayingDateFormatTwoFromAPIDateTime(item.reportDate!!)
+                tvTime.text = DateUtils.displayingTimeFormat(item.reportDate!!)
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
             if (item.isAlert!!) {
                 tvAllergyTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))

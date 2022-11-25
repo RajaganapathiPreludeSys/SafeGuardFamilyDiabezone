@@ -25,6 +25,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
@@ -400,14 +401,14 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             if (it!!) {
                 val spanString = SpannableString(message)
 
-                val termsAndCondition: ClickableSpan = object : ClickableSpan() {
+                val clickableSpan: ClickableSpan = object : ClickableSpan() {
                     override fun onClick(p0: View) {
                         navigateTo(SubscriptionActivity::class.java)
                     }
                 }
 
                 spanString.setSpan(
-                    termsAndCondition,
+                    clickableSpan,
                     message!!.indexOf("Enrol"),
                     message.indexOf("Enrol") + 9,
                     0
@@ -434,7 +435,59 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 mBinding.tvHVDesc.movementMethod = LinkMovementMethod.getInstance()
                 mBinding.tvHVDesc.setText(spanString, TextView.BufferType.SPANNABLE)
                 mBinding.tvHVDesc.isSelected = true
-            } else mBinding.tvHVDesc.text = message
+            } else {
+                val substring = "Please contact Health Coach"
+                if (message!!.contains(substring, ignoreCase = true)) {
+                    val spanString = SpannableString(message)
+
+                    val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                        override fun onClick(p0: View) {
+                            val bundle = Bundle()
+                            bundle.putString(
+                                KEY_DOCTOR,
+                                Gson().toJson(mViewModel.healthCoach.value!!)
+                            )
+                            bundle.putString(KEY_TITLE, "Health Coach")
+                            navigateTo(DoctorDetailsActivity::class.java, bundle)
+                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                                param(
+                                    FirebaseAnalytics.Param.CONTENT,
+                                    "Go to Health Coach Details screen"
+                                )
+                            }
+                        }
+                    }
+
+                    spanString.setSpan(
+                        clickableSpan,
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        ForegroundColorSpan(Color.WHITE),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        UnderlineSpan(),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+
+                    mBinding.tvHVDesc.movementMethod = LinkMovementMethod.getInstance()
+                    mBinding.tvHVDesc.setText(spanString, TextView.BufferType.SPANNABLE)
+                    mBinding.tvHVDesc.isSelected = true
+                } else mBinding.tvHVDesc.text = message
+            }
         }
 
         mBinding.tvTitle.text = user!!.name
@@ -468,12 +521,16 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvInsurer.text = insurance.insurer
             mBinding.tvPolicyName.text = insurance.policyName
             mBinding.tvPolicyNo.text = insurance.policyNo
-            mBinding.tvPeriod.text =
-                "${displayingDateFormatTwo(insurance.startDate!!)} - ${
-                    displayingDateFormatTwo(
-                        insurance.endDate!!
-                    )
-                }"
+            try {
+                mBinding.tvPeriod.text =
+                    "${displayingDateFormatTwo(insurance.startDate!!)} - ${
+                        displayingDateFormatTwo(
+                            insurance.endDate!!
+                        )
+                    }"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             mBinding.tvAmount.text = "₹ ${insurance.sumAssured}"
             mBinding.tvPolicyHolder.text = insurance.tpa!!.name
 

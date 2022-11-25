@@ -43,7 +43,7 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))
             } else {
-                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.black))
+                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.blue))
                 ivAlert.setImageDrawable(null)
             }
         }
