@@ -326,7 +326,7 @@
                                 android:drawablePadding="10dp"
                                 android:gravity="center_vertical"
                                 android:padding="10dp"
-                                android:text="@{profile.health_coach.whatsapp_no}" />
+                                android:text="@{profile.health_coach.whatsapp}" />
 
                         </LinearLayout>
 

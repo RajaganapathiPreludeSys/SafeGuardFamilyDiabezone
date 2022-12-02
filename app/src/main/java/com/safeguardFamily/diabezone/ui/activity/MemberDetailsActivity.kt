@@ -139,7 +139,7 @@ class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberD
         }
 
         mBinding.tvWhatsappCall.setOnClickListener {
-            openWhatsApp(mViewModel.userResponse.value!!.health_coach!!.whatsapp_no)
+            openWhatsApp(mViewModel.userResponse.value!!.health_coach!!.whatsapp)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Whats App doctor")
             }

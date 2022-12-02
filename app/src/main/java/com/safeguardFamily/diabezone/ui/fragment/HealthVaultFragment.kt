@@ -166,13 +166,32 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvName.text = beneficiary[0].name
             mBinding.tvDetails.text =
                 "${beneficiary[0].gender}, ${beneficiary[0].age}, ${beneficiary[0].occupation}"
-            mBinding.tvEmail.text = beneficiary[0].email
-            mBinding.tvMobile.text = beneficiary[0].mobile
-            mBinding.tvLocation.text = beneficiary[0].address
 
-            mBinding.tvEmailBottom.text = beneficiary[0].email
-            mBinding.tvMobileBottom.text = beneficiary[0].mobile
-            mBinding.tvLocationBottom.text = beneficiary[0].address
+            if (beneficiary[0].email!!.length > 1) {
+                mBinding.tvEmail.text = beneficiary[0].email
+                mBinding.tvEmail.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].mobile!!.length > 1) {
+                mBinding.tvMobile.text = beneficiary[0].mobile
+                mBinding.tvMobile.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].address!!.length > 1) {
+                mBinding.tvLocation.text = beneficiary[0].address
+                mBinding.tvLocation.visibility = View.VISIBLE
+            }
+
+            if (beneficiary[0].email!!.length > 1) {
+                mBinding.tvEmailBottom.text = beneficiary[0].email
+                mBinding.tvEmailBottom.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].mobile!!.length > 1) {
+                mBinding.tvMobileBottom.text = beneficiary[0].mobile
+                mBinding.tvMobileBottom.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].address!!.length > 1) {
+                mBinding.tvLocationBottom.text = beneficiary[0].address
+                mBinding.tvLocationBottom.visibility = View.VISIBLE
+            }
 
             Glide.with(this).load(beneficiary[0].pic)
                 .placeholder(R.drawable.ic_profile_thumb).into(mBinding.ivImages)
@@ -358,13 +377,14 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvPrimaryDoctor.text = details.primaryDoctor
             mBinding.tvEmergencyContact.text = details.mobile
 
-            mBinding.tvEmergencyContact.setOnClickListener {
-                phoneNumber = details.mobile!!
-                requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Call Emergency Contact")
+            if (SharedPref.isMember())
+                mBinding.tvEmergencyContact.setOnClickListener {
+                    phoneNumber = details.mobile!!
+                    requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(FirebaseAnalytics.Param.CONTENT, "Call Emergency Contact")
+                    }
                 }
-            }
         } else {
             mBinding.llEmergencyContainer.visibility = View.GONE
             mBinding.view1.visibility = View.GONE
@@ -499,15 +519,33 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         if (patron != null) {
             mBinding.cvPatron.visibility = View.VISIBLE
             mBinding.tvPatronName.text = patron.name
-            mBinding.tvPatronEmail.text = patron.email
-            mBinding.tvPatronContact.text = patron.mobile
-            mBinding.tvPatronAddress.text = patron.address
+            if (patron.email!!.length > 1) {
+                mBinding.tvPatronEmail.text = patron.email
+                mBinding.tvPatronEmail.visibility = View.VISIBLE
+            }
+            if (patron.mobile!!.length > 1) {
+                mBinding.tvPatronContact.text = patron.mobile
+                mBinding.tvPatronContact.visibility = View.VISIBLE
+            }
+            if (patron.address!!.length > 1) {
+                mBinding.tvPatronAddress.text = patron.address
+                mBinding.tvPatronAddress.visibility = View.VISIBLE
+            }
 
             mBinding.cvPatronBottom.visibility = View.VISIBLE
             mBinding.tvPatronNameBottom.text = patron.name
-            mBinding.tvPatronEmailBottom.text = patron.email
-            mBinding.tvPatronContactBottom.text = patron.mobile
-            mBinding.tvPatronAddressBottom.text = patron.address
+            if (patron.email!!.length > 1) {
+                mBinding.tvPatronEmailBottom.text = patron.email
+                mBinding.tvPatronEmailBottom.visibility = View.VISIBLE
+            }
+            if (patron.mobile!!.length > 1) {
+                mBinding.tvPatronContactBottom.text = patron.mobile
+                mBinding.tvPatronContactBottom.visibility = View.VISIBLE
+            }
+            if (patron.address!!.length > 1) {
+                mBinding.tvPatronAddressBottom.text = patron.address
+                mBinding.tvPatronAddressBottom.visibility = View.VISIBLE
+            }
         } else {
             mBinding.cvPatron.visibility = View.GONE
             mBinding.cvPatronBottom.visibility = View.GONE

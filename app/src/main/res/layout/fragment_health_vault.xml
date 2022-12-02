@@ -205,6 +205,7 @@
                                 android:id="@+id/tvEmail"
                                 style="@style/Medium.Blue"
                                 android:layout_width="match_parent"
+                                android:visibility="gone"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_mail"
                                 android:drawablePadding="15dp" />
@@ -215,6 +216,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:visibility="gone"
                                 android:drawableStart="@drawable/ic_call"
                                 android:drawablePadding="15dp" />
 
@@ -224,6 +226,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:visibility="gone"
                                 android:drawableStart="@drawable/ic_location"
                                 android:drawablePadding="15dp" />
                         </LinearLayout>
@@ -278,6 +281,7 @@
                             style="@style/Medium.Blue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginBottom="5dp"
                             android:drawableStart="@drawable/ic_mail"
                             android:drawablePadding="15dp" />
@@ -289,6 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
+                            android:visibility="gone"
                             android:drawableStart="@drawable/ic_call"
                             android:drawablePadding="15dp" />
 
@@ -299,6 +304,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
+                            android:visibility="gone"
                             android:drawableStart="@drawable/ic_location"
                             android:drawablePadding="15dp" />
 
@@ -1375,6 +1381,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:visibility="gone"
                                 android:drawableStart="@drawable/ic_location"
                                 android:drawablePadding="15dp" />
                         </LinearLayout>
@@ -1431,6 +1438,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
+                            android:visibility="gone"
                             android:drawableStart="@drawable/ic_mail"
                             android:drawablePadding="15dp" />
 
@@ -1440,6 +1448,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:visibility="gone"
                             android:layout_marginBottom="5dp"
                             android:drawableStart="@drawable/ic_call"
                             android:drawablePadding="15dp" />
@@ -1451,6 +1460,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
+                            android:visibility="gone"
                             android:drawableStart="@drawable/ic_location"
                             android:drawablePadding="15dp" />
 

@@ -37,7 +37,7 @@ data class Provider(
     @SerializedName("type") var type: String,
     @SerializedName("vchat_url") var vchat_url: String,
     @SerializedName("mobile") var mobile: String,
-    @SerializedName("whatsapp_no") var whatsapp_no: String,
+    @SerializedName("whatsapp") var whatsapp: String,
     @SerializedName("category") var category: String,
     @SerializedName("is_free") var isFree: Boolean,
     @SerializedName("cc") var cc: String

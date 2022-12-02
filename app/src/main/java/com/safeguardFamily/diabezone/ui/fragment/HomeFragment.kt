@@ -247,9 +247,13 @@ class HomeFragment :
             }
         }
         mBinding.cvThree.setOnClickListener {
-            (activity as DashboardActivity?)!!.setCurrentFragment(
-                (activity as DashboardActivity?)!!.healthVault
-            )
+            if (SharedPref.isMember()) (activity as DashboardActivity?)!!.setCurrentFragment(
+                    (activity as DashboardActivity?)!!.healthVault)
+            else {
+                showToast("Please subscribe to become a member")
+                navigateTo(SubscriptionActivity::class.java)
+            }
+
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Health vault from home")
             }

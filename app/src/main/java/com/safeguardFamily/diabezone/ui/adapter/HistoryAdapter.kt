@@ -44,7 +44,9 @@ class HistoryAdapter(items: List<History>) :
             tvAllergyTitle.text = item.title
             tvName.text = item.preparedBy
             tvHospital.text = item.hospital
-            tvSeverity.text = if (item.comment!!.length > 2) item.comment else "NIL"
+            if (item.comment!!.length > 1)
+                tvSeverity.text =  item.comment
+            else llSeverity.visibility = View.GONE
             tvReaction.text = item.status
             tvDate.text = DateUtils.displayingDateFormatTwoFromAPIDateTime(item.reportDate!!)
             tvTime.text = DateUtils.displayingTimeFormat(item.reportDate!!)

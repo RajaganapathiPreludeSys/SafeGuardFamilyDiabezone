@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.model.response.EmergencyContact
 
 class EmergencyContactAdapter(
@@ -47,8 +48,10 @@ class EmergencyContactAdapter(
             if (item.mobile2!!.length > 1)
                 tvContact2.visibility = View.VISIBLE
             tvContact2.text = item.mobile2
-            tvContact1.setOnClickListener { onItemClicked(item.mobile1!!) }
-            tvContact2.setOnClickListener { onItemClicked(item.mobile2!!) }
+            if (SharedPref.isMember()) {
+                tvContact1.setOnClickListener { onItemClicked(item.mobile1!!) }
+                tvContact2.setOnClickListener { onItemClicked(item.mobile2!!) }
+            }
         }
 
         init {
