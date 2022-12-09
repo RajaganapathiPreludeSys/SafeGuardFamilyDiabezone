@@ -12,8 +12,7 @@ import com.safeguardFamily.diabezone.model.response.EmergencyContact
 class EmergencyContactAdapter(
     items: List<EmergencyContact>,
     private var onItemClicked: ((mobile: String) -> Unit)
-) :
-    RecyclerView.Adapter<EmergencyContactAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<EmergencyContactAdapter.ViewHolder>() {
 
     private val mItems: List<EmergencyContact>
 

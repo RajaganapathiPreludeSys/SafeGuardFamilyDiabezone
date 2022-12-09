@@ -15,7 +15,9 @@ data class Appointment(
     @SerializedName("provider") var provider: Provider,
     @SerializedName("puid") var puid: String,
     @SerializedName("slot") var slot: String,
-    @SerializedName("uid") var uid: String
+    @SerializedName("uid") var uid: String,
+    @SerializedName("res_btn_enabled") var enabledReschedule: Boolean,
+    @SerializedName("res_duration") var rescheduleDuration: String
 )
 
 data class Provider(

@@ -7,6 +7,10 @@
         <variable
             name="mViewModel"
             type="com.safeguardFamily.diabezone.viewModel.HomeViewModel" />
+
+        <variable
+            name="isMember"
+            type="Boolean" />
     </data>
 
     <ScrollView
@@ -666,7 +670,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="110dp"
                                     android:scaleType="centerInside"
-                                    android:src="@drawable/ic_red_banner"
+                                    android:src="@{isMember? @drawable/ic_red_banner_hc: @drawable/ic_red_banner}"
                                     android:visibility="gone" />
 
                             </LinearLayout>

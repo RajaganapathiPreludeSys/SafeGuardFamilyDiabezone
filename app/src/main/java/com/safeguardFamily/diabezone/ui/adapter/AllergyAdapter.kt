@@ -41,6 +41,8 @@ class AllergyAdapter(items: List<Allergy>) :
         private val tvSeverity: TextView
         private val tvReaction: TextView
         private val ivAlert: ImageView
+        private val llComment: LinearLayout
+        private val tvComment: TextView
         private val llSeverity: LinearLayout
         private val llReaction: LinearLayout
         fun setOnBoardingData(item: Allergy) {
@@ -62,6 +64,12 @@ class AllergyAdapter(items: List<Allergy>) :
                 tvAllergyTitle.setTextColor(itemView.rootView.context.getColor(R.color.blue))
                 ivAlert.setImageDrawable(null)
             }
+            if (item.comment == null || item.comment!!.isEmpty())
+                llComment.visibility = View.GONE
+            else {
+                llComment.visibility = View.VISIBLE
+                tvComment.text = item.comment
+            }
         }
 
         init {
@@ -75,6 +83,8 @@ class AllergyAdapter(items: List<Allergy>) :
             ivAlert = itemView.findViewById(R.id.ivAlert)
             llSeverity = itemView.findViewById(R.id.llSeverity)
             llReaction = itemView.findViewById(R.id.llReaction)
+            llComment = itemView.findViewById(R.id.llComment)
+            tvComment = itemView.findViewById(R.id.tvComment)
         }
     }
 

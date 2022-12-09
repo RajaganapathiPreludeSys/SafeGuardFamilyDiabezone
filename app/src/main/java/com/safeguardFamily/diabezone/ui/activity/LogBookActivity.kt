@@ -26,6 +26,7 @@ import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.databinding.ActivityLogBookBinding
 import com.safeguardFamily.diabezone.model.response.GraphItems
+import com.safeguardFamily.diabezone.model.response.Log
 import com.safeguardFamily.diabezone.ui.adapter.DiabetesAdapter
 import com.safeguardFamily.diabezone.viewModel.LogBookViewModel
 import kotlin.math.roundToInt
@@ -42,7 +43,7 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
 
         mBinding.icToolbar.ivRight.setOnClickListener {
 
-            if (mViewModel.pdfUrl.value!!.length > 2)  {
+            if (mViewModel.pdfUrl.value!!.length > 2) {
                 val mBundle = Bundle()
                 mBundle.putString(KEY_WEB_KEY, "PDF")
                 mBundle.putString(KEY_WEB_URL, mViewModel.pdfUrl.value)
@@ -61,8 +62,8 @@ class LogBookActivity : BaseActivity<ActivityLogBookBinding, LogBookViewModel>(
 
     private fun loadData() {
         mViewModel.logs.observe(this) {
-            mBinding.rvDiabetes.adapter = DiabetesAdapter(it) {
-                mViewModel.editDiabetesLog(it)
+            mBinding.rvDiabetes.adapter = DiabetesAdapter(it as java.util.ArrayList<Log>) {
+
             }
             mBinding.rvDiabetes.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

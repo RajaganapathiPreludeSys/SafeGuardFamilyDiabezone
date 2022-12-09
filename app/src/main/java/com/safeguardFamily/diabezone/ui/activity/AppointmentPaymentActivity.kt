@@ -102,7 +102,29 @@ class AppointmentPaymentActivity :
                     aid = appointmentID
                 )
             )
-            else mViewModel.createAppointment(
+            else if (mProvider.isFree) {
+                mViewModel.confirmAppointment(
+                    CreateAppointmentRequest(
+                        uid = SharedPref.getUserId()!!,
+                        puid = mProvider.puid,
+                        sel_date = apiDate,
+                        slot = apiTime
+                    )
+                ) {
+                    val dialogBuilder = AlertDialog.Builder(this)
+                    dialogBuilder
+                        .setMessage("Appointment Created Successfully")
+                        .setCancelable(true)
+                        .setPositiveButton("Ok") { dialog, id ->
+                            setResult(123, Intent())
+                            finish()
+                        }
+
+                    val alert = dialogBuilder.create()
+                    alert.setTitle("Appointment Creation")
+                    alert.show()
+                }
+            } else mViewModel.createAppointment(
                 CreateAppointmentRequest(
                     uid = SharedPref.getUserId()!!,
                     puid = mProvider.puid,
@@ -116,7 +138,7 @@ class AppointmentPaymentActivity :
                         "Payment For Subscription with orderId:$it"
                     )
                 }
-                Log.d(TAG, "onceCreated - ORder ID: $it")
+                Log.d(TAG, "onceCreated - Order ID: $it")
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
                 checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
@@ -150,7 +172,7 @@ class AppointmentPaymentActivity :
     }
 
     override fun onPaymentSuccess(p0: String?) {
-        Log.d(Bundle.TAG, "Razorpay onPayment Success() called with: p0 = $p0")
+        Log.d(TAG, "Razorpay onPayment Success() called with: p0 = $p0")
         mViewModel.confirmAppointment(
             CreateAppointmentRequest(
                 uid = SharedPref.getUserId()!!,
@@ -177,7 +199,7 @@ class AppointmentPaymentActivity :
 
     override fun onPaymentError(p0: Int, p1: String?) {
         showToast("Payment failed, Please retry later")
-        Log.d(Bundle.TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
+        Log.d(TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
         mViewModel.payFailed(
             PaymentFailRequest(
                 amount = mProvider.fees,

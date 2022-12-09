@@ -38,12 +38,7 @@ class AppointmentPaymentViewModel : BaseViewModel() {
                     if (response.isSuccessful)
                         if (response.body()?.success!!) {
                             appointment.postValue(response.body()!!.data)
-                            if (response.body()!!.data.appointment.booking_status == 4)
-                                onSuccess(response.body()!!.data.orderId!!)
-                            else if (response.body()!!.data.appointment.booking_status == 1) {
-//                                successToast.postValue("Appointment Created Successfully")
-                                isBookingCompleted.postValue(true)
-                            }
+                            onSuccess(response.body()!!.data.orderId!!)
                         } else apiError.postValue(response.body()!!.error)
                     else apiError.postValue(response.message())
                     apiLoader.postValue(false)

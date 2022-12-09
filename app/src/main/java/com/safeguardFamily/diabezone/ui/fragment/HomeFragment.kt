@@ -51,10 +51,7 @@ import com.safeguardFamily.diabezone.databinding.DialogTimeBinding
 import com.safeguardFamily.diabezone.databinding.FragmentHomeBinding
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
 import com.safeguardFamily.diabezone.model.response.GraphItems
-import com.safeguardFamily.diabezone.ui.activity.DashboardActivity
-import com.safeguardFamily.diabezone.ui.activity.LogBookActivity
-import com.safeguardFamily.diabezone.ui.activity.PDFActivity
-import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
+import com.safeguardFamily.diabezone.ui.activity.*
 import com.safeguardFamily.diabezone.ui.adapter.NotificationAdapter
 import com.safeguardFamily.diabezone.viewModel.HomeViewModel
 import java.text.SimpleDateFormat
@@ -74,6 +71,7 @@ class HomeFragment :
 
     override fun onceCreated() {
         mBinding.mViewModel = mViewModel
+        mBinding.isMember = SharedPref.isMember()
 
         loadNotification()
 
@@ -184,7 +182,8 @@ class HomeFragment :
         }
 
         mBinding.ivRedBanner.setOnClickListener {
-            navigateTo(SubscriptionActivity::class.java)
+            if (!SharedPref.isMember()) navigateTo(SubscriptionActivity::class.java)
+            else navigateTo(MemberDetailsActivity::class.java)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
             }
@@ -248,7 +247,8 @@ class HomeFragment :
         }
         mBinding.cvThree.setOnClickListener {
             if (SharedPref.isMember()) (activity as DashboardActivity?)!!.setCurrentFragment(
-                    (activity as DashboardActivity?)!!.healthVault)
+                (activity as DashboardActivity?)!!.healthVault
+            )
             else {
                 showToast("Please subscribe to become a member")
                 navigateTo(SubscriptionActivity::class.java)

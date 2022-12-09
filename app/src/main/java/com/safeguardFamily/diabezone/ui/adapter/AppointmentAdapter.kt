@@ -20,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.common.Bundle.KEY_APPOINTMENT
-import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFromAPI
 import com.safeguardFamily.diabezone.common.DateUtils.formatTo12Hrs
 import com.safeguardFamily.diabezone.model.response.Appointment
@@ -67,6 +66,7 @@ class AppointmentAdapter(items: List<Appointment>) :
             tvDate.text = displayingDateFromAPI(item.booking_date)
             tvTime.text = formatTo12Hrs(item.slot)?.uppercase()
             Glide.with(itemView.context).load(item.provider.pic).into(ivProfileImage)
+            btReschedule.visibility = if (item.enabledReschedule) View.VISIBLE else View.GONE
             btJoinOnline.setOnClickListener {
 
                 val parsedMillis = SimpleDateFormat(
@@ -93,7 +93,10 @@ class AppointmentAdapter(items: List<Appointment>) :
                 Log.d("RRR", "Current time ${simple.format(result)}")
                 result = Date(c.timeInMillis)
                 Log.d("RRR", "Current ---- ${Date(parsedMillis)} > ${Date(c.timeInMillis)}")
-                Log.d("RRR", "Current ---- ${Date(System.currentTimeMillis()).after(Date(c.timeInMillis))} > ${c.timeInMillis}")
+                Log.d(
+                    "RRR",
+                    "Current ---- ${Date(System.currentTimeMillis()).after(Date(c.timeInMillis))} > ${c.timeInMillis}"
+                )
 
                 if (Date(System.currentTimeMillis()).after(Date(c.timeInMillis)))
                     itemView.context.startActivity(
@@ -112,16 +115,38 @@ class AppointmentAdapter(items: List<Appointment>) :
                 }
             }
             btReschedule.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString(KEY_APPOINTMENT, Gson().toJson(item))
-                itemView.context.startActivity(
-                    Intent(
-                        itemView.context,
-                        ScheduleAppointmentActivity::class.java
-                    ).putExtras(bundle)
+                val parsedMillis = SimpleDateFormat(
+                    "yyyy-MM-dd HH:mm:ss",
+                    Locale.getDefault()
+                ).parse(item.booking_date)!!.time
+                Log.d(
+                    "RRR",
+                    "API time stamp...$parsedMillis Current time stamp-- ${System.currentTimeMillis()}"
                 )
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Reschedule Appointment ${item.aid}")
+
+                val estimatedMin = (((parsedMillis - System.currentTimeMillis()) / 1000) / 60)
+                Log.d("RRR", "AAA...$estimatedMin")
+
+                if (estimatedMin > item.rescheduleDuration.toInt()-2)
+                    if (estimatedMin > item.rescheduleDuration.toInt()) {
+                    val bundle = Bundle()
+                    bundle.putString(KEY_APPOINTMENT, Gson().toJson(item))
+                    itemView.context.startActivity(
+                        Intent(
+                            itemView.context,
+                            ScheduleAppointmentActivity::class.java
+                        ).putExtras(bundle)
+                    )
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(FirebaseAnalytics.Param.CONTENT, "Reschedule Appointment ${item.aid}")
+                    }
+                } else {
+                    Toast.makeText(
+                        itemView.context,
+                        "Rescheduling is not possible at this moment",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    btReschedule.visibility = View.GONE
                 }
             }
         }

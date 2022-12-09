@@ -45,7 +45,7 @@ class DoctorDetailsActivity :
             mBinding.llContainer.visibility = View.GONE
         }
 
-        if (provider.experience.isNotEmpty()) {
+        if (provider.type == "doctor") {
             mBinding.tvExpValue.text = provider.experience
             mBinding.tvExperience.text = "Experience"
         } else {

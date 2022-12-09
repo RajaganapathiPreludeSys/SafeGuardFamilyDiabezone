@@ -36,7 +36,8 @@ data class Allergy(
     @SerializedName("reaction") var reaction: String?,
     @SerializedName("report_date") var reportDate: String?,
     @SerializedName("severity") var severity: String?,
-    @SerializedName("title") var title: String?
+    @SerializedName("title") var title: String?,
+    @SerializedName("comment") var comment: String?
 )
 
 data class Beneficiary(
@@ -64,7 +65,8 @@ data class Diagnosi(
     @SerializedName("duration") var duration: String?,
     @SerializedName("status") var status: String?,
     @SerializedName("is_alert") var isAlert: Boolean?,
-    @SerializedName("title") var title: String?
+    @SerializedName("title") var title: String?,
+    @SerializedName("comment") var comment: String?
 )
 
 data class EmergencyContact(

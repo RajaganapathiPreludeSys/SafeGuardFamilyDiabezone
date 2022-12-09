@@ -69,7 +69,8 @@ class ScheduleAppointmentActivity :
             mViewModel.getSlots(
                 GetSlotsRequest(
                     puid = mProvider.puid,
-                    uid = SharedPref.getUserId()!!
+                    uid = SharedPref.getUserId()!!,
+                    isReschedule = isReschedule
                 )
             ) { slots ->
                 mProvider.available_slots = slots

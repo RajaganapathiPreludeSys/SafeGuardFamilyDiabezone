@@ -13,8 +13,7 @@ import com.safeguardFamily.diabezone.model.response.Notification
 class NotificationAdapter(
     items: List<Notification>,
     private var onItemClicked: ((time: String) -> Unit)
-) :
-    RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder?>() {
+) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder?>() {
 
     private val mItems: List<Notification>
 

@@ -72,4 +72,29 @@ class LogBookViewModel : BaseViewModel() {
                 }
             })
     }
+
+    fun deleteDiabetesLog(request: DiabetesLogRequest) {
+        apiLoader.postValue(true)
+        RetrofitClient.apiInterface.addEditDiabetesLog(request)
+            .enqueue(object : Callback<BaseResponse<DiabetesLogResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<DiabetesLogResponse>>,
+                    response: Response<BaseResponse<DiabetesLogResponse>>
+                ) {
+                    if (response.isSuccessful)
+                        if (response.body()!!.success!!) getLogBook()
+                        else apiError.postValue(response.body()!!.error)
+                    else apiError.postValue(response.message())
+                    apiLoader.postValue(false)
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<DiabetesLogResponse>>,
+                    t: Throwable
+                ) {
+                    apiError.postValue(t.message)
+                    apiLoader.postValue(false)
+                }
+            })
+    }
 }
