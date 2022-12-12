@@ -376,9 +376,9 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvBloodGroup.text = details.bloodGroup
             mBinding.tvPrimaryDoctor.text = details.primaryDoctor
             if (details.mobile == null || details.mobile!!.isEmpty())
-                mBinding.tvEmergencyContact.visibility = View.GONE
+                mBinding.llPhoneNumber.visibility = View.GONE
             else {
-                mBinding.tvEmergencyContact.visibility = View.VISIBLE
+                mBinding.llPhoneNumber.visibility = View.VISIBLE
                 mBinding.tvEmergencyContact.text = details.mobile
             }
             if (SharedPref.isMember())
