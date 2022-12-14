@@ -17,6 +17,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.safeguardFamily.diabezone.R
+import com.safeguardFamily.diabezone.apiService.RetrofitClient
 import com.safeguardFamily.diabezone.common.Bundle
 import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils.displayingDateFormat
@@ -28,16 +29,24 @@ import com.safeguardFamily.diabezone.databinding.DialogDateBinding
 import com.safeguardFamily.diabezone.databinding.DialogDiabetesBinding
 import com.safeguardFamily.diabezone.databinding.DialogTimeBinding
 import com.safeguardFamily.diabezone.databinding.ItemDiabetesBinding
+import com.safeguardFamily.diabezone.model.request.DeleteLogRequest
 import com.safeguardFamily.diabezone.model.request.DiabetesLogRequest
+import com.safeguardFamily.diabezone.model.response.BaseResponse
+import com.safeguardFamily.diabezone.model.response.DiabetesLogResponse
 import com.safeguardFamily.diabezone.model.response.Log
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
-class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -> Unit)) :
-    RecyclerView.Adapter<DiabetesAdapter.DiabetesViewHolder?>() {
+class DiabetesAdapter(
+    items: ArrayList<Log>,
+    onDone: ((request: DiabetesLogRequest) -> Unit),
+) : RecyclerView.Adapter<DiabetesAdapter.DiabetesViewHolder?>() {
 
-    private val mItems: List<Log>
+    private val mItems: ArrayList<Log>
     private val mOnDone: (request: DiabetesLogRequest) -> Unit
 
     private lateinit var binding: ItemDiabetesBinding
@@ -52,11 +61,12 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
     override fun getItemCount() = mItems.size
 
-    class DiabetesViewHolder(private val binding: ItemDiabetesBinding) :
+    inner class DiabetesViewHolder(private val binding: ItemDiabetesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var dateString = ""
         var timeString24 = ""
         private lateinit var dialogBinding: DialogDiabetesBinding
+
         fun bind(item: Log, mOnDone: (request: DiabetesLogRequest) -> Unit) {
             dateString = splitDate(item.measureDate!!)!!
             timeString24 = splitTime(item.measureDate!!)!!
@@ -71,6 +81,20 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             binding.tvTime.text = formatTo12Hrs(timeString24)
             binding.tvContactHealchCoach.text = item.message
 
+            binding.ivDelete.setOnClickListener {
+                val dialogBuilder = AlertDialog.Builder(itemView.context)
+                dialogBuilder
+                    .setMessage("Are you sure, do you want to delete this diabetes log")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok") { dialog, id ->
+                        this.deleteDiabetesLog(item.lid!!, adapterPosition)
+                    }
+                    .setNegativeButton("Cancel") { dialog, id ->
+                    }
+                val alert = dialogBuilder.create()
+                alert.setTitle("Delete Diabetes Log")
+                alert.show()
+            }
 
             Glide.with(itemView.context).load(
                 when (item.status) {
@@ -100,7 +124,10 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
 
             binding.llHyperContainer.setOnClickListener {
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Contact health coach from diabetes logs ${item.lid}")
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Contact health coach from diabetes logs ${item.lid}"
+                    )
                 }
                 if (SharedPref.isMember()) {
                     val bundle = android.os.Bundle()
@@ -177,18 +204,27 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
             dialogBinding.tvTime.text = "${formatTo12Hrs(timeString24)}"
             dialogBinding.etBloodSugar.setText(item.logValue)
 
-            dialogBinding.btCancel.setOnClickListener { mDialog.dismiss()
+            dialogBinding.btCancel.setOnClickListener {
+                mDialog.dismiss()
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT, "Dismiss edit diabetes dialog ${item.lid}")
-            } }
-            dialogBinding.tlDateContainer.setOnClickListener { showDateDialog(itemView.context)
+                    param(
+                        FirebaseAnalytics.Param.CONTENT,
+                        "Dismiss edit diabetes dialog ${item.lid}"
+                    )
+                }
+            }
+            dialogBinding.tlDateContainer.setOnClickListener {
+                showDateDialog(itemView.context)
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Diabetes log Date picker ${item.lid}")
-                } }
-            dialogBinding.tlTimeContainer.setOnClickListener { showTimeDialog(itemView.context)
+                }
+            }
+            dialogBinding.tlTimeContainer.setOnClickListener {
+                showTimeDialog(itemView.context)
                 Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                     param(FirebaseAnalytics.Param.CONTENT, "Diabetes log time picker ${item.lid}")
-                } }
+                }
+            }
             dialogBinding.etBloodSugar.addTextChangedListener {
                 dialogBinding.tlBloodSugarContainer.setBackgroundResource(R.drawable.bg_blue_border)
             }
@@ -205,8 +241,7 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                         "Enter a valid blood sugar value",
                         Toast.LENGTH_LONG
                     ).show()
-                }
-                else {
+                } else {
                     android.util.Log.d(TAG, "editDiabetes: $dateString$timeString24")
                     onDone(
                         DiabetesLogRequest(
@@ -225,7 +260,6 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                     mDialog.dismiss()
                 }
             }
-
         }
 
         private fun showDateDialog(mContext: Context) {
@@ -315,6 +349,32 @@ class DiabetesAdapter(items: List<Log>, onDone: ((request: DiabetesLogRequest) -
                     param(FirebaseAnalytics.Param.CONTENT, "Diabetes log Time picked")
                 }
             }
+        }
+
+        private fun deleteDiabetesLog(lid: String, position: Int) {
+            RetrofitClient.apiInterface.deleteEditDiabetesLog(
+                DeleteLogRequest(lid = lid, uid = SharedPref.getUserId()!!)
+            ).enqueue(object : Callback<BaseResponse<DiabetesLogResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<DiabetesLogResponse>>,
+                    response: Response<BaseResponse<DiabetesLogResponse>>
+                ) {
+                    if (response.isSuccessful)
+                        if (response.body()!!.success!!) {
+                            mItems.removeAt(position)
+                            notifyItemRemoved(position)
+                            notifyItemRangeChanged(position, mItems.size)
+                            notifyDataSetChanged()
+                        }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<DiabetesLogResponse>>,
+                    t: Throwable
+                ) {
+
+                }
+            })
         }
     }
 

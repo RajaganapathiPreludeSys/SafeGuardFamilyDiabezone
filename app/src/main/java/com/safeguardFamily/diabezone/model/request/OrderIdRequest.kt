@@ -1,8 +1,10 @@
 package com.safeguardFamily.diabezone.model.request
 
+import com.google.gson.annotations.SerializedName
+
 data class OrderIdRequest(
-    var amount: String,
-    var pid: String,
-    var type: String,
-    var uid: String
+    @SerializedName("amount") var amount: String,
+    @SerializedName("pid") var pid: String,
+    @SerializedName("type") var type: String,
+    @SerializedName("uid") var uid: String
 )

@@ -12,6 +12,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -24,6 +25,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseFragment
 import com.safeguardFamily.diabezone.common.Bundle.KEY_DOCTOR
@@ -40,7 +42,6 @@ import com.safeguardFamily.diabezone.model.response.*
 import com.safeguardFamily.diabezone.ui.activity.DoctorDetailsActivity
 import com.safeguardFamily.diabezone.ui.activity.PDFActivity
 import com.safeguardFamily.diabezone.ui.activity.SubscriptionActivity
-import com.safeguardFamily.diabezone.ui.activity.WebViewActivity
 import com.safeguardFamily.diabezone.ui.adapter.*
 import com.safeguardFamily.diabezone.viewModel.HealthVaultViewModel
 
@@ -61,7 +62,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 mBinding.llBeneficiaryContainer.visibility = View.VISIBLE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.GONE
             } else {
-                mBinding.tvDesc.text = "HV PDF"
+                mBinding.tvDesc.text = "Health Vault"
                 mBinding.llBeneficiaryContainer.visibility = View.GONE
                 mBinding.llBeneficiaryContainerBottom.visibility = View.VISIBLE
             }
@@ -165,13 +166,32 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvName.text = beneficiary[0].name
             mBinding.tvDetails.text =
                 "${beneficiary[0].gender}, ${beneficiary[0].age}, ${beneficiary[0].occupation}"
-            mBinding.tvEmail.text = beneficiary[0].email
-            mBinding.tvMobile.text = beneficiary[0].mobile
-            mBinding.tvLocation.text = beneficiary[0].address
 
-            mBinding.tvEmailBottom.text = beneficiary[0].email
-            mBinding.tvMobileBottom.text = beneficiary[0].mobile
-            mBinding.tvLocationBottom.text = beneficiary[0].address
+            if (beneficiary[0].email!!.length > 1) {
+                mBinding.tvEmail.text = beneficiary[0].email
+                mBinding.tvEmail.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].mobile!!.length > 1) {
+                mBinding.tvMobile.text = beneficiary[0].mobile
+                mBinding.tvMobile.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].address!!.length > 1) {
+                mBinding.tvLocation.text = beneficiary[0].address
+                mBinding.tvLocation.visibility = View.VISIBLE
+            }
+
+            if (beneficiary[0].email!!.length > 1) {
+                mBinding.tvEmailBottom.text = beneficiary[0].email
+                mBinding.tvEmailBottom.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].mobile!!.length > 1) {
+                mBinding.tvMobileBottom.text = beneficiary[0].mobile
+                mBinding.tvMobileBottom.visibility = View.VISIBLE
+            }
+            if (beneficiary[0].address!!.length > 1) {
+                mBinding.tvLocationBottom.text = beneficiary[0].address
+                mBinding.tvLocationBottom.visibility = View.VISIBLE
+            }
 
             Glide.with(this).load(beneficiary[0].pic)
                 .placeholder(R.drawable.ic_profile_thumb).into(mBinding.ivImages)
@@ -355,15 +375,20 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvEmergency.visibility = View.GONE
             mBinding.tvBloodGroup.text = details.bloodGroup
             mBinding.tvPrimaryDoctor.text = details.primaryDoctor
-            mBinding.tvEmergencyContact.text = details.mobile
-
-            mBinding.tvEmergencyContact.setOnClickListener {
-                phoneNumber = details.mobile!!
-                requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(FirebaseAnalytics.Param.CONTENT, "Call Emergency Contact")
-                }
+            if (details.mobile == null || details.mobile!!.isEmpty())
+                mBinding.llPhoneNumber.visibility = View.GONE
+            else {
+                mBinding.llPhoneNumber.visibility = View.VISIBLE
+                mBinding.tvEmergencyContact.text = details.mobile
             }
+            if (SharedPref.isMember())
+                mBinding.tvEmergencyContact.setOnClickListener {
+                    phoneNumber = details.mobile!!
+                    requestSinglePermission.launch(Manifest.permission.CALL_PHONE)
+                    Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(FirebaseAnalytics.Param.CONTENT, "Call Emergency Contact")
+                    }
+                }
         } else {
             mBinding.llEmergencyContainer.visibility = View.GONE
             mBinding.view1.visibility = View.GONE
@@ -400,41 +425,93 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             if (it!!) {
                 val spanString = SpannableString(message)
 
-                val termsAndCondition: ClickableSpan = object : ClickableSpan() {
+                val clickableSpan: ClickableSpan = object : ClickableSpan() {
                     override fun onClick(p0: View) {
                         navigateTo(SubscriptionActivity::class.java)
                     }
                 }
 
                 spanString.setSpan(
-                    termsAndCondition,
-                    message!!.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    clickableSpan,
+                    message!!.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     ForegroundColorSpan(Color.WHITE),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     UnderlineSpan(),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
                 spanString.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    message.indexOf("Enroll"),
-                    message.indexOf("Enroll") + 10,
+                    message.indexOf("Enrol"),
+                    message.indexOf("Enrol") + 9,
                     0
                 )
 
                 mBinding.tvHVDesc.movementMethod = LinkMovementMethod.getInstance()
                 mBinding.tvHVDesc.setText(spanString, TextView.BufferType.SPANNABLE)
                 mBinding.tvHVDesc.isSelected = true
-            } else mBinding.tvHVDesc.text = message
+            } else {
+                val substring = "Please contact Health Coach"
+                if (message!!.contains(substring, ignoreCase = true)) {
+                    val spanString = SpannableString(message)
+
+                    val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                        override fun onClick(p0: View) {
+                            val bundle = Bundle()
+                            bundle.putString(
+                                KEY_DOCTOR,
+                                Gson().toJson(mViewModel.healthCoach.value!!)
+                            )
+                            bundle.putString(KEY_TITLE, "Health Coach")
+                            navigateTo(DoctorDetailsActivity::class.java, bundle)
+                            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                                param(
+                                    FirebaseAnalytics.Param.CONTENT,
+                                    "Go to Health Coach Details screen"
+                                )
+                            }
+                        }
+                    }
+
+                    spanString.setSpan(
+                        clickableSpan,
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        ForegroundColorSpan(Color.WHITE),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        UnderlineSpan(),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+                    spanString.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        message.indexOf(substring),
+                        message.indexOf(substring) + substring.length,
+                        0
+                    )
+
+                    mBinding.tvHVDesc.movementMethod = LinkMovementMethod.getInstance()
+                    mBinding.tvHVDesc.setText(spanString, TextView.BufferType.SPANNABLE)
+                    mBinding.tvHVDesc.isSelected = true
+                } else mBinding.tvHVDesc.text = message
+            }
         }
 
         mBinding.tvTitle.text = user!!.name
@@ -446,15 +523,33 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
         if (patron != null) {
             mBinding.cvPatron.visibility = View.VISIBLE
             mBinding.tvPatronName.text = patron.name
-            mBinding.tvPatronEmail.text = patron.email
-            mBinding.tvPatronContact.text = patron.mobile
-            mBinding.tvPatronAddress.text = patron.address
+            if (patron.email!!.length > 1) {
+                mBinding.tvPatronEmail.text = patron.email
+                mBinding.tvPatronEmail.visibility = View.VISIBLE
+            }
+            if (patron.mobile!!.length > 1) {
+                mBinding.tvPatronContact.text = patron.mobile
+                mBinding.tvPatronContact.visibility = View.VISIBLE
+            }
+            if (patron.address!!.length > 1) {
+                mBinding.tvPatronAddress.text = patron.address
+                mBinding.tvPatronAddress.visibility = View.VISIBLE
+            }
 
             mBinding.cvPatronBottom.visibility = View.VISIBLE
             mBinding.tvPatronNameBottom.text = patron.name
-            mBinding.tvPatronEmailBottom.text = patron.email
-            mBinding.tvPatronContactBottom.text = patron.mobile
-            mBinding.tvPatronAddressBottom.text = patron.address
+            if (patron.email!!.length > 1) {
+                mBinding.tvPatronEmailBottom.text = patron.email
+                mBinding.tvPatronEmailBottom.visibility = View.VISIBLE
+            }
+            if (patron.mobile!!.length > 1) {
+                mBinding.tvPatronContactBottom.text = patron.mobile
+                mBinding.tvPatronContactBottom.visibility = View.VISIBLE
+            }
+            if (patron.address!!.length > 1) {
+                mBinding.tvPatronAddressBottom.text = patron.address
+                mBinding.tvPatronAddressBottom.visibility = View.VISIBLE
+            }
         } else {
             mBinding.cvPatron.visibility = View.GONE
             mBinding.cvPatronBottom.visibility = View.GONE
@@ -468,12 +563,16 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             mBinding.tvInsurer.text = insurance.insurer
             mBinding.tvPolicyName.text = insurance.policyName
             mBinding.tvPolicyNo.text = insurance.policyNo
-            mBinding.tvPeriod.text =
-                "${displayingDateFormatTwo(insurance.startDate!!)} - ${
-                    displayingDateFormatTwo(
-                        insurance.endDate!!
-                    )
-                }"
+            try {
+                mBinding.tvPeriod.text =
+                    "${displayingDateFormatTwo(insurance.startDate!!)} - ${
+                        displayingDateFormatTwo(
+                            insurance.endDate!!
+                        )
+                    }"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             mBinding.tvAmount.text = "₹ ${insurance.sumAssured}"
             mBinding.tvPolicyHolder.text = insurance.tpa!!.name
 
@@ -496,6 +595,18 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
             }
         }
 
+        mBinding.ivConsolidatedPdf.setOnClickListener {
+            if (prescription != null && prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
+            else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
+
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(
+                    FirebaseAnalytics.Param.CONTENT,
+                    "Consolidated prescription - PDF in webview"
+                )
+            }
+        }
+
         //      Consolidated Prescription
         if (prescription != null) {
             mBinding.llPrescription.visibility = View.VISIBLE
@@ -511,17 +622,7 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
                 displayingDateFormatTwoFromAPIDateTime(prescription.recommendations!!)
             mBinding.tvRecommendationTime.text =
                 displayingTimeFormat(prescription.recommendations!!)
-            mBinding.ivConsolidatedPdf.setOnClickListener {
-                if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
-                else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
 
-                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(
-                        FirebaseAnalytics.Param.CONTENT,
-                        "Consolidated prescription - PDF in webview"
-                    )
-                }
-            }
             mBinding.ivNext.setOnClickListener {
                 if (prescription.pdfUrl!!.length > 2) openWebView(prescription.pdfUrl!!)
                 else showToast("Consolidated Prescription PDF not available for now. Please contact your health coach")
@@ -560,6 +661,8 @@ class HealthVaultFragment : BaseFragment<FragmentHealthVaultBinding, HealthVault
     }
 
     private fun openWebView(url: String) {
+
+        Log.d("RRR -- ", "openWebView() called with: url = $url")
         val mBundle = Bundle()
         mBundle.putString(KEY_WEB_KEY, "PDF")
         mBundle.putString(KEY_WEB_URL, url)

@@ -48,16 +48,34 @@ class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberD
             }
 
             if (SharedPref.isMember()) {
-                mBinding.llPackageDetailsContainer.visibility = View.VISIBLE
-                mBinding.rlHealthCoach.visibility = View.VISIBLE
-                mBinding.tvAskQues.visibility = View.VISIBLE
-                mBinding.tvMemberShip.text = "Member - ${it.membership!![0].pack_name}"
-                mBinding.tvExpireDate.text = displayingDateFormat(it.membership!![0].validity)
+                if (it.health_coach == null || it.health_coach?.name == null) {
+                    mBinding.llPackageDetailsContainer.visibility = View.VISIBLE
+                    mBinding.rlHealthCoach.visibility = View.GONE
+                    mBinding.tvAskQues.visibility = View.VISIBLE
+                    mBinding.ivProgram.visibility = View.GONE
+                    mBinding.tvMemberShip.text = "Member - ${it.membership!![0].pack_name}"
+                    mBinding.tvAskQues.text = "Your assigned health coach will appear here"
+                } else {
+                    mBinding.llPackageDetailsContainer.visibility = View.VISIBLE
+                    mBinding.rlHealthCoach.visibility = View.VISIBLE
+                    mBinding.tvAskQues.visibility = View.VISIBLE
+                    mBinding.ivProgram.visibility = View.GONE
+                    mBinding.tvMemberShip.text = "Member - ${it.membership!![0].pack_name}"
+                    mBinding.tvExpireDate.text = displayingDateFormat(it.membership!![0].validity)
+                }
             } else {
                 mBinding.llPackageDetailsContainer.visibility = View.GONE
                 mBinding.rlHealthCoach.visibility = View.GONE
                 mBinding.tvAskQues.visibility = View.GONE
+                mBinding.ivProgram.visibility = View.VISIBLE
                 mBinding.tvMemberShip.text = "Please subscribe to become a member"
+            }
+        }
+
+        mBinding.ivProgram.setOnClickListener {
+            navigateTo(SubscriptionActivity::class.java)
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT, "Go to Subscription Page")
             }
         }
 
@@ -130,7 +148,7 @@ class MemberDetailsActivity : BaseActivity<ActivityMemberDetailsBinding, MemberD
         }
 
         mBinding.tvWhatsappCall.setOnClickListener {
-            openWhatsApp(mViewModel.userResponse.value!!.health_coach!!.whatsapp_no)
+            openWhatsApp(mViewModel.userResponse.value!!.health_coach!!.whatsapp)
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Whats App doctor")
             }

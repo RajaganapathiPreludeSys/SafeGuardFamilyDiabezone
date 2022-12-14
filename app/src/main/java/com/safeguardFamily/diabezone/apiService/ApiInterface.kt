@@ -42,6 +42,10 @@ interface ApiInterface {
     @POST("add-diabetes-log")
     fun addEditDiabetesLog(@Body body: DiabetesLogRequest): Call<BaseResponse<DiabetesLogResponse>>
 
+    //  https://safeguardfamily.com/apis/del-diabetes-log
+    @POST("del-diabetes-log")
+    fun deleteEditDiabetesLog(@Body body: DeleteLogRequest): Call<BaseResponse<DiabetesLogResponse>>
+
     //  https://safeguardfamily.com/apis/diabetes-logs
     @POST("diabetes-logs")
     fun getLogs(@Body body: IdRequest): Call<BaseResponse<DiabetesResponse>>

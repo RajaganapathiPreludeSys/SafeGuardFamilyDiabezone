@@ -90,14 +90,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         val callHealthCoach = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
-            if (isGranted)
-                startActivity(
-                    Intent(
-                        Intent.ACTION_CALL,
-                        Uri.parse("tel:+91" + viewModel.userResponse.value!!.health_coach!!.mobile)
-                    )
-                )
-            else showToast("Permission Denied by user for making calls")
+            if (isGranted) {
+                val phoneNumber =
+                    if (viewModel.userResponse.value!!.health_coach == null || viewModel.userResponse.value!!.health_coach!!.mobile == null)
+                        viewModel.userResponse.value!!.contactInfo!!.mobile
+                    else viewModel.userResponse.value!!.health_coach!!.mobile
+                startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:+91$phoneNumber")))
+            } else showToast("Permission Denied by user for making calls")
         }
 
         val callSupport = registerForActivityResult(
@@ -125,11 +124,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             }
         }
 
-//        mBinding.clPastConsult.setOnClickListener { logout() }
-
         mBinding.clLogout.setOnClickListener {
             logout()
-
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Logout")
             }
@@ -137,7 +133,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
 
         mBinding.ivCall.setOnClickListener {
             callSupport.launch(Manifest.permission.CALL_PHONE)
-
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.CONTENT, "Calling customer support")
             }

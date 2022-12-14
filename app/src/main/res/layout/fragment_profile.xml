@@ -42,14 +42,13 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cvProfileImages"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_margin="20dp"
                         app:cardCornerRadius="5dp">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -101,6 +100,14 @@
                             android:text="@{profile.mobile}" />
 
                     </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_edit_circle_blue" />
 
                 </RelativeLayout>
 

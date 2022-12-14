@@ -14,6 +14,7 @@ import com.razorpay.PaymentResultListener
 import com.safeguardFamily.diabezone.R
 import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle
+import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.DateUtils
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityAppointmentPaymentBinding
@@ -101,7 +102,29 @@ class AppointmentPaymentActivity :
                     aid = appointmentID
                 )
             )
-            else mViewModel.createAppointment(
+            else if (mProvider.isFree) {
+                mViewModel.confirmAppointment(
+                    CreateAppointmentRequest(
+                        uid = SharedPref.getUserId()!!,
+                        puid = mProvider.puid,
+                        sel_date = apiDate,
+                        slot = apiTime
+                    )
+                ) {
+                    val dialogBuilder = AlertDialog.Builder(this)
+                    dialogBuilder
+                        .setMessage("Appointment Created Successfully")
+                        .setCancelable(true)
+                        .setPositiveButton("Ok") { dialog, id ->
+                            setResult(123, Intent())
+                            finish()
+                        }
+
+                    val alert = dialogBuilder.create()
+                    alert.setTitle("Appointment Creation")
+                    alert.show()
+                }
+            } else mViewModel.createAppointment(
                 CreateAppointmentRequest(
                     uid = SharedPref.getUserId()!!,
                     puid = mProvider.puid,
@@ -109,10 +132,17 @@ class AppointmentPaymentActivity :
                     slot = apiTime
                 )
             ) {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(
+                        FirebaseAnalytics.Param.PAYMENT_TYPE,
+                        "Payment For Subscription with orderId:$it"
+                    )
+                }
+                Log.d(TAG, "onceCreated - Order ID: $it")
                 val amount = mProvider.fees.toInt() * 100
                 val checkout = Checkout()
-//                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
-                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
+                checkout.setKeyID("rzp_live_LLwJrP6eCuhu9U")
+//                checkout.setKeyID("rzp_test_C5aketpmxb6Hl6")
                 checkout.setImage(R.mipmap.ic_launcher)
                 val obj = JSONObject()
                 try {
@@ -120,10 +150,11 @@ class AppointmentPaymentActivity :
                     obj.put("description", "Payment for appointment")
                     obj.put("theme.color", "")
                     obj.put("currency", "INR")
-                    obj.put("orderId", it)
+                    obj.put("order_id", it)
                     obj.put("amount", amount)
                     obj.put("prefill.contact", SharedPref.getUser().mobile)
                     obj.put("prefill.email", SharedPref.getUser().email)
+                    Log.d(TAG, "onceCreated - ORder ID: ${Gson().toJson(obj)}")
                     checkout.open(this, obj)
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -141,7 +172,7 @@ class AppointmentPaymentActivity :
     }
 
     override fun onPaymentSuccess(p0: String?) {
-        Log.d(Bundle.TAG, "Razorpay onPayment Success() called with: p0 = $p0")
+        Log.d(TAG, "Razorpay onPayment Success() called with: p0 = $p0")
         mViewModel.confirmAppointment(
             CreateAppointmentRequest(
                 uid = SharedPref.getUserId()!!,
@@ -168,7 +199,7 @@ class AppointmentPaymentActivity :
 
     override fun onPaymentError(p0: Int, p1: String?) {
         showToast("Payment failed, Please retry later")
-        Log.d(Bundle.TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
+        Log.d(TAG, "Razorpay onPayment Error() called with: p0 = $p0, p1 = $p1")
         mViewModel.payFailed(
             PaymentFailRequest(
                 amount = mProvider.fees,

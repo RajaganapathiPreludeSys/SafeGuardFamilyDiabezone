@@ -26,7 +26,7 @@ class MobileActivity : BaseActivity<ActivityMobileBinding, MobileViewModel>(
         mBinding.icHeader.tvTitle.text = "Login with Mobile"
         mBinding.icHeader.ivBack.visibility = View.INVISIBLE
 
-        if (BuildConfig.BUILD_TYPE == "debug") mBinding.tiePhone.setText("9988776650")
+        if (BuildConfig.BUILD_TYPE == "debug") mBinding.tiePhone.setText("6383070263")
 
         mBinding.btSendCode.setOnClickListener {
             Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){

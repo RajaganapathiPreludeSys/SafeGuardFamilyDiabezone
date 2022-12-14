@@ -1,5 +1,7 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 data class OtpResponse(
-    var otps: List<String>? = null
+    @SerializedName("otps") var otps: List<String>? = null
 )

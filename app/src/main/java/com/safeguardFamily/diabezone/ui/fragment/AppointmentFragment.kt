@@ -31,7 +31,6 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding, Appointment
     }
 
     private fun loadDoctor() {
-        mViewModel.getAppointmentData()
         mViewModel.providers.observe(this) {
             mBinding.rvDoctors.adapter = DoctorsAdapter(it)
             mBinding.rvDoctors.layoutManager =

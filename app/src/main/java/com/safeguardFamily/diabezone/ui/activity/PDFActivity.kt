@@ -104,7 +104,7 @@ class PDFActivity : BaseActivity<ActivityPdfBinding, PDFViewModel>(
         }
 
         mViewModel.pdfPath.observe(this) {
-            mBinding.pdf.fromFile(it.toFile()).show()
+            mBinding.pdf.fromFile(it.toFile()).scale(1000f).show()
         }
     }
 

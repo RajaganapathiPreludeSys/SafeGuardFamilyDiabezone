@@ -12,6 +12,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.TextView
@@ -28,6 +29,7 @@ import com.safeguardFamily.diabezone.base.BaseActivity
 import com.safeguardFamily.diabezone.common.Bundle.KEY_EDIT_PROFILE
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_KEY
 import com.safeguardFamily.diabezone.common.Bundle.KEY_WEB_URL
+import com.safeguardFamily.diabezone.common.Bundle.TAG
 import com.safeguardFamily.diabezone.common.Bundle.URL_TERMS
 import com.safeguardFamily.diabezone.common.SharedPref
 import com.safeguardFamily.diabezone.databinding.ActivityRegisterBinding
@@ -111,6 +113,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         })
 
         mBinding.btRegister.setOnClickListener {
+            Log.d(TAG, "onceCreated: ${mBinding.tieName.text}")
             if (!mBinding.tieName.text!!.matches(Regex("^[A-Za-z ]+$")))
                 showToast(getString(R.string.valid_name))
             else if (mBinding.tieEmail.text!!.isEmpty()

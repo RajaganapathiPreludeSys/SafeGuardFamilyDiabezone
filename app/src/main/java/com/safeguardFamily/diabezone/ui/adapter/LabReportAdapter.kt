@@ -20,8 +20,7 @@ import com.safeguardFamily.diabezone.model.response.LabReport
 class LabReportAdapter(
     items: List<LabReport>,
     private var onItemClicked: ((time: String) -> Unit)
-) :
-    RecyclerView.Adapter<LabReportAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<LabReportAdapter.ViewHolder>() {
 
     private val mItems: List<LabReport>
 

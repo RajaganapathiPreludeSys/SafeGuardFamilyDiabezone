@@ -1,6 +1,8 @@
 package com.safeguardFamily.diabezone.model.response
 
+import com.google.gson.annotations.SerializedName
+
 data class SlotsResponse(
-    val is_member: Boolean,
-    val slots: List<AvailableSlot>
+    @SerializedName("is_member") var is_member: Boolean,
+    @SerializedName("slots") var slots: List<AvailableSlot>
 )

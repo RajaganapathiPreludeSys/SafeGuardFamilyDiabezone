@@ -23,7 +23,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvContactCount"
-                style="@style/Medium.Grey"
+                style="@style/Small.Grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Emergency Contact 1" />
@@ -63,7 +63,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvContact2"
-                android:visibility="invisible"
+                android:visibility="gone"
                 style="@style/Medium.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

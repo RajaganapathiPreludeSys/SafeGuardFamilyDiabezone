@@ -18,6 +18,7 @@
         android:name="android.hardware.camera.autofocus"
         android:required="true" />
 
+    <queries> <package android:name="com.whatsapp" /> </queries>
     <application
         android:name=".AppApplication"
         android:allowBackup="true"

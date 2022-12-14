@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:maxLines="2"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp" />
 
@@ -25,6 +26,31 @@
         android:drawableStart="@drawable/ic_date"
         android:drawablePadding="5dp"
         app:drawableTint="@color/grey" />
+
+    <LinearLayout
+        android:id="@+id/llComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Medium.MontserratBold"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Comments" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvComment"
+            style="@style/Medium.Grey"
+            android:layout_width="match_parent"
+            android:text="comment"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

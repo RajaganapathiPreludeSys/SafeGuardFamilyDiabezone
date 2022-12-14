@@ -1,3 +1,7 @@
 package com.safeguardFamily.diabezone.model.request
 
-data class IdRequest(val uid: String)
+import com.google.gson.annotations.SerializedName
+
+data class IdRequest(
+    @SerializedName("uid") val uid: String
+)

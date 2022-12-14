@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.safeguardFamily.diabezone.R
@@ -34,6 +35,8 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
         private val tvTitle: TextView
         private val tvDuration: TextView
         private val tvStatus: TextView
+        private val llComment: LinearLayout
+        private val tvComment: TextView
         private val ivAlert: ImageView
         fun setOnBoardingData(item: Diagnosi) {
             tvTitle.text = item.title
@@ -43,8 +46,14 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
                 tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.red))
                 ivAlert.setImageDrawable(itemView.rootView.context.getDrawable(R.drawable.ic_red_drop))
             } else {
-                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.black))
+                tvTitle.setTextColor(itemView.rootView.context.getColor(R.color.blue))
                 ivAlert.setImageDrawable(null)
+            }
+            if (item.comment == null || item.comment!!.isEmpty())
+                llComment.visibility = View.GONE
+            else {
+                llComment.visibility = View.VISIBLE
+                tvComment.text = item.comment
             }
         }
 
@@ -52,6 +61,8 @@ class DiagnosisAdapter(items: List<Diagnosi>) :
             tvTitle = itemView.findViewById(R.id.tvTitle)
             tvDuration = itemView.findViewById(R.id.tvDuration)
             tvStatus = itemView.findViewById(R.id.tvStatus)
+            llComment = itemView.findViewById(R.id.llComment)
+            tvComment = itemView.findViewById(R.id.tvComment)
             ivAlert = itemView.findViewById(R.id.ivAlert)
         }
     }

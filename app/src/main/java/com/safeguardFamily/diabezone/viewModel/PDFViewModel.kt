@@ -12,7 +12,7 @@ class PDFViewModel : BaseViewModel() {
 
     private var inProgress = false
 
-    val PDF_CACHED_FILE_NAME = "mypdf.pdf"
+    val PDF_CACHED_FILE_NAME = "${System.currentTimeMillis()}.pdf"
     val pdfPath: MutableLiveData<Uri> = MutableLiveData<Uri>()
 
      fun loadPdf(cacheDir: File, url: String) {
