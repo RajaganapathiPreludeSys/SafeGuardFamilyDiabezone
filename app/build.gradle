@@ -15,8 +15,8 @@ android {
         applicationId "com.safeguardFamily.diabezone"
         minSdk 28
         targetSdk 32
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         def formattedDate = new Date().format('dd-MM-yy')
         archivesBaseName = "SafeGuardFamily - Diabezone" + "_V" + versionName + "_" + formattedDate
